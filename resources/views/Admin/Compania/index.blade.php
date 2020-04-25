@@ -4,20 +4,22 @@
 @endif
 @section('content')
     @include('layouts.top-nav')
-    <div class="container">
+    <div class="container container-rapi2">
             <main role="main" class="ml-sm-auto">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Compañías</h1>
+                    <h1 class="h2 h2-less">Compañías</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
-                            <button type="button" class="btn btn-info" id="new" onclick="AddCompany();"><i class="fas fa-plus"></i> Agregar Compañia</button>
+                            <button type="button" class="btn-less btn btn-info" id="new" onclick="AddCompany();"><i class="fas fa-plus"></i> Agregar Compañia</button>
                         </div>
                     </div>
                 </div>
             </main>
 
             <div id="Alert"></div>
+    </div>
 
+    <div class="container">
         <div data-simplebar class="table-responsive table-height">
             <div class="col text-center">
                 <table class="table table-striped table-bordered mydatatable">

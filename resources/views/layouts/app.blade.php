@@ -56,48 +56,48 @@ use Illuminate\Support\Facades\URL;
 
 <div class="navbar-ica bg-ica">
     @if(Auth::user()->Clave_Rol=='1')
-        <a class="navbar-brand ml-auto" style="color: white">
+        <a class="navbar-brand ml-auto nav-name">
             <i class="fas fa-user-tie"></i>
-            <h6>Super Administrador de <strong style="color: #0e84b5" onclick="ChangeCompany();">@yield('company','Sin Compañia')</strong>, {{ Auth::user()->Nombres }}</h6>
+            <h6 class="h6-less"><strong>Super Administrador de <strong style="color: #0e84b5" onclick="ChangeCompany();">@yield('company','Sin Compañia')</strong>, {{ Auth::user()->Nombres }}</strong></h6>
         </a>
 
-        <a class="navbar-brand ml-auto" style="color: white" href="#">
+        <a class="navbar-brand ml-auto nav-name">
             <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
                 <i class="fas fa-sign-out-alt"></i>
-                <h6>Salir</h6>
+                <h6 class="h6-less"><strong>Salir</strong></h6>
             </div>
         </a>
     @elseif (Auth::user()->Clave_Rol=='2')
-        <a class="navbar-brand ml-auto" style="color: white">
+        <a class="navbar-brand ml-auto nav-name">
             <i class="fas fa-user-tie"></i>
-            <h6>Administrador, {{ Auth::user()->Nombres }}</h6>
+            <h6 class="h6-less"><strong>Administrador, {{ Auth::user()->Nombres }}</strong></h6>
         </a>
-        <a class="navbar-brand ml-auto" style="color: white" href="#">
+        <a class="navbar-brand ml-auto nav-name">
             <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
                 <i class="fas fa-sign-out-alt"></i>
-                <h6>Salir</h6>
+                <h6 class="h6-less"><strong>Salir</strong></h6>
             </div>
         </a>
     @elseif (Auth::user()->Clave_Rol=='3')
-        <a class="navbar-brand ml-auto" style="color: white">
+        <a class="navbar-brand ml-auto nav-name">
             <i class="fas fa-user-tie"></i>
-            <h6>Usuario, {{ Auth::user()->Nombres }}</h6>
+            <h6 class="h6-less"><strong>Usuario, {{ Auth::user()->Nombres }}</strong></h6>
         </a>
-        <a class="navbar-brand ml-auto" style="color: white" href="#">
+        <a class="navbar-brand ml-auto nav-name">
             <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
                 <i class="fas fa-sign-out-alt"></i>
-                <h6>Salir</h6>
+                <h6 class="h6-less"><strong>Salir</strong></h6>
             </div>
         </a>
     @elseif (Auth::user()->Clave_Rol=='4')
-        <a class="navbar-brand ml-auto" style="color: white">
+        <a class="navbar-brand ml-auto nav-name">
             <i class="fas fa-user-tie"></i>
-            <h6>PMO, {{ Auth::user()->Nombres }}</h6>
+            <h6 class="h6-less"><strong>PMO, {{ Auth::user()->Nombres }}</strong></h6>
         </a>
-        <a class="navbar-brand ml-auto" style="color: white" href="#">
+        <a class="navbar-brand ml-auto nav-name">
             <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
                 <i class="fas fa-sign-out-alt"></i>
-                <h6>Salir</h6>
+                <h6 class="h6-less"><strong>Salir</strong></h6>
             </div>
         </a>
     @endif
@@ -109,37 +109,33 @@ use Illuminate\Support\Facades\URL;
               style="display: none;">
             @csrf
         </form>
-        <ul class="navbar-nav" id="menuNavbarReporte">
-            <li class="nav-item">
-                <a class="side-font sidebar-margin-elements" href="{{ url('/' ) }}"><span class="material-icons" style="vertical-align: bottom">home</span>
-            Inicio</a>
-            </li>
-        </ul>
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-muted">
-            <span>Reportes</span>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-cool" style="margin-top: 0% !important;">
+            <span><strong>Reportes</strong></span>
         </h6>
-        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/ActividadesEmpresaPorEnfoque')}}" style="padding-top: 1% !important;"><i class="fas fa-file-excel"></i> De Actividades Por Enfoque
+        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/ActividadesEmpresaPorEnfoque')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Actividades Por Enfoque
         </a>
-        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/ActividadesEmpresaPorStatus')}}" style="padding-top: 1% !important;"><i class="fas fa-file-excel"></i> De Actividades Por Estado
+        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/ActividadesEmpresaPorStatus')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Actividades Por Estado
         </a>
-        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/Proyectos')}}" style="padding-top: 1% !important;"><i class="fas fa-file-excel"></i> De Asignaciones Por Enfoque
+        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/Proyectos')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Asignaciones Por Enfoque
         </a>
-        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/Recursos')}}" style="padding-top: 1% !important;"><i class="fas fa-file-excel"></i> De Recursos
+        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/Recursos')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Recursos
         </a>
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-muted">
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-cool">
         <span>
-          @if(Auth::user()->Clave_Rol==1)
-                {{'Super Administrador'}}
-            @endif
-            @if(Auth::user()->Clave_Rol==2)
-                {{'Administrador'}}
-            @endif
-            @if(Auth::user()->Clave_Rol==3)
-                {{'Usuario'}}
-            @endif
-            @if(Auth::user()->Clave_Rol==4)
-                {{'PMO'}}
-            @endif
+            <strong>
+                @if(Auth::user()->Clave_Rol==1)
+                    {{'Super Administrador'}}
+                @endif
+                @if(Auth::user()->Clave_Rol==2)
+                    {{'Administrador'}}
+                @endif
+                @if(Auth::user()->Clave_Rol==3)
+                    {{'Usuario'}}
+                @endif
+                @if(Auth::user()->Clave_Rol==4)
+                    {{'PMO'}}
+                @endif
+            </strong>
         </span>
         </h6>
         <!-- ROUTES -->

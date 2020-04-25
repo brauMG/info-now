@@ -125,19 +125,19 @@
     margin: 0;
     padding: 0;
     width: 10%;
-    background-color: #212121;
+    background-color: #09b9e8;
     position: fixed;
     height: 100%;
     overflow: hidden;
 }
 
 .table-header{
-    background-color: #12334A !important;
+    background-color: #055e76 !important;
     color: white;
 }
 
 .table-footer{
-    background-color: #12334A !important;
+    background-color: #055e76 !important;
     color: white;
 }
 
@@ -162,7 +162,7 @@
 /* Sidebar links */
 .sidebar a {
     display: block;
-    color: #999999;
+    color: #FFFFFF;
     padding: 15px !important;
     text-decoration: none;
 }
@@ -170,7 +170,7 @@
 @media screen and (max-width: 1473px) {
     .sidebar a {
         display: block;
-        color: #999999;
+        color: #FFFFFF;
         padding: 14px !important;
         text-decoration: none;
     }
@@ -179,7 +179,7 @@
 @media screen and (max-width: 1366px) {
     .sidebar a {
         display: block;
-        color: #999999;
+        color: #FFFFFF;
         padding: 13px !important;
         text-decoration: none;
     }
@@ -188,7 +188,7 @@
 @media screen and (max-width: 1232px) {
     .sidebar a {
         display: block;
-        color: #999999;
+        color: #FFFFFF;
         padding: 12px !important;
         text-decoration: none;
     }
@@ -197,7 +197,7 @@
 @media screen and (max-width: 1166px) {
     .sidebar a {
         display: block;
-        color: #999999;
+        color: #FFFFFF;
         padding: 11px !important;
         text-decoration: none;
     }
@@ -205,15 +205,18 @@
 
 /* Active/current link */
 .sidebar a.active {
-     background-color: #212121;
+     background-color: #FFFFFF;
      color: #00bcd4;
+    margin-left: 0% !important;
     font-size: 1em !important;
 }
 
 /* Links on mouse-over */
 .sidebar a:hover:not(.active) {
-    background-color: #12334A;
-    color: white;
+    background-color: #12334a;
+    color: #00bcd4;
+    margin-left: 0% !important;
+    font-size: 1em !important;
 }
 
 /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
@@ -310,7 +313,7 @@ div.content {
 
 .layoutContainer{
     display: none !important;
-    background-color: #12334A !important;
+    background-color: #09b9e8 !important;
     margin-left: 0% !important;
     width: 100% !important;
     height: 25% !important;
@@ -319,7 +322,7 @@ div.content {
 @media screen and (max-width: 1148px) {
     .layoutContainer{
         display: block !important;
-        background-color: #12334A !important;
+        background-color: #09b9e8 !important;
         margin-left: 0% !important;
         width: 100% !important;
         height: 25% !important;
@@ -328,7 +331,7 @@ div.content {
 
 @media screen and (max-width: 700px) {
     .layoutContainer{
-        background-color: #12334A !important;
+        background-color: #09b9e8 !important;
         margin-left: 0% !important;
         width: 100% !important;
         height: 25% !important;
@@ -343,13 +346,13 @@ div.content {
 }
 
 .btn-layout{
-    background-color: #0F4C75 !important;
+    background-color: #1491b3 !important;
     color: white !important;
 }
 
 @media screen and (max-width: 768px) {
     .btn-layout{
-        background-color: #0F4C75 !important;
+        background-color: #1491b3 !important;
         color: white !important;
         font-size: 0.9em;
     }
@@ -357,7 +360,7 @@ div.content {
 
 @media screen and (max-width: 574px) {
     .btn-layout{
-        background-color: #0F4C75 !important;
+        background-color: #1491b3 !important;
         color: white !important;
         font-size: 0.89em;
     }
@@ -365,7 +368,7 @@ div.content {
 
 @media screen and (max-width: 555px) {
     .btn-layout{
-        background-color: #0F4C75 !important;
+        background-color: #1491b3 !important;
         color: white !important;
         font-size: 0.80em;
     }
@@ -373,7 +376,7 @@ div.content {
 
 @media screen and (max-width: 516px) {
     .btn-layout{
-        background-color: #0F4C75 !important;
+        background-color: #1491b3 !important;
         color: white !important;
         font-size: 0.75em;
     }
@@ -381,7 +384,7 @@ div.content {
 
 @media screen and (max-width: 495px) {
     .btn-layout{
-        background-color: #0F4C75 !important;
+        background-color: #1491b3 !important;
         color: white !important;
         font-size: 0.70em;
     }
@@ -389,7 +392,7 @@ div.content {
 
 @media screen and (max-width: 475px) {
     .btn-layout{
-        background-color: #0F4C75 !important;
+        background-color: #1491b3 !important;
         color: white !important;
         font-size: 0.65em;
     }
@@ -397,7 +400,7 @@ div.content {
 
 @media screen and (max-width: 452px) {
     .btn-layout{
-        background-color: #0F4C75 !important;
+        background-color: #1491b3 !important;
         color: white !important;
         font-size: 0.60em;
     }
@@ -502,22 +505,22 @@ div.content {
 
 .btns-grid {
     background-color: #12334A;
-    color: #00bcd4;
+    color: #09b9e8;
     text-decoration: none; }
 
 .btns-grid:hover {
     background-color: #12334A !important;
-    color: #00bcd4 !important;
+    color: #09b9e8 !important;
     text-decoration: none !important; }
 
 .btn-available:hover {
     background-color: #12334A;
-    color: #00bcd4;
+    color: #09b9e8;
     text-decoration: none; }
 
 .btn-unavailable:hover {
     background-color: #12334A;
-    color: #00bcd4;
+    color: #09b9e8;
     text-decoration: none; }
 
 .tr-card-complete{
@@ -783,8 +786,8 @@ div.content {
 }
 
 .selected{
-    background-color: #212121 !important;
-    color: #00bcd4 !important;
+    background-color: #FFFFFF !important;
+    color: #09b9e8 !important;
 }
 
 .card-height-add-test{
@@ -891,4 +894,77 @@ div.content {
 
 .sidebar-margin-elements{
     margin-left: 5% !important;
+}
+
+@media screen and (max-width: 485px) {
+    .h2-less{
+        font-size: 1.5em !important;
+    }
+}
+
+@media screen and (max-width: 485px) {
+    .btn-less{
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.82031rem !important;
+        line-height: 1.5 !important;
+        border-radius: 0.2rem !important;
+    }
+}
+
+@media screen and (max-width: 485px) {
+    .h6-less{
+        font-size: 0.75rem !important;
+    }
+}
+
+.text-cool {
+    padding-bottom: 3% !important;
+    padding-top: 3% !important;
+    color: #595a09;
+    background-color: #dbf7dd;
+    border-bottom: solid;
+    border-top: solid;
+    border-color: #0d8015;
+}
+
+.container-rapi2 {
+    padding-top: 0%;
+    margin-left: 0%;
+    background-color: #055e76 !important;
+    border-left: solid !important;
+    border-top: solid !important;
+    border-right: solid !important;
+    color: white !important;
+}
+
+@media screen and (max-width: 1148px) {
+    .container-rapi2 {
+        background-color: #055e76 !important;
+        padding-top: 0%;
+        margin-left: 0%;
+        border-left: solid !important;
+        border-top: solid !important;
+        border-right: solid !important;
+        color: white !important;
+    }
+}
+
+
+@media screen and (max-width: 485px) {
+    .btn-less{
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.82031rem !important;
+        line-height: 1.5 !important;
+        border-radius: 0.2rem !important;
+    }
+}
+
+.nav-name {
+    color: #dbf7dd !important;
+}
+
+@media screen and (max-width: 1148px) {
+    .nav-name{
+        color: #0e84b5 !important;
+    }
 }

@@ -1061,7 +1061,7 @@ pre {
   border: 0; }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: #ecf0f1; }
+  background-color: #e2f9ff; }
 
 .table-hover tbody tr:hover {
   color: #212529;
@@ -4632,7 +4632,13 @@ button.bg-dark:focus {
   background-color: #fff !important; }
 
 .bg-ica {
-    background-color: #212121 !important; }
+    background-color: #09b9e8 !important; }
+
+@media screen and (max-width: 1148px) {
+    .bg-ica{
+        background-color: #FFFFFF !important; }
+
+}
 
 .bg-transparent {
   background-color: transparent !important; }
@@ -4686,7 +4692,7 @@ button.bg-dark:focus {
   border-color: #E74C3C !important; }
 
 .border-light {
-  border-color: #ecf0f1 !important; }
+  border-color: #12334a !important; }
 
 .border-dark {
   border-color: #7b8a8b !important; }

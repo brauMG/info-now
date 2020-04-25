@@ -25,21 +25,21 @@
                                 <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
                             @endforeach
                         </select>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar <i class="fas fa-times"></i></button>
-            <button type="button" class="btn btn-primary" id="update">Actualizar <i class="fas fa-edit"></i></button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
+            <button type="button" class="btn btn-primary" id="update"><i class="fas fa-edit"></i> Actualizar</button>
         </div>
     </div>
 </div>
 <script>
     $(document).ready(function(){
         $('#compania').val('{{Auth::user()->Clave_Compania}}');
-        var table=$('#table').DataTable();        
+        var table=$('#table').DataTable();
         $('#update').click(function(){
             var error=false;
             var descripcion=$('#descripcion').val();
@@ -56,7 +56,7 @@
                 error=true;
             }
             if(error==false){
-                $.post('{{ url('/Admin/Areas/Update')}}',{_token:token,descripcion:descripcion,clave:clave,compania:compania},function(data ){                             
+                $.post('{{ url('/Admin/Areas/Update')}}',{_token:token,descripcion:descripcion,clave:clave,compania:compania},function(data ){
                     $('#Alert').html('<div class="alert alert-warning alert-dismissible fade show" role="alert"><strong>Listo!</strong> Se actualizó correctamente.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                     var data=table.row(tr)
                     .data();
@@ -68,7 +68,7 @@
                     .draw();
                     $('#myModal').modal('hide');
                 })
-                .fail(function(data) {                
+                .fail(function(data) {
                     Swal.fire({
                         type: 'error',
                         title: 'Error',
