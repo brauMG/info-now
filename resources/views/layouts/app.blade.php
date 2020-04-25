@@ -172,7 +172,7 @@ use Illuminate\Support\Facades\URL;
         @endif
 
         @if(Auth::user()->Clave_Rol==4)
-            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/RolesProyectos')){ active } @else {} @endif" href="{{ url('/Admin/RolesProyectos') }}"><i class="fas fa-address-book"></i> Agregar usuarios al Proyecto</a>
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/RolesProyectos')){ active } @else {} @endif" href="{{ url('/Admin/RolesProyectos') }}"><i class="fas fa-address-book"></i> Roles en Proyectos</a>
         @endif
 
         @if(Auth::user()->Clave_Rol==1)
@@ -180,7 +180,7 @@ use Illuminate\Support\Facades\URL;
         @endif
 
         @if(Auth::user()->Clave_Rol==1)
-            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Indicador')){ active } @else {} @endif" href="{{ url('/Admin/Indicador') }}"><i class="fas fa-chart-line"></i> Indicador</a>
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Indicador')){ active } @else {} @endif" href="{{ url('/Admin/Indicador') }}"><i class="fas fa-chart-line"></i> Indicadores</a>
         @endif
 
         @if(Auth::user()->Clave_Rol==1)
