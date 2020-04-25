@@ -1,5 +1,5 @@
 <nav class="col-md-2 bg-light sidebar" id="sidebar-left">
-  <div class="sidebar-sticky"> 
+  <div class="sidebar-sticky">
     <div class="collapse navbar-collapse show" id="navbarSupportedContent">
       <ul class="navbar-nav" id="menuNavbarReporte">
         <li class="nav-item">
@@ -10,7 +10,7 @@
         </li>
       </ul>
       <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-        <span>Reportes</span>       
+        <span>Reportes</span>
       </h6>
       <ul class="nav flex-column mb-2">
         <li class="nav-item">
@@ -28,31 +28,31 @@
         <li class="nav-item">
           <a class="nav-link" href="{{url('/Reportes/Proyectos')}}" id="nav-ReporteEnfoque">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            Reporte Asignaciones por enfoque 
+            Reporte Asignaciones por enfoque
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{url('/Reportes/Recursos')}}" id="nav-ReportRecursos">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            Reporte de recursos 
+            Reporte de recursos
           </a>
         </li>
-      </ul>        
+      </ul>
       <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
         <span>
           @if(Auth::user()->Clave_Rol==1)
-            {{'Admin'}}
+            {{'Super Administrador'}}
           @endif
           @if(Auth::user()->Clave_Rol==2)
-            {{'Company Admin'}}
+            {{'Administrador'}}
           @endif
           @if(Auth::user()->Clave_Rol==3)
-            {{'User'}}
+            {{'Usuario'}}
           @endif
           @if(Auth::user()->Clave_Rol==4)
             {{'PMO'}}
           @endif
-        </span>            
+        </span>
       </h6>
       <ul class="nav flex-column mb-2">
         @if(Auth::user()->Clave_Rol==1 )
@@ -62,8 +62,8 @@
               Compañia
             </a>
           </li>
-        @endif                       
-     
+        @endif
+
         @if(Auth::user()->Clave_Rol==1)
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/Admin/Roles') }}" id="nav-roles">
@@ -168,10 +168,9 @@
             </a>
           </li>
         @endif
-        
-      </ul> 
-    </div>         
+
+      </ul>
+    </div>
   </div>
 </nav>
 
-        

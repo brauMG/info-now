@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateActividadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,18 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('Usuarios', function (Blueprint $table) {
+        Schema::create('Actividades', function (Blueprint $table) {
             $table->bigIncrements('Clave');
             $table->bigInteger('Clave_Compania');
-            $table->string('Iniciales', 10);
-            $table->string('Nombres', 150);
-            $table->string('Correo', 50)->unique();
-            $table->bigInteger('Clave_Area')->nullable();
-            $table->bigInteger('Clave_Puesto')->nullable();
-            $table->bigInteger('Clave_Rol');
+            $table->bigInteger('Clave_Proyecto');
+            $table->bigInteger('Clave_Fase');
+            $table->string('Descripcion', 150);
+            $table->string('FechaAccion', 50);
+            $table->string('Decision', 250)->unique();
+            $table->bigInteger('Clave_Status');
             $table->string('Contrasena', 250);
-            $table->dateTime('UltimoLogin')->nullable();
             $table->dateTime('FechaCreacion');
             $table->tinyInteger('Activo');
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -38,6 +36,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Usuarios');
+        Schema::dropIfExists('Actividades');
+
     }
 }

@@ -14,7 +14,7 @@
                             @foreach ($company as $item)
                                 <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
                             @endforeach
-                        </select>                      
+                        </select>
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -25,7 +25,7 @@
                         <div class="invalid-feedback" id="error_descripcion" style="display: none;"></div>
                     </div>
                 </div>
-                
+
             </div>
             <div class="row">
                 <div class="col-12 col-md-4">
@@ -41,10 +41,10 @@
                         </select>
                         @if($areas->count()==0)
                              <div class="invalid-feedback" id="error_area">
-                                *El Company Admin tiene que crear las areas.
+                                *El administrador tiene que crear las areas.
                             </div>
                         @else
-                            <div class="invalid-feedback" id="error_area" style="display: none;"></div>                            
+                            <div class="invalid-feedback" id="error_area" style="display: none;"></div>
                         @endif
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                 *El Admin tiene que crear los enfoques.
                             </div>
                         @else
-                            <div class="invalid-feedback" id="error_enfoque" style="display: none;"></div>                            
+                            <div class="invalid-feedback" id="error_enfoque" style="display: none;"></div>
                         @endif
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                                 *El Admin tiene que crear los trabajos.
                             </div>
                         @else
-                            <div class="invalid-feedback" id="error_trabajo" style="display: none;"></div>                            
+                            <div class="invalid-feedback" id="error_trabajo" style="display: none;"></div>
                         @endif
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                                 *El Admin tiene que crear las fases.
                             </div>
                         @else
-                            <div class="invalid-feedback" id="error_fase" style="display: none;"></div>                            
+                            <div class="invalid-feedback" id="error_fase" style="display: none;"></div>
                         @endif
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                                 *El Admin tiene que crear los indicadores.
                             </div>
                         @else
-                            <div class="invalid-feedback" id="error_indicador" style="display: none;"></div>                            
+                            <div class="invalid-feedback" id="error_indicador" style="display: none;"></div>
                         @endif
                     </div>
                 </div>
@@ -147,14 +147,14 @@
 </div>
 <script>
     $(document).ready(function(){
-        
+
         $('#save').click(function(){
             var error=false;
             var table=$('#table').DataTable();
             var compania=$('#compania').val();
             var companiaText=$('#compania option:selected').text();
 
-            var descripcion=$('#descripcion').val();      
+            var descripcion=$('#descripcion').val();
 
             var area=$('#area').val();
             var areaText=$('#area option:selected').text();
@@ -167,7 +167,7 @@
 
             var trabajo=$('#trabajo').val();
             var trabajoText=$('#trabajo option:selected').text();
-            
+
             var indicador=$('#indicador').val();
             var indicadorText=$('#indicador option:selected').text();
 
@@ -179,7 +179,7 @@
                 $('#error_descripcion').html('*Ingresa una descripcion');
                 $('#error_descripcion').show();
                 error=true;
-            }           
+            }
             if('{{$areas->count()}}'=='0'){
                 error=true;
             }
@@ -205,23 +205,23 @@
             }
             if(error==false){
                 $.post('{{ url('/Admin/Proyectos/Create')}}',{_token:token,compania:compania,descripcion:descripcion,area:area,fase:fase,enfoque:enfoque,trabajo:trabajo,indicador:indicador,objectivo:objectivo},function(data ){
-                    $('#Alert').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Listo!</strong> Se agrego correctamente<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');                                              
+                    $('#Alert').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Listo!</strong> Se agrego correctamente<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                     var node=table.rows
                     .add([{ 0:data.proyecto.Clave, 1:companiaText, 2:descripcion,3:areaText,4:faseText,5:enfoqueText,6:trabajoText,7:indicadorText,8:objectivo ,9:'<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-primary btn-sm edit" clave="'+data.proyecto.Clave+'" onclick="edit(this);">Editar <i class="fas fa-edit"></i></button><button type="button" class="btn btn-danger btn-sm delete" clave="'+data.proyecto.Clave+'" onclick="deleted(this);">Eliminar<i class="fas fa-trash-alt"></i></button></div>'}])
                     .draw()
-                    .nodes();                
+                    .nodes();
                     $( node ).find('td').eq(9).addClass('text-right');
                     $('#myModal').modal('hide');
                 })
-                .fail(function(data) {                
+                .fail(function(data) {
                     Swal.fire({
                         type: 'error',
                         title: 'Error',
                         text: data.responseJSON.message
-                    })  
+                    })
                 });
             }
-            
+
         });
     });
 </script>
