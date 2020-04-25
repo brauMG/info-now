@@ -13,6 +13,7 @@
           @endphp
           <a class="nav-link" href="#" style="color:white;">{{ $nombres[0] }}@if(count($nombres)>1) {{' '.$nombres[1]}} @endif</a>
         </div>
+
         <div class="col-4 col-md-4 text-center">
           <div class="form-inline text-center">
             <a class="btn btn-link" href="#" style="color:white;" @if(Auth::user()->Clave_Rol=='1') onclick="ChangeCompany();" @endif>
@@ -21,17 +22,17 @@
 
           </div>
         </div>
-      <div class="col-4 col-md-4 text-right">
-        @if(Auth::check())
-            <a class="nav-link" href="{{route('logout')}}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="color:white;">Cerrar Sesión</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-              @csrf
-            </form>
-          @else
-            <a class="nav-link" href="{{route('login')}}" style="color:white;">Iniciar sesión</a>
-          @endif
 
-      </div>
+          <div class="col-4 col-md-4 text-right">
+            @if(Auth::check())
+                <a class="nav-link" href="{{route('logout')}}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="color:white;">Cerrar Sesión</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  @csrf
+                </form>
+              @else
+                <a class="nav-link" href="{{route('login')}}" style="color:white;">Iniciar sesión</a>
+              @endif
+          </div>
       </div>
 
     </div>

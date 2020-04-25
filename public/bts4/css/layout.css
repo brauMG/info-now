@@ -163,8 +163,44 @@
 .sidebar a {
     display: block;
     color: #999999;
-    padding: 16px;
+    padding: 15px !important;
     text-decoration: none;
+}
+
+@media screen and (max-width: 1473px) {
+    .sidebar a {
+        display: block;
+        color: #999999;
+        padding: 14px !important;
+        text-decoration: none;
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .sidebar a {
+        display: block;
+        color: #999999;
+        padding: 13px !important;
+        text-decoration: none;
+    }
+}
+
+@media screen and (max-width: 1232px) {
+    .sidebar a {
+        display: block;
+        color: #999999;
+        padding: 12px !important;
+        text-decoration: none;
+    }
+}
+
+@media screen and (max-width: 1166px) {
+    .sidebar a {
+        display: block;
+        color: #999999;
+        padding: 11px !important;
+        text-decoration: none;
+    }
 }
 
 /* Active/current link */
@@ -273,6 +309,7 @@ div.content {
 }
 
 .layoutContainer{
+    display: none !important;
     background-color: #12334A !important;
     margin-left: 0% !important;
     width: 100% !important;
@@ -281,6 +318,7 @@ div.content {
 
 @media screen and (max-width: 1148px) {
     .layoutContainer{
+        display: block !important;
         background-color: #12334A !important;
         margin-left: 0% !important;
         width: 100% !important;
@@ -845,4 +883,12 @@ div.content {
 
 .upcase{
     text-transform: uppercase !important;
+}
+
+.no-href{
+    color: white !important;
+}
+
+.sidebar-margin-elements{
+    margin-left: 5% !important;
 }

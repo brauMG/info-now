@@ -1,80 +1,229 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<?php
+use App\User;
+use Illuminate\Support\Facades\URL;
+?>
 <head>
+    @yield('head')
+    <link rel="icon" href="{{ URL::asset('/css/favicon.ico') }}" type="image/x-icon"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>RAPIDOSS</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/1fd9851a23.js" crossorigin="anonymous"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+    {{--Required for Charts--}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('bts4/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bts4/css/layout.css') }}" rel="stylesheet">
+    <link href="{{ asset('bts4/css/datatables.css') }}" rel="stylesheet">
+    <link href="{{ asset('bts4/css/sponsors.css') }}" rel="stylesheet">
+
+
+    {{--Required for TableScrolling--}}
+    <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css"/>
+    <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+
+    {{--Required per Vue.js / Vuetify--}}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+
+    {{--Required for tables--}}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>--}}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/datatables.js') }}"></script>
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+<div class="navbar-ica bg-ica">
+    @if(Auth::user()->Clave_Rol=='1')
+        <a class="navbar-brand ml-auto" style="color: white">
+            <i class="fas fa-user-tie"></i>
+            <h6>Super Administrador de <strong style="color: #0e84b5" onclick="ChangeCompany();">@yield('company','Sin Compañia')</strong>, {{ Auth::user()->Nombres }}</h6>
+        </a>
 
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+        <a class="navbar-brand ml-auto" style="color: white" href="#">
+            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
+                <i class="fas fa-sign-out-alt"></i>
+                <h6>Salir</h6>
             </div>
-        </nav>
+        </a>
+    @elseif (Auth::user()->Clave_Rol=='2')
+        <a class="navbar-brand ml-auto" style="color: white">
+            <i class="fas fa-user-tie"></i>
+            <h6>Administrador, {{ Auth::user()->Nombres }}</h6>
+        </a>
+        <a class="navbar-brand ml-auto" style="color: white" href="#">
+            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
+                <i class="fas fa-sign-out-alt"></i>
+                <h6>Salir</h6>
+            </div>
+        </a>
+    @elseif (Auth::user()->Clave_Rol=='3')
+        <a class="navbar-brand ml-auto" style="color: white">
+            <i class="fas fa-user-tie"></i>
+            <h6>Usuario, {{ Auth::user()->Nombres }}</h6>
+        </a>
+        <a class="navbar-brand ml-auto" style="color: white" href="#">
+            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
+                <i class="fas fa-sign-out-alt"></i>
+                <h6>Salir</h6>
+            </div>
+        </a>
+    @elseif (Auth::user()->Clave_Rol=='4')
+        <a class="navbar-brand ml-auto" style="color: white">
+            <i class="fas fa-user-tie"></i>
+            <h6>PMO, {{ Auth::user()->Nombres }}</h6>
+        </a>
+        <a class="navbar-brand ml-auto" style="color: white" href="#">
+            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
+                <i class="fas fa-sign-out-alt"></i>
+                <h6>Salir</h6>
+            </div>
+        </a>
+    @endif
+</div>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
-</body>
+<div class="sidebar">
+    @auth
+        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+              style="display: none;">
+            @csrf
+        </form>
+        <ul class="navbar-nav" id="menuNavbarReporte">
+            <li class="nav-item">
+                <a class="side-font sidebar-margin-elements" href="{{ url('/' ) }}"><span class="material-icons" style="vertical-align: bottom">home</span>
+            Inicio</a>
+            </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-muted">
+            <span>Reportes</span>
+        </h6>
+        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/ActividadesEmpresaPorEnfoque')}}" style="padding-top: 1% !important;"><i class="fas fa-file-excel"></i> De Actividades Por Enfoque
+        </a>
+        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/ActividadesEmpresaPorStatus')}}" style="padding-top: 1% !important;"><i class="fas fa-file-excel"></i> De Actividades Por Estado
+        </a>
+        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/Proyectos')}}" style="padding-top: 1% !important;"><i class="fas fa-file-excel"></i> De Asignaciones Por Enfoque
+        </a>
+        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/Recursos')}}" style="padding-top: 1% !important;"><i class="fas fa-file-excel"></i> De Recursos
+        </a>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-muted">
+        <span>
+          @if(Auth::user()->Clave_Rol==1)
+                {{'Super Administrador'}}
+            @endif
+            @if(Auth::user()->Clave_Rol==2)
+                {{'Administrador'}}
+            @endif
+            @if(Auth::user()->Clave_Rol==3)
+                {{'Usuario'}}
+            @endif
+            @if(Auth::user()->Clave_Rol==4)
+                {{'PMO'}}
+            @endif
+        </span>
+        </h6>
+        <!-- ROUTES -->
+        @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Compania')){ active } @else {} @endif" href="{{ url('/Admin/Compania') }}"><i class="fas fa-registered"></i> Compañias</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Roles')){ active } @else {} @endif" href="{{ url('/Admin/Roles') }}"><i class="fas fa-user-tag"></i> Roles</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Areas')){ active } @else {} @endif" href="{{ url('/Admin/Areas') }}"><i class="fas fa-project-diagram"></i> Áreas</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Puestos')){ active } @else {} @endif" href="{{ url('/Admin/Puestos') }}"><i class="fas fa-users-cog"></i> Puestos</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Status')){ active } @else {} @endif" href="{{ url('/Admin/Status') }}"><i class="fas fa-spinner"></i> Estado</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Usuarios')){ active } @else {} @endif" href="{{ url('/Admin/Usuarios') }}"><i class="fas fa-users"></i> Usuarios</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==4)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Proyectos')){ active } @else {} @endif" href="{{ url('/Admin/Proyectos') }}"><i class="fas fa-tasks"></i> Proyectos</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==4)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/RolesProyectos')){ active } @else {} @endif" href="{{ url('/Admin/RolesProyectos') }}"><i class="fas fa-address-book"></i> Agregar usuarios al Proyecto</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/RolesRASIC')){ active } @else {} @endif" href="{{ url('/Admin/RolesRASIC') }}"><i class="fas fa-check-square"></i> Roles RASIC</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Indicador')){ active } @else {} @endif" href="{{ url('/Admin/Indicador') }}"><i class="fas fa-chart-line"></i> Indicador</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Fases')){ active } @else {} @endif" href="{{ url('/Admin/Fases') }}"><i class="fas fa-business-time"></i> Fases</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Enfoques')){ active } @else {} @endif" href="{{ url('/Admin/Enfoques') }}"><i class="fas fa-calendar-week"></i> Enfoques</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Trabajos')){ active } @else {} @endif" href="{{ url('/Admin/Trabajos') }}"><i class="fas fa-network-wired"></i> Trabajos</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades')){ active } @else {} @endif" href="{{ url('/Admin/Actividades') }}"><i class="fas fa-clipboard-list"></i> Actividades</a>
+        @endif
+    @endauth
+
+        <a class="logout_sidebar_button" href="{{ route('logout') }}" onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();" style="background-color: #0000007d !important;"><i class="material-icons" style="vertical-align: bottom;">
+                power_settings_new
+            </i> {{ __('Salir') }}
+        </a>
+</div>
+<div class="fixContainer mb-4">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true"></div>
+    @yield('content')
+</div>
+@yield('script')
+<script type="text/javascript">
+    function ChangeCompany(){
+        $('#myModal').load( '{{ url('/home/selectCompany') }}',function(response, status, xhr){
+            if ( status == "success" ) {
+                $('#myModal').modal('show');
+            }else{
+                Swal.fire({
+                    type: 'Error',
+                    title: 'Error',
+                    text: 'Hubo un error al cargar la vista'
+                })
+            }
+        });
+    }
+</script>
 </html>

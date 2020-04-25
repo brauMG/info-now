@@ -1,58 +1,66 @@
-@extends('Shared.layout')
+@extends('layouts.app')
 @if($compania!=null)
     @section('company',$compania->Descripcion)
 @endif
-@section('title', 'Compañia')
 @section('content')
-    <div class="row">
-        @include('Shared.sidebar') 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">           
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Compañía</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary" id="new">Agregar<i class="fas fa-plus"></i></button>                        
-                    </div>                    
+    @include('layouts.top-nav')
+    <div class="container">
+            <main role="main" class="ml-sm-auto">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Compañías</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <button type="button" class="btn btn-info" id="new" onclick="AddCompany();"><i class="fas fa-plus"></i> Agregar Compañia</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div id="Alert">
-                
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover" id="table">
-                    <thead>
-                        <tr>
-                            <th>Clave</th>
-                            <th>Descripción</th>
-                            <th>Dominio</th>
-                            <th></th>
-                        </tr>
+            </main>
+
+            <div id="Alert"></div>
+
+        <div data-simplebar class="table-responsive table-height">
+            <div class="col text-center">
+                <table class="table table-striped table-bordered mydatatable">
+                    <thead class="table-header">
+                    <tr>
+                        <th scope="col" style="text-transform: uppercase">Clave</th>
+                        <th scope="col" style="text-transform: uppercase">Descripción</th>
+                        <th scope="col" style="text-transform: uppercase">Dominio</th>
+                        <th scope="col" style="text-transform: uppercase">Acción</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach ($company as $item)
-                            <tr id="{{$item->Clave}}">
-                                <td>{{$item->Clave}}</td>
-                                <td>{{$item->Descripcion}}</td>
-                                <td>{{$item->Dominio}}</td>
-                                <td class="text-right">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-primary  btn-sm edit" clave="{{$item->Clave}}" onclick="edit(this);">Editar <i class="fas fa-edit"></i></button>                                        
-                                        <button type="button" class="btn btn-danger btn-sm delete" clave="{{$item->Clave}}" onclick="deleted(this);">Eliminar <i class="fas fa-trash-alt"></i></button>                                            
-                                    </div>
-                                </td>
-                            </tr>    
-                        @endforeach
-                                         
+                    @foreach ($company as $item)
+                        <tr id="{{$item->Clave}}">
+                            <td class="td td-center">{{$item->Clave}}</td>
+                            <td class="td td-center">{{$item->Descripcion}}</td>
+                            <td class="td td-center">{{$item->Dominio}}</td>
+                            <td class="td td-center">
+                                    <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="edit(this);"><i class="fas fa-edit"></i>Editar</a>
+                                    <a class="btn-row btn btn-danger no-href" clave="{{$item->Clave}}" onclick="deleted(this);"><i class="fas fa-trash-alt"></i>Eliminar</a>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
+                    <tfoot class="table-footer">
+                        <tr>
+                            <th style="text-transform: uppercase">Clave</th>
+                            <th style="text-transform: uppercase">Descripción</th>
+                            <th style="text-transform: uppercase">Dominio</th>
+                            <th style="text-transform: uppercase">Acción</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
-        </main>
+        </div>
     </div>
     <script>
+        $('.mydatatable').DataTable();
+
         function edit(button){
             var clave = $(button).attr('clave');
             $('#myModal').load( '{{ url('/Admin/Compania/Edit') }}/'+clave,function(response, status, xhr){
-                if ( status == "success" ) {                        
+                if ( status == "success" ) {
                     $('#myModal').modal('show');
                 }
             } );
@@ -68,9 +76,9 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
-            }).then(function(result){                    
-                if (result.value) {                        
-                    $.post('{{ url('/Admin/Compania/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){                            
+            }).then(function(result){
+                if (result.value) {
+                    $.post('{{ url('/Admin/Compania/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){
                         if(data.error==false){
                             table
                             .row(tr )
@@ -89,39 +97,16 @@
                             title: 'Error',
                             text: data.responseJSON.message
                         })
-                    });                    
+                    });
                 }
             })
         }
-        $(document).ready(function(){
-            table=$('#table').DataTable({
-                language:
-                {
-                    processing: "Cargando",
-                    search: "_INPUT_",
-                    searchPlaceholder: "Buscar en Registros",
-                    lengthMenu: "Mostrar _MENU_ Registros",
-                    info: "Registros _START_  al  _END_  de _TOTAL_",
-                    infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros)",
-                    oPaginate:
-                        {
-                            sFirst: "Primero",
-                            sPrevious: "Anterior",
-                            sNext: "Siguiente",
-                            sLast: "Ultimo"
-                        },
-                    zeroRecords: "No hay registros"
-                }
+        function AddCompany() {
+            $('#myModal').load( '{{ url('/Admin/Compania/New') }}',function(response, status, xhr)
+            {
+                if (status == "success")
+                    $('#myModal').modal('show');
             });
-            $('#new').click(function(){                
-                $('#myModal').load( '{{ url('/Admin/Compania/New') }}',function(response, status, xhr){
-                    if ( status == "success" )                         
-                        $('#myModal').modal('show');                    
-                });                
-            });
-            $('#nav-compania').addClass('active')
-            $('#nav-compania').css({"background": "#9b9634","color": "white"});
-        });
+        }
     </script>
 @endsection
