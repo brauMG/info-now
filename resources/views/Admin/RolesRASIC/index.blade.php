@@ -1,54 +1,58 @@
-@extends('Shared.layout')
+@extends('layouts.app')
 @if($compania!=null)
     @section('company',$compania->Descripcion)
 @endif
-@section('title', 'RolesRasic')
 @section('content')
-    <div class="row">
-        @include('Shared.sidebar') 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">           
+    @include('layouts.top-nav')
+    <div class="container container-rapi2">
+        <main role="main" class="ml-sm-auto">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">RolesRasic</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary" id="new">Agregar<i class="fas fa-plus"></i></button>                        
-                    </div>                    
-                </div>
+                <h1 class="h2 h2-less">RASIC</h1>
             </div>
-            <div id="Alert">                
-            </div>            
-            <div class="table-responsive">
-                <table class="table table-hover" id="table">
-                    <thead>
-                        <tr>
-                            <th>Clave</th>
-                            <th>Rol RASIC</th>                            
-                            <th></th>
-                        </tr>
+        </main>
+        <div id="Alert"></div>
+    </div>
+    <div class="container">
+        <div data-simplebar class="table-responsive table-height">
+            <div class="col text-center">
+                <table class="table table-striped table-bordered mydatatable">
+                    <thead class="table-header">
+                    <tr>
+                        <th scope="col" style="text-transform: uppercase">Clave</th>
+                        <th scope="col" style="text-transform: uppercase">Rol RASIC</th>
+                        <th scope="col" style="text-transform: uppercase">Acción</th>
+                    </tr>
                     </thead>
                     <tbody>
                         @foreach ($rolRASIC as $item)
                             <tr id="{{$item->Clave}}">
-                                <td>{{$item->Clave}}</td>
-                                <td>{{$item->RolRASIC}}</td>                               
-                                <td class="text-right">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-primary btn-sm edit" clave="{{$item->Clave}}" onclick="edit(this);">Editar<i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm delete" clave="{{$item->Clave}}" onclick="deleted(this);">Eliminar<i class="fas fa-trash-alt"></i></button>                                          
-                                    </div>
+                                <td class="td td-center">{{$item->Clave}}</td>
+                                <td class="td td-center">{{$item->RolRASIC}}</td>
+                                <td class="td td-center">
+                                    <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="edit(this);"><i class="fas fa-edit"></i>Editar</a>
+                                    <a class="btn-row btn btn-danger no-href" clave="{{$item->Clave}}" onclick="deleted(this);"><i class="fas fa-trash-alt"></i>Eliminar</a>
                                 </td>
-                            </tr>    
-                        @endforeach                                         
+                            </tr>
+                        @endforeach
                     </tbody>
+                    <tfoot class="table-footer">
+                    <tr>
+                        <th style="text-transform: uppercase">Clave</th>
+                        <th style="text-transform: uppercase">Rol RASIC</th>
+                        <th style="text-transform: uppercase">Acción</th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
-        </main>
+        </div>
     </div>
     <script>
+        $('.mydatatable').DataTable();
+
         function edit(button){
                 var clave = $(button).attr('clave');
                 $('#myModal').load( '{{ url('/Admin/RolesRASIC/Edit') }}/'+clave,function(response, status, xhr){
-                    if ( status == "success" ) {                        
+                    if ( status == "success" ) {
                         $('#myModal').modal('show');
                     }
                 });
@@ -65,9 +69,9 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Sí, eliminar!'
-                }).then((result) => {                    
-                    if (result.value) {                        
-                        $.post('{{ url('/Admin/RolesRASIC/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){                            
+                }).then((result) => {
+                    if (result.value) {
+                        $.post('{{ url('/Admin/RolesRASIC/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){
                             if(data.error==false){
                                 table
                                 .row(tr )
@@ -86,7 +90,7 @@
                                 title: 'Error',
                                 text: data.responseJSON.message
                             })
-                        });                        
+                        });
                     }
                 })
             }
@@ -111,21 +115,21 @@
                     zeroRecords: "No hay registros"
                 }
             });
-            $('#new').click(function(){                
+            $('#new').click(function(){
                 $('#myModal').load( '{{ url('/Admin/RolesRASIC/New') }}',function(response, status, xhr){
-                    if ( status == "success" ) {                        
+                    if ( status == "success" ) {
                         $('#myModal').modal('show');
                     }else{
                         Swal.fire({
                             type: 'error',
                             title: 'Error',
                             text: response
-                        })   
+                        })
                     }
-                });            
+                });
             });
             $("#nav-rolesRASIC").addClass("active");
-            $('#nav-rolesRASIC').css({"background": "#9b9634","color": "white"}); 
+            $('#nav-rolesRASIC').css({"background": "#9b9634","color": "white"});
         });
     </script>
 @endsection

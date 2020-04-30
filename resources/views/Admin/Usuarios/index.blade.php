@@ -1,72 +1,98 @@
-@extends('Shared.layout')
-@section('title', 'Usuarios')
+@extends('layouts.app')
 @if($compania!=null)
     @section('company',$compania->Descripcion)
 @endif
 @section('content')
-    <div class="row">
-        @include('Shared.sidebar') 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">           
+    @include('layouts.top-nav')
+    <div class="container container-rapi2">
+        <main role="main" class="ml-sm-auto">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2"> Usuarios</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary" id="new">Nuevo <i class="fas fa-plus"></i></button>     
-                        &nbsp;
-                        <button type="button" class="btn btn-sm btn-outline-secondary" id="import">Importar<i class="fas fa-file-excel"></i></button>                   
-                    </div>                    
-                </div>
+                <h1 class="h2 h2-less">Usuarios</h1>
             </div>
-            <div id="Alert">
-                
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <button type="button" class="btn-less btn btn-info" id="new" onclick="AddUser();"><i class="fas fa-plus"></i> Agregar Usuario</button>
+                <button type="button" class="btn-less btn btn-info" id="new" onclick="Import();" style="margin-left: 1%"><i class="fas fa-plus"></i> Importar Lista de Usuarios</button>
             </div>
-            
-            <div class="table-responsive">
-                <table class="table table-hover" id="table">
-                    <thead>
-                        <tr>
-                            <th>Clave</th>
-                            <th>Compania</th>                            
-                            <th>Nombre(s)</th>
-                            <th>Correo</th>
-                            <th>Area</th>
-                            <th>Puesto</th>
-                            <th>Rol</th>
-                            <th>UltimoLogin</th>
-                            <th></th>
-                        </tr>
+        </main>
+        <div id="Alert"></div>
+    </div>
+
+    <div class="container">
+        <div data-simplebar class="table-responsive table-height">
+            <div class="col text-center">
+                <table class="table table-striped table-bordered mydatatable">
+                    <thead class="table-header">
+                    <tr>
+                        <th scope="col" style="text-transform: uppercase">Clave</th>
+                        <th scope="col" style="text-transform: uppercase">Compania</th>
+                        <th scope="col" style="text-transform: uppercase">Nombre(s)</th>
+                        <th scope="col" style="text-transform: uppercase">Correo</th>
+                        <th scope="col" style="text-transform: uppercase">Área</th>
+                        <th scope="col" style="text-transform: uppercase">Puesto</th>
+                        <th scope="col" style="text-transform: uppercase">Rol</th>
+                        <th scope="col" style="text-transform: uppercase">Ultima Sesión</th>
+                        <th scope="col" style="text-transform: uppercase">Acciones</th>
+                    </tr>
                     </thead>
                     <tbody>
                         @foreach ($usuarios as $item)
                             <tr id="{{$item->Clave}}">
-                                <td>{{$item->Clave}}</td>
-                                <td>{{$item->Compania}}</td>                                
-                                <td>{{$item->Nombres}}</td>
-                                <td>{{$item->Correo}}</td>
-                                <td>{{$item->Area}}</td>
-                                <td>{{$item->Puesto}}</td>
-                                <td>{{$item->Rol}}</td>
-                                <td>{{$item->UltimoLogin}}</td>
-                                <td class="text-right">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-primary btn-sm edit" clave="{{$item->Clave}}" onclick="edit(this);">Editar <i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-success btn-sm change" clave="{{$item->Clave}}" onclick="changePassword(this);">Cambiar Contraseña <i class="fas fa-key"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm delete" clave="{{$item->Clave}}" onclick="deleted(this);">Eliminar <i class="fas fa-trash-alt"></i></button>                                            
-                                    </div>
+                                <td class="td td-center">{{$item->Clave}}</td>
+                                <td class="td td-center">{{$item->Compania}}</td>
+                                <td class="td td-center">{{$item->Nombres}}</td>
+                                <td class="td td-center">{{$item->Correo}}</td>
+                                <td class="td td-center">{{$item->Area}}</td>
+                                <td class="td td-center">{{$item->Puesto}}</td>
+                                <td class="td td-center">{{$item->Rol}}</td>
+                                <td class="td td-center">{{$item->UltimoLogin}}</td>
+                                <td  class="td td-center">
+                                    <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="edit(this);"><i class="fas fa-edit"></i>Editar</a>
+                                    <a class="btn-row btn btn-danger no-href" clave="{{$item->Clave}}" onclick="deleted(this);"><i class="fas fa-trash-alt"></i>Eliminar</a>
                                 </td>
-                            </tr>    
+                            </tr>
                         @endforeach
-                                         
                     </tbody>
+                    <tfoot class="table-footer">
+                    <tr>
+                        <th style="text-transform: uppercase">Clave</th>
+                        <th style="text-transform: uppercase">Compania</th>
+                        <th style="text-transform: uppercase">Nombre(s)</th>
+                        <th style="text-transform: uppercase">Correo</th>
+                        <th style="text-transform: uppercase">Área</th>
+                        <th style="text-transform: uppercase">Puesto</th>
+                        <th style="text-transform: uppercase">Rol</th>
+                        <th style="text-transform: uppercase">Ultima Sesión</th>
+                        <th style="text-transform: uppercase">Acciones</th>
+
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
-        </main>
+        </div>
     </div>
     <script>
+        $('.mydatatable').DataTable();
+
+        function AddUser() {
+            $('#myModal').load( '{{ url('/Admin/Usuarios/New') }}',function(response, status, xhr)
+            {
+                if (status == "success")
+                    $('#myModal').modal('show');
+            });
+        }
+
+        function Import() {
+            $('#myModal').load( '{{ url('/Admin/Usuarios/ImportExcelIndex') }}',function(response, status, xhr)
+            {
+                if (status == "success")
+                    $('#myModal').modal('show');
+            });
+        }
+
         function edit(button){
             var clave = $(button).attr('clave');
             $('#myModal').load( '{{ url('/Admin/Usuarios/Edit') }}/'+clave,function(response, status, xhr){
-                if ( status == "success" ) {                        
+                if ( status == "success" ) {
                     $('#myModal').modal('show');
                 }
             } );
@@ -74,7 +100,7 @@
         function changePassword(button){
             var clave = $(button).attr('clave');
             $('#myModal').load( '{{ url('/Admin/Usuarios/ChangePassword') }}/'+clave,function(response, status, xhr){
-                if ( status == "success" ) {                        
+                if ( status == "success" ) {
                     $('#myModal').modal('show');
                 }
             } );
@@ -91,9 +117,9 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Si, Eliminalo'
-            }).then(function(result)  {                    
-                if (result.value) {                        
-                    $.post('{{ url('/Admin/Usuarios/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){                            
+            }).then(function(result)  {
+                if (result.value) {
+                    $.post('{{ url('/Admin/Usuarios/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){
                         if(data.error==false){
                             table
                             .row(tr )
@@ -113,7 +139,7 @@
                             text: data.responseJSON.message
                         })
                     });
-                    
+
                 }
             })
         }
@@ -148,7 +174,7 @@
                     })
                 }else{
                     $('#myModal').load( '{{ url('/Admin/Usuarios/New') }}',function(response, status, xhr){
-                        if ( status == "success" ) {                        
+                        if ( status == "success" ) {
                             $('#myModal').modal('show');
                         }else{
                             Swal.fire({
@@ -159,12 +185,12 @@
                         }
                     });
                 }
-                
+
             });
 
-            $('#import').click(function(){                
+            $('#import').click(function(){
                 $('#myModal').load('{{ url('/Admin/Usuarios/ImportExcelIndex') }}',function(response, status, xhr){
-                    if ( status == "success" ) {                    
+                    if ( status == "success" ) {
                         $('#myModal').modal('show');
                     }else{
                         Swal.fire({
@@ -177,8 +203,8 @@
             });
 
             $("#nav-usuarios").addClass("active");
-            $('#nav-usuarios').css({"background": "#9b9634","color": "white"}); 
-            
+            $('#nav-usuarios').css({"background": "#9b9634","color": "white"});
+
         });
     </script>
 @endsection

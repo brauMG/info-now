@@ -15,7 +15,6 @@
                     </div>
                 </div>
             </main>
-
             <div id="Alert"></div>
     </div>
 
@@ -58,6 +57,14 @@
     </div>
     <script>
         $('.mydatatable').DataTable();
+
+        function AddCompany() {
+            $('#myModal').load( '{{ url('/Admin/Compania/New') }}',function(response, status, xhr)
+            {
+                if (status == "success")
+                    $('#myModal').modal('show');
+            });
+        }
 
         function edit(button){
             var clave = $(button).attr('clave');
@@ -102,13 +109,6 @@
                     });
                 }
             })
-        }
-        function AddCompany() {
-            $('#myModal').load( '{{ url('/Admin/Compania/New') }}',function(response, status, xhr)
-            {
-                if (status == "success")
-                    $('#myModal').modal('show');
-            });
         }
     </script>
 @endsection

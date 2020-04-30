@@ -1,44 +1,53 @@
-@extends('Shared.layout')
+@extends('layouts.app')
 @if($compania!=null)
     @section('company',$compania->Descripcion)
 @endif
-@section('title', 'Roles')
 @section('content')
-    <div class="row">
-        @include('Shared.sidebar') 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">           
+    @include('layouts.top-nav')
+    <div class="container container-rapi2">
+        <main role="main" class="ml-sm-auto">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Rol</h1>
-                
+                <h1 class="h2 h2-less">Roles</h1>
             </div>
-            <div id="Alert">
-                
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover" id="table">
-                    <thead>
-                        <tr>
-                            <th>Clave</th>
-                            <th>Descripción</th>                        
-                        </tr>
+        </main>
+        <div id="Alert"></div>
+    </div>
+
+    <div class="container">
+        <div data-simplebar class="table-responsive table-height">
+            <div class="col text-center">
+                <table class="table table-striped table-bordered mydatatable">
+                    <thead class="table-header">
+                    <tr>
+                        <th scope="col" style="text-transform: uppercase">Clave</th>
+                        <th scope="col" style="text-transform: uppercase">Descripción</th>
+                    </tr>
                     </thead>
                     <tbody>
                         @foreach ($rol as $item)
                             <tr id="{{$item->Clave}}">
-                                <td>{{$item->Clave}}</td>
-                                <td>{{$item->Rol}}</td>                                
-                            </tr>    
-                        @endforeach                                         
+                                <td class="td td-center">{{$item->Clave}}</td>
+                                <td class="td td-center">{{$item->Rol}}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
+                    <tfoot class="table-footer">
+                        <tr>
+                            <th style="text-transform: uppercase">Clave</th>
+                            <th style="text-transform: uppercase">Descripción</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
-        </main>
+        </div>
     </div>
     <script>
+        $('.mydatatable').DataTable();
+
         function edit(button){
             var clave = $(button).attr('clave');
             $('#myModal').load( '{{ url('/Admin/Roles/Edit') }}/'+clave,function(response, status, xhr){
-                if ( status == "success" ) {                        
+                if ( status == "success" ) {
                     $('#myModal').modal('show');
                 }
             } );
@@ -54,9 +63,9 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Sí, eliminar!'
-            }).then(function(result){                    
-                if (result.value) {                        
-                    $.post('{{ url('/Admin/Roles/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){                            
+            }).then(function(result){
+                if (result.value) {
+                    $.post('{{ url('/Admin/Roles/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){
                         if(data.error==false){
                             table
                             .row(tr )
@@ -75,7 +84,7 @@
                             title: 'Error',
                             text: data.responseJSON.message
                         })
-                    });                
+                    });
                 }
             })
         }
@@ -100,15 +109,15 @@
                     zeroRecords: "No hay registros"
                 }
             });
-            $('#new').click(function(){                
+            $('#new').click(function(){
                 $('#myModal').load( '{{ url('/Admin/Roles/New') }}',function(response, status, xhr){
-                    if ( status == "success" ) {                        
+                    if ( status == "success" ) {
                         $('#myModal').modal('show');
                     }
-                });                
+                });
             });
             $('#nav-roles').addClass('active');
-            $('#nav-roles').css({"background": "#9b9634","color": "white"});                 
+            $('#nav-roles').css({"background": "#9b9634","color": "white"});
         });
     </script>
 @endsection

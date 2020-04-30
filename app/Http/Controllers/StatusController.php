@@ -21,14 +21,14 @@ class StatusController extends Controller
         else{
             return redirect('/');
         }
-        
+
     }
     public function edit($id){
         $status=Status::find($id);
         return view('Admin.Status.edit',['status'=>$status]);
     }
 
-    public function new(){        
+    public function new(){
         return view('Admin.Status.new');
     }
     public function create(Request $request){
