@@ -30,7 +30,7 @@ use App\MaturityLevel;
     <link href="{{ asset('bts4/css/login.less') }}" rel="stylesheet">
     <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
 
-    <title>Sistema de Evaluación Directiva</title>
+    <title>RAPIDOSS</title>
 
 </head>
 <nav class="navbar navbar-expand-md navbar-light bg-black shadow-sm">
