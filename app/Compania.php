@@ -11,5 +11,5 @@ class Compania extends Model
     protected $guarded = ['Clave'];
     protected $primaryKey = 'Clave';
     protected $table = 'Companias';
-    public $timestamps = false;    
+    public $timestamps = false;
 }

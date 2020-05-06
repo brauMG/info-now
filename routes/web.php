@@ -16,10 +16,13 @@
 Route::get('/Admin/Compania', 'CompaniaController@index');
 Route::get('/Admin/Compania/New', 'CompaniaController@new');
 Route::get('/Admin/Compania/Edit/{id}', 'CompaniaController@edit');
+Route::get('/Admin/Compania/Delete/{id}', 'CompaniaController@prepare');
 
-Route::post('/Admin/Compania/Create', 'CompaniaController@create');
-Route::post('/Admin/Compania/Update', 'CompaniaController@update');
-Route::post('/Admin/Compania/Delete/{id}', 'CompaniaController@delete');
+
+
+Route::post('/Admin/Compania/Create', 'CompaniaController@store')->name('CreateCompany');
+Route::put('/Admin/Compania/Update/{id}', 'CompaniaController@update')->name('UpdateCompany');
+Route::post('/Admin/Compania/Delete/{id}', 'CompaniaController@delete')->name('DeleteCompany');
 
 Route::get('/Admin/Roles', 'RolesController@index');
 Route::get('/Admin/Roles/New', 'RolesController@new');
