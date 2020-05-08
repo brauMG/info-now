@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class AreaController extends Controller
     public function __construct(){
         $this->middleware('auth');
     }
-    public function index(){             
+    public function index(){
         if( Auth::user()->Clave_Rol==1 ||Auth::user()->Clave_Rol==2 ){
             $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
             $area=DB::table('Areas')
@@ -26,50 +27,56 @@ class AreaController extends Controller
             return redirect('/');
         }
     }
-    public function edit($id){        
-        if(Auth::user()->Clave_Rol==1 ||Auth::user()->Clave_Rol==2){
-            $area=Areas::find($id);
-            $company=Compania::where('Clave', Auth::user()->Clave_Compania)
-            ->get();
-            return view('Admin.Areas.edit',['area'=>$area,'company'=>$company]);
-        }
-        else{
-            return redirect('/'); 
-        }
+    public function edit($id){
+        $area=Areas::where('Clave', $id)->get()->toArray();
+        $company=Compania::where('Clave', Auth::user()->Clave_Compania)->get();
+        $areaId = $area[0]['Clave'];
+        $area = $area[0];
+        return view('Admin.Areas.edit', compact('area', 'company', 'areaId'));
     }
 
-    public function new(){        
-        if(Auth::user()->Clave_Rol==1 ||Auth::user()->Clave_Rol==2)
-        {
-            $company=Compania::where('Clave', Auth::user()->Clave_Compania)
-            ->get();
-            return view('Admin.Areas.new',['company'=>$company]);
-        }
-        else{
-            return redirect('/'); 
-        }
-        
+    public function update(Request $request, $Clave){
+        $area = $request->validate([
+            'descripcion' => ['required', 'string', 'max:150'],
+            'compania' => ['required']
+        ]);
+        Areas::where('Clave', $Clave)->update([
+            'Descripcion' => $area['descripcion'],
+            'Clave_Compania' => $area['compania'],
+            'Activo' => 1,
+            'FechaCreacion' => Carbon::now()
+        ]);
+        return redirect('/Admin/Areas')->with('mensaje', "Área editada correctamente");
     }
-    public function create(Request $request){        
-        $area = new Areas;
-        $area->Clave_Compania=Auth::user()->Clave_Compania;
-        $area->Descripcion = $request->descripcion;
-        $area->Activo=true;
-        $area->save();
-        return response()->json(['area'=>$area]);
+
+    public function new(){
+        $company = Compania::all();
+        return view('Admin.Areas.new', compact('company'));
     }
+
+    public function store(Request $request){
+        $area = $request->validate([
+            'descripcion' => ['required', 'string', 'max:150'],
+            'compania' => ['required']
+        ]);
+        Areas::create([
+            'Descripcion' => $area['descripcion'],
+            'Clave_Compania' => $area['compania'],
+            'Activo' => 1,
+            'FechaCreacion' => Carbon::now()
+        ]);
+        return redirect('/Admin/Areas')->with('mensaje', "Nueva área agregada correctamente");
+    }
+
+    public function prepare($id){
+        $area=Areas::where('Clave', $id)->get()->toArray();
+        $area = $area[0];
+        return view('Admin.Areas.delete', compact('area'));
+    }
+
     public function delete($id){
         $area = Areas::find($id);
-
         $area->delete();
-        return response()->json(['error'=>false]);
-    }
-    public function update(Request $request){
-        $area = Areas::find($request->clave);
-        $area->Clave_Compania=Auth::user()->Clave_Compania;
-        $area->Descripcion = $request->descripcion;
-        $area->Activo=true;
-        $area->save();
-        return response()->json(['area'=>$area]);
+        return redirect('/Admin/Areas')->with('mensajeAlert', "Área eliminada correctamente");
     }
 }

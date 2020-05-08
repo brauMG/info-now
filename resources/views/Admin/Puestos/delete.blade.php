@@ -2,17 +2,17 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #761b18">
-                <h5 class="modal-title upcase"  id="exampleModalLongTitle" style="color: white">Eliminar Área</h5>
+                <h5 class="modal-title upcase"  id="exampleModalLongTitle" style="color: white">Eliminar Puesto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('DeleteArea', [$area['Clave']])}}" method="POST">
+            <form action="{{route('DeletePuesto', [$puesto['Clave']])}}" method="POST">
                 @csrf
                 <div style="background-color: white;color: black;">
                     <center>
                         <div class="modal-body" >
-                            ¿Deseas eliminar por completo los datos del área?
+                            ¿Deseas eliminar este puesto?
                         </div>
                         <div class="spinner-border m-5" role="status" style="display: none;">
                             <span class="sr-only">Cargando...</span>

@@ -30,6 +30,7 @@ class CompaniaController extends Controller
         $company = $company[0];
         return view('Admin.Compania.edit', compact('company'));
     }
+
     public function prepare($id){
         $company=Compania::where('Clave', $id)->get()->toArray();
         $company = $company[0];

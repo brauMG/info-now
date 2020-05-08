@@ -10,14 +10,39 @@
                 <h1 class="h2 h2-less">Puestos</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
-                        <button type="button" class="btn-less btn btn-info" id="new" onclick="AddPuesto();"><i class="fas fa-plus"></i> Agregar</button>
+                        <button type="button" class="btn-less btn btn-info" id="new" onclick="AddPuesto();"><i class="fas fa-plus"></i> Agregar Puesto</button>
                     </div>
                 </div>
             </div>
         </main>
         <div id="Alert"></div>
     </div>
-
+    @if ( session('mensaje') )
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-success" class='message' id='message'>{{ session('mensaje') }}</div>
+        </div>
+    @endif
+    @if ( session('mensajeAlert') )
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-warning" class='message' id='message'>{{ session('mensajeAlert') }}</div>
+        </div>
+    @endif
+    @if ( session('mensajeDanger') )
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-danger" class='message' id='message'>{{ session('mensajeDanger') }}</div>
+        </div>
+    @endif
+    @if($errors->any())
+        <div class="container-edits" style="margin-top: 1%">
+            <div class="alert alert-danger" class='message' id='message'>
+                Se encontraron los siguientes errores: <br>
+                @foreach($errors->all() as $error)
+                    <br>
+                    {{'• '.$error }}
+                @endforeach
+            </div>
+        </div>
+    @endif
     <div class="container">
         <div data-simplebar class="table-responsive table-height">
             <div class="col text-center">
@@ -66,79 +91,14 @@
                 }
             } );
         }
+
         function deleted(button){
-            var table=$('#table').DataTable();
             var clave = $(button).attr('clave');
-            var tr=$(button).closest('tr');
-            Swal.fire({
-                title: '¿Está seguro?',
-                text: "¡No podrá revertir esto!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar!'
-            }).then(function(result){
-                if (result.value) {
-                    $.post('{{ url('/Admin/Puestos/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){
-                        if(data.error==false){
-                            table
-                            .row(tr )
-                            .remove()
-                            .draw();
-                            Swal.fire(
-                                ' Eliminado!',
-                                'Registro eliminado.',
-                                'success'
-                            )
-                        }
-                    })
-                    .fail(function(data){
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Error',
-                            text: data.responseJSON.message
-                        })
-                    });
+            $('#myModal').load( '{{ url('/Admin/Puestos/Delete') }}/'+clave,function(response, status, xhr){
+                if ( status == "success" ) {
+                    $('#myModal').modal('show');
                 }
-            })
+            } );
         }
-        $(document).ready(function(){
-            var table=$('#table').DataTable({
-                language:
-                {
-                    processing: "Cargando",
-                    search: "_INPUT_",
-                    searchPlaceholder: "Buscar en Registros",
-                    lengthMenu: "Mostrar _MENU_ Registros",
-                    info: "Registros _START_  al  _END_  de _TOTAL_",
-                    infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros)",
-                    oPaginate:
-                        {
-                            sFirst: "Primero",
-                            sPrevious: "Anterior",
-                            sNext: "Siguiente",
-                            sLast: "Ultimo"
-                        },
-                    zeroRecords: "No hay registros"
-                }
-            });
-            $('#new').click(function(){
-                $('#myModal').load( '{{ url('/Admin/Puestos/New') }}',function(response, status, xhr){
-                    if ( status == "success" ) {
-                        $('#myModal').modal('show');
-                    }else{
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Error',
-                            text: response
-                        })
-                    }
-                } );
-            });
-            $("#nav-puestos").addClass("active");
-            $('#nav-puestos').css({"background": "#9b9634","color": "white"});
-        });
     </script>
 @endsection
