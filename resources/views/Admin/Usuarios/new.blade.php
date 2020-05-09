@@ -75,8 +75,8 @@
                                         <option value="{{ $item->Clave }}">{{ $item->Descripcion }}</option>
                                     @php($count++)
                                 @endforeach
-                                @if($count ==1)
-                                    <option disabled selected>No hay empresas</option>
+                                @if($count ==0)
+                                    <option disabled selected>No Hay Áreas</option>
                                 @endif
                             </select>
                         </td>
@@ -94,7 +94,7 @@
                                     @php($count++)
                                 @endforeach
                                 @if($count ==0)
-                                    <option disabled selected>No hay roles</option>
+                                    <option disabled selected>No Hay Roles</option>
                                 @endif
                             </select>
                         </td>
@@ -102,7 +102,7 @@
 
                     <tr>
                         <th for="inputGroupSelect01" class="th-card">
-                            <i class="fas fa-address-card"></i> Rol Asignado
+                            <i class="fas fa-address-card"></i> Puesto Asignado
                         </th>
                         <td class="td-card"> <select name="puesto" type="text" class="custom-select  @error('puesto') is-invalid @enderror" required>
                                 <option disabled selected>Seleccionar...</option>
@@ -112,7 +112,7 @@
                                     @php($count++)
                                 @endforeach
                                 @if($count ==0)
-                                    <option disabled selected>No hay puestos</option>
+                                    <option disabled selected>No Hay Puestos</option>
                                 @endif
                             </select>
                         </td>
