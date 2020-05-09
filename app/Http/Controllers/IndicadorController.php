@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -21,43 +22,51 @@ class IndicadorController extends Controller
         else{
             return redirect('/');
         }
-        
+
     }
     public function edit($id){
-        if(Auth::user()->Clave_Rol==1 ){
-            $indicador=Indicador::find($id);
-            return view('Admin.Indicador.edit',['indicador'=>$indicador]);
-        }
-        else{
-            return redirect('/');
-        }
+        $indicador=Indicador::where('Clave', $id)->get()->toArray();
+        $indicadorId = $indicador[0]['Clave'];
+        $indicador = $indicador[0];
+        return view('Admin.Indicador.edit', compact('indicador', 'indicadorId'));
     }
 
     public function new(){
-        if(Auth::user()->Clave_Rol==1 ){
-            return view('Admin.Indicador.new');
-        }else{
-            return redirect('/');
-        }
+        return view('Admin.Indicador.new');
     }
-    public function create(Request $request){        
-        $indicador = new Indicador;        
-        $indicador->Descripcion = $request->descripcion;
-        $indicador->Activo=true;
-        $indicador->save();
-        return response()->json(['indicador'=>$indicador]);
+
+    public function store(Request $request){
+        $indicador = $request->validate([
+            'descripcion' => ['required', 'string', 'max:150', 'unique:Indicador'],
+        ]);
+        Indicador::create([
+            'Descripcion' => $indicador['descripcion'],
+            'Activo' => 1,
+            'FechaCreacion' => Carbon::now()
+        ]);
+        return redirect('/Admin/Indicador')->with('mensaje', "Nuevo indicador agregado correctamente");
+    }
+
+    public function prepare($id){
+        $indicador=Indicador::where('Clave', $id)->get()->toArray();
+        $indicador = $indicador[0];
+        return view('Admin.Indicador.delete', compact('indicador'));
     }
     public function delete($id){
         $indicador = Indicador::find($id);
-
         $indicador->delete();
-        return response()->json(['error'=>false]);
+        return redirect('/Admin/Indicador')->with('mensajeAlert', "Indicador eliminado correctamente");
     }
-    public function update(Request $request){
-        $indicador = Indicador::find($request->clave);
-        $indicador->Descripcion = $request->descripcion;
-        $indicador->Activo=true;
-        $indicador->save();
-        return response()->json(['indicador'=>$indicador]);
+
+    public function update(Request $request, $Clave){
+        $indicador = $request->validate([
+            'descripcion' => ['required', 'string', 'max:150', 'unique:Indicador'],
+        ]);
+        Indicador::where('Clave', $Clave)->update([
+            'Descripcion' => $indicador['descripcion'],
+            'Activo' => 1,
+            'FechaCreacion' => Carbon::now()
+        ]);
+        return redirect('/Admin/Indicador')->with('mensaje', "El indicador fue editado correctamente");
     }
 }

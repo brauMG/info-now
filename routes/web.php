@@ -45,19 +45,43 @@ Route::post('/Admin/Status/Create', 'StatusController@store')->name('CreateStatu
 Route::put('/Admin/Status/Update/{id}', 'StatusController@update')->name('UpdateStatus');
 Route::post('/Admin/Status/Delete/{id}', 'StatusController@delete')->name('DeleteStatus');
 
+Route::get('/Admin/RolesRASIC', 'RolesRASICController@index');
+
+Route::get('/Admin/Indicador', 'IndicadorController@index');
+Route::get('/Admin/Indicador/New', 'IndicadorController@new');
+Route::get('/Admin/Indicador/Edit/{id}', 'IndicadorController@edit');
+Route::get('/Admin/Indicador/Delete/{id}', 'IndicadorController@prepare');
+Route::post('/Admin/Indicador/Create', 'IndicadorController@store')->name('CreateIndicator');
+Route::put('/Admin/Indicador/Update/{id}', 'IndicadorController@update')->name('UpdateIndicator');
+Route::post('/Admin/Indicador/Delete/{id}', 'IndicadorController@delete')->name('DeleteIndicator');
+
+Route::get('/Admin/Enfoques', 'EnfoquesController@index');
+Route::get('/Admin/Enfoques/New', 'EnfoquesController@new');
+Route::get('/Admin/Enfoques/Edit/{id}', 'EnfoquesController@edit');
+Route::get('/Admin/Enfoques/Delete/{id}', 'EnfoquesController@prepare');
+Route::post('/Admin/Enfoques/Create', 'EnfoquesController@store')->name('CreateFocus');
+Route::put('/Admin/Enfoques/Update/{id}', 'EnfoquesController@update')->name('UpdateFocus');
+Route::post('/Admin/Enfoques/Delete/{id}', 'EnfoquesController@delete')->name('DeleteFocus');
+
 Route::get('/Admin/Usuarios', 'UsuariosController@index');
 Route::get('/Admin/Usuarios/New', 'UsuariosController@new');
 Route::get('/Admin/Usuarios/Edit/{id}', 'UsuariosController@edit');
-Route::get('/Admin/Usuarios/ChangePassword/{id}', 'UsuariosController@changePassword');
-Route::get('/Admin/Usuarios/ImportExcelIndex', 'UsuariosController@ImportExcelIndex');
 Route::get('/Admin/Usuarios/Delete/{id}', 'UsuariosController@prepare');
-Route::post('/Admin/Usuarios/importData', 'UsuariosController@importData');
-//Route::get('/Admin/Usuarios/UsersByProyect/{proyecto}', 'UsuariosController@UsersByProyect');
 Route::post('/Admin/Usuarios/Create', 'UsuariosController@store')->name('CreateUser');
-Route::post('/Admin/Usuarios/Update', 'UsuariosController@update')->name('UpdateUser');
+Route::put('/Admin/Usuarios/Update/{id}', 'UsuariosController@update')->name('UpdateUser');
 Route::post('/Admin/Usuarios/Delete/{id}', 'UsuariosController@delete')->name('DeleteUser');
-Route::post('/Admin/Usuarios/UpdatePassword', 'UsuariosController@updatePassword');
+//Route::post('/Admin/Usuarios/UpdatePassword', 'UsuariosController@updatePassword');
 Route::get('/Admin/Usuarios/ChangeCompany/{id}', 'UsuariosController@changeCompany');
+//Route::post('/Admin/Usuarios/importData', 'UsuariosController@importData');
+//Route::get('/Admin/Usuarios/ChangePassword/{id}', 'UsuariosController@changePassword');
+//Route::get('/Admin/Usuarios/ImportExcelIndex', 'UsuariosController@ImportExcelIndex');
+
+Route::get('/Admin/Fases', 'FasesController@index');
+Route::get('/Admin/Fases/New', 'FasesController@new');
+Route::get('/Admin/Fases/Edit/{id}', 'FasesController@edit');
+Route::post('/Admin/Fases/Create', 'FasesController@create');
+Route::post('/Admin/Fases/Update', 'FasesController@update');
+Route::post('/Admin/Fases/Delete/{id}', 'FasesController@delete');
 
 Route::get('/Admin/Roles', 'RolesController@index');
 Route::get('/Admin/Roles/New', 'RolesController@new');
@@ -87,34 +111,6 @@ Route::get('/Admin/RolesProyectos/Edit/{id}', 'RolesProyectosController@edit');
 Route::post('/Admin/RolesProyectos/Create', 'RolesProyectosController@create');
 Route::post('/Admin/RolesProyectos/Update', 'RolesProyectosController@update');
 Route::post('/Admin/RolesProyectos/Delete/{id}', 'RolesProyectosController@delete');
-
-Route::get('/Admin/RolesRASIC', 'RolesRASICController@index');
-Route::get('/Admin/RolesRASIC/New', 'RolesRASICController@new');
-Route::get('/Admin/RolesRASIC/Edit/{id}', 'RolesRASICController@edit');
-Route::post('/Admin/RolesRASIC/Create', 'RolesRASICController@create');
-Route::post('/Admin/RolesRASIC/Update', 'RolesRASICController@update');
-Route::post('/Admin/RolesRASIC/Delete/{id}', 'RolesRASICController@delete');
-
-Route::get('/Admin/Indicador', 'IndicadorController@index');
-Route::get('/Admin/Indicador/New', 'IndicadorController@new');
-Route::get('/Admin/Indicador/Edit/{id}', 'IndicadorController@edit');
-Route::post('/Admin/Indicador/Create', 'IndicadorController@create');
-Route::post('/Admin/Indicador/Update', 'IndicadorController@update');
-Route::post('/Admin/Indicador/Delete/{id}', 'IndicadorController@delete');
-
-Route::get('/Admin/Fases', 'FasesController@index');
-Route::get('/Admin/Fases/New', 'FasesController@new');
-Route::get('/Admin/Fases/Edit/{id}', 'FasesController@edit');
-Route::post('/Admin/Fases/Create', 'FasesController@create');
-Route::post('/Admin/Fases/Update', 'FasesController@update');
-Route::post('/Admin/Fases/Delete/{id}', 'FasesController@delete');
-
-Route::get('/Admin/Enfoques', 'EnfoquesController@index');
-Route::get('/Admin/Enfoques/New', 'EnfoquesController@new');
-Route::get('/Admin/Enfoques/Edit/{id}', 'EnfoquesController@edit');
-Route::post('/Admin/Enfoques/Create', 'EnfoquesController@create');
-Route::post('/Admin/Enfoques/Update', 'EnfoquesController@update');
-Route::post('/Admin/Enfoques/Delete/{id}', 'EnfoquesController@delete');
 
 
 Route::get('/Admin/Trabajos', 'TrabajosController@index');

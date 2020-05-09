@@ -20,9 +20,10 @@ class User extends Authenticatable
         'Iniciales',
         'Nombres',
         'Correo',
-        'Clave_Area',	
-        'Clave_Puesto',	
+        'Clave_Area',
+        'Clave_Puesto',
         'Clave_Rol',
+        'Contrasena',
         'UltimoLogin',
         'FechaCreacion',
         'Activo'

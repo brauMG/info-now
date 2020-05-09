@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Compania;
@@ -22,41 +23,48 @@ class EnfoquesController extends Controller
         }
     }
     public function edit($id){
-        if(Auth::user()->Clave_Rol==1 ){
-            $enfoque=Enfoque::find($id);
-            return view('Admin.Enfoques.edit',['enfoque'=>$enfoque]);
-        }
-        else{
-            return redirect('/');
-        }
+        $enfoque=Enfoque::where('Clave', $id)->get()->toArray();
+        $enfoqueId = $enfoque[0]['Clave'];
+        $enfoque = $enfoque[0];
+        return view('Admin.Enfoques.edit', compact('enfoque', 'enfoqueId'));
     }
 
-    public function new(){ 
-        if(Auth::user()->Clave_Rol==1 ){       
-            return view('Admin.Enfoques.new');
-        }
-        else{
-            return redirect('/');
-        }
+    public function prepare($id){
+        $enfoque=Enfoque::where('Clave', $id)->get()->toArray();
+        $enfoque = $enfoque[0];
+        return view('Admin.Enfoques.delete', compact('enfoque'));
     }
-    public function create(Request $request){
-        $enfoque = new Enfoque;
-        $enfoque->Descripcion = $request->descripcion;
-        $enfoque->Activo=true;
-        $enfoque->save();
-        return response()->json(['enfoque'=>$enfoque]);
+
+    public function new(){
+        return view('Admin.Enfoques.new');
+    }
+
+    public function store(Request $request){
+        $enfoque = $request->validate([
+            'descripcion' => ['required', 'string', 'max:150', 'unique:Enfoques'],
+        ]);
+        Enfoque::create([
+            'Descripcion' => $enfoque['descripcion'],
+            'Activo' => 1,
+            'FechaCreacion' => Carbon::now()
+        ]);
+        return redirect('/Admin/Enfoques')->with('mensaje', "Nuevo enfoque agregado correctamente");
     }
     public function delete($id){
         $enfoque = Enfoque::find($id);
         $enfoque->delete();
-        return response()->json(['error'=>false]);
+        return redirect('/Admin/Enfoques')->with('mensajeAlert', "Enfoque eliminado correctamente");
     }
-    public function update(Request $request){
-        $enfoque = Enfoque::find($request->clave);
-        $enfoque->Descripcion = $request->descripcion;
-        $enfoque->Activo=true;
-        $enfoque->save();
-        return response()->json(['enfoque'=>$enfoque]);
+    public function update(Request $request, $Clave){
+        $enfoque = $request->validate([
+            'descripcion' => ['required', 'string', 'max:150', 'unique:Enfoques'],
+        ]);
+        Enfoque::where('Clave', $Clave)->update([
+            'Descripcion' => $enfoque['descripcion'],
+            'Activo' => 1,
+            'FechaCreacion' => Carbon::now()
+        ]);
+        return redirect('/Admin/Enfoques')->with('mensaje', "El enfoque fue editado correctamente");
     }
-    
+
 }

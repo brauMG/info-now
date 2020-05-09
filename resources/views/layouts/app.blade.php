@@ -191,7 +191,7 @@ use Illuminate\Support\Facades\URL;
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Trabajos')){ active } @else {} @endif" href="{{ url('/Admin/Trabajos') }}"><i class="fas fa-network-wired"></i> Trabajos</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==1)
+        @if(Auth::user()->Clave_Rol!=1)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades')){ active } @else {} @endif" href="{{ url('/Admin/Actividades') }}"><i class="fas fa-clipboard-list"></i> Actividades</a>
         @endif
     @endauth

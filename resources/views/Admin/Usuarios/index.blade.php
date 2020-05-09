@@ -16,7 +16,32 @@
         </main>
         <div id="Alert"></div>
     </div>
-
+    @if ( session('mensaje') )
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-success" class='message' id='message'>{{ session('mensaje') }}</div>
+        </div>
+    @endif
+    @if ( session('mensajeAlert') )
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-warning" class='message' id='message'>{{ session('mensajeAlert') }}</div>
+        </div>
+    @endif
+    @if ( session('mensajeDanger') )
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-danger" class='message' id='message'>{{ session('mensajeDanger') }}</div>
+        </div>
+    @endif
+    @if($errors->any())
+        <div class="container-edits" style="margin-top: 1%">
+            <div class="alert alert-danger" class='message' id='message'>
+                Se encontraron los siguientes errores: <br>
+                @foreach($errors->all() as $error)
+                    <br>
+                    {{'• '.$error }}
+                @endforeach
+            </div>
+        </div>
+    @endif
     <div class="container">
         <div data-simplebar class="table-responsive table-height">
             <div class="col text-center">
@@ -30,7 +55,6 @@
                         <th scope="col" style="text-transform: uppercase">Área</th>
                         <th scope="col" style="text-transform: uppercase">Puesto</th>
                         <th scope="col" style="text-transform: uppercase">Rol</th>
-                        <th scope="col" style="text-transform: uppercase">Ultima Sesión</th>
                         <th scope="col" style="text-transform: uppercase">Acciones</th>
                     </tr>
                     </thead>
@@ -44,7 +68,6 @@
                                 <td class="td td-center">{{$item->Area}}</td>
                                 <td class="td td-center">{{$item->Puesto}}</td>
                                 <td class="td td-center">{{$item->Rol}}</td>
-                                <td class="td td-center">{{$item->UltimoLogin}}</td>
                                 <td  class="td td-center">
                                     <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="edit(this);"><i class="fas fa-edit"></i>Editar</a>
                                     <a class="btn-row btn btn-danger no-href" clave="{{$item->Clave}}" onclick="deleted(this);"><i class="fas fa-trash-alt"></i>Eliminar</a>
@@ -61,9 +84,7 @@
                         <th style="text-transform: uppercase">Área</th>
                         <th style="text-transform: uppercase">Puesto</th>
                         <th style="text-transform: uppercase">Rol</th>
-                        <th style="text-transform: uppercase">Ultima Sesión</th>
                         <th style="text-transform: uppercase">Acciones</th>
-
                     </tr>
                     </tfoot>
                 </table>
@@ -81,14 +102,6 @@
             });
         }
 
-        function Import() {
-            $('#myModal').load( '{{ url('/Admin/Usuarios/ImportExcelIndex') }}',function(response, status, xhr)
-            {
-                if (status == "success")
-                    $('#myModal').modal('show');
-            });
-        }
-
         function edit(button){
             var clave = $(button).attr('clave');
             $('#myModal').load( '{{ url('/Admin/Usuarios/Edit') }}/'+clave,function(response, status, xhr){
@@ -97,114 +110,14 @@
                 }
             } );
         }
-        function changePassword(button){
+
+        function deleted(button){
             var clave = $(button).attr('clave');
-            $('#myModal').load( '{{ url('/Admin/Usuarios/ChangePassword') }}/'+clave,function(response, status, xhr){
+            $('#myModal').load( '{{ url('/Admin/Usuarios/Delete') }}/'+clave,function(response, status, xhr){
                 if ( status == "success" ) {
                     $('#myModal').modal('show');
                 }
             } );
         }
-        function deleted(button){
-            var table=$('#table').DataTable();
-            var clave = $(button).attr('clave');
-            var tr=$(button).closest('tr');
-            Swal.fire({
-                title: 'Estas seguro',
-                text: "Este cambio no puede ser revertirdo",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, Eliminalo'
-            }).then(function(result)  {
-                if (result.value) {
-                    $.post('{{ url('/Admin/Usuarios/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){
-                        if(data.error==false){
-                            table
-                            .row(tr )
-                            .remove()
-                            .draw();
-                            Swal.fire(
-                                'Eliminado',
-                                'Tu registro ha sido eliminado',
-                                'success'
-                            )
-                        }
-                    })
-                    .fail(function(data){
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Error',
-                            text: data.responseJSON.message
-                        })
-                    });
-
-                }
-            })
-        }
-        $(document).ready(function(){
-            var table=$('#table').DataTable({
-                language:
-                {
-                    processing: "Cargando",
-                    search: "_INPUT_",
-                    searchPlaceholder: "Buscar en Registros",
-                    lengthMenu: "Mostrar _MENU_ Registros",
-                    info: "Registros _START_  al  _END_  de _TOTAL_",
-                    infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros)",
-                    oPaginate:
-                        {
-                            sFirst: "Primero",
-                            sPrevious: "Anterior",
-                            sNext: "Siguiente",
-                            sLast: "Ultimo"
-                        },
-                    zeroRecords: "No hay registros"
-                }
-            });
-
-            $('#new').click(function(){
-                if('{{Auth::user()->Clave_Compania}}'==''){
-                    Swal.fire({
-                        type: 'info',
-                        title: 'Compañia',
-                        text: 'Falta seleccionar compañia antes de ingresar el usuario'
-                    })
-                }else{
-                    $('#myModal').load( '{{ url('/Admin/Usuarios/New') }}',function(response, status, xhr){
-                        if ( status == "success" ) {
-                            $('#myModal').modal('show');
-                        }else{
-                            Swal.fire({
-                                type: 'error',
-                                title: 'Error',
-                                text: response
-                            })
-                        }
-                    });
-                }
-
-            });
-
-            $('#import').click(function(){
-                $('#myModal').load('{{ url('/Admin/Usuarios/ImportExcelIndex') }}',function(response, status, xhr){
-                    if ( status == "success" ) {
-                        $('#myModal').modal('show');
-                    }else{
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Error',
-                            text: response
-                        })
-                    }
-                });
-            });
-
-            $("#nav-usuarios").addClass("active");
-            $('#nav-usuarios').css({"background": "#9b9634","color": "white"});
-
-        });
     </script>
 @endsection

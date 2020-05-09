@@ -968,3 +968,16 @@ div.content {
         color: #0e84b5 !important;
     }
 }
+
+.table-form{
+    background-color: white !important;
+    padding: 1% !important;
+}
+
+.modal-row-right{
+    padding-right: 1%;
+}
+
+.modal-row-left{
+    padding-left: 1%;
+}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class UsuariosController extends Controller
     }
     public function index(){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
-        if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2){            
+        if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2){
             $Usuarios=DB::table('Usuarios')
             ->leftJoin('Companias', 'Usuarios.Clave_Compania', '=', 'Companias.Clave')
             ->leftJoin('Areas','Usuarios.Clave_Area','=','Areas.Clave')
@@ -33,136 +34,154 @@ class UsuariosController extends Controller
             return view('Admin.Usuarios.index',['usuarios'=>$Usuarios,'compania'=>$compania]);
         }else{
             return redirect('/');
-        }        
+        }
     }
+
     public function edit($id){
-        $user=User::find($id);
-        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
-        if(Auth::user()->Clave_Rol==1)
-        {
-            $area=Areas::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
-            $company=Compania::where('Clave',Auth::user()->Clave_Compania)->get();
-            $rol=Rol::all();
-            $puesto=Puesto::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
-            return view('Admin.Usuarios.edit',['usuario'=>$user,'company'=>$company,'area'=>$area,'rol'=>$rol,'puesto'=>$puesto,'compania'=>$compania]);
-        }
-        else if(Auth::user()->Clave_Rol==2){
-            $area=Areas::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
-            $company=Compania::where('Clave',Auth::user()->Clave_Compania)->get();
-            $rol=Rol::where('Clave','<>','1')->where('Clave','<>','2')->get();
-            $puesto=Puesto::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
-            return view('Admin.Usuarios.edit',['usuario'=>$user,'company'=>$company,'area'=>$area,'rol'=>$rol,'puesto'=>$puesto,'compania'=>$compania]);
-        }
-        else{
-            return redirect('/');
-        }
+        $usuario=User::where('Clave', $id)->get()->toArray();
+        $userId = $usuario[0]['Clave'];
+        $usuario = $usuario[0];
+        $usuarioArea = $usuario['Clave_Area'];
+        $usuarioRol = $usuario['Clave_Rol'];
+        $usuarioPuesto = $usuario['Clave_Puesto'];
+        $area=Areas::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $rol=Rol::all();
+        $puesto=Puesto::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->get();
+        return view('Admin.Usuarios.edit', compact('usuario', 'userId', 'area', 'rol', 'puesto', 'compania', 'usuarioArea', 'usuarioRol', 'usuarioPuesto'));
     }
-    public function changePassword($id){
-        $user=User::find($id);
-        return view('Admin.Usuarios.password',['usuario'=>$user]);
-    }
+
     public function new(){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $area=Areas::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
-        $company=Compania::where('Clave',Auth::user()->Clave_Compania)->get();
         $puesto=Puesto::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
-        if(Auth::user()->Clave_Rol==1 )
-        {            
-            $rol=Rol::all();            
-            return view('Admin.Usuarios.new',['company'=>$company,'area'=>$area,'rol'=>$rol,'puesto'=>$puesto,'compania'=>$compania]);
-        }
-        else if(Auth::user()->Clave_Rol==2)
-        {            
-            $rol=Rol::where('Clave','<>','1')->where('Clave','<>','2')->get();            
-            return view('Admin.Usuarios.new',['company'=>$company,'area'=>$area,'rol'=>$rol,'puesto'=>$puesto,'compania'=>$compania]);
-        }
-        else{
-            return redirect('/');
-        }
+        $rol=Rol::all();
+        return view('Admin.Usuarios.new', compact('compania', 'puesto', 'area', 'rol'));
     }
 
-    public function ImportExcelIndex(){
-        return view('Admin.Usuarios.ImportExcelIndex');
-    }
-
-    public function importData(Request $request){
-        $request->validate([
-            'import_file' => 'required'
-        ]);
-        $path = $request->file('import_file')->getRealPath();
-        $data = Excel::load($path)->get();
-        if($data->count()){
-            foreach ($data as $key=>$value) {
-                try {
-                    $user = new User;
-                    $user->Clave_Compania=$value->clave_compania;
-                    $user->Iniciales=$value->iniciales;
-                    $user->Nombres=$value->nombres;
-                    $user->Correo=$value->correo;
-                    $user->Clave_Area=$value->clave_area;
-                    $user->Clave_Puesto=$value->clave_puesto;
-                    $user->Clave_Rol=$value->clave_rol;        
-                    $user->Contrasena= Hash::make($value->contrasena);
-                    $user->Activo=true;             
-                    $user->save();   
-                } catch (Exception $e) {
-                    dd($e);
-                }
-                           
-            }
-        }
-     return redirect('/Admin/Usuarios');
-    }
-
-    public function create(Request $request){        
+    public function store(Request $request){
         $user = new User;
-        $user->Clave_Compania=Auth::user()->Clave_Compania;
-        $user->Iniciales=$request->nombres[0];
-        $user->Nombres=$request->nombres;
-        $user->Correo=$request->correo;
-        $user->Clave_Area=$request->area;
-        $user->Clave_Puesto=$request->puesto;
-        $user->Clave_Rol=$request->rol;        
-        $user->Contrasena= Hash::make($request->contrasena);
-        $user->Activo=true;
-        $user->save();
-        return response()->json(['user'=>$user]);
+        $company=$user->Clave_Compania=Auth::user()->Clave_Compania;
+
+        $user = $request->validate([
+            'nombres' => ['required', 'string', 'max:150'],
+            'correo' => ['required', 'email', 'max:50', 'unique:Usuarios'],
+            'area' => ['required'],
+            'puesto' => ['required'],
+            'rol' => ['required'],
+            'password' => ['required', 'string', 'min:8', 'max:250', 'confirmed']
+        ]);
+        $nombres = explode(" ", $request->input('nombres'));
+        $iniciales = "";
+
+        foreach ($nombres as $l){
+            $iniciales .=$l[0];
+        }
+        User::create([
+            'Clave_Compania' => $company,
+            'Iniciales' => $iniciales,
+            'Nombres' => $user['nombres'],
+            'Correo' => $user['correo'],
+            'Clave_Area' => $user['area'],
+            'Clave_Puesto' => $user['puesto'],
+            'Clave_Rol' => $user['rol'],
+            'Contrasena' => Hash::make($user['password']),
+            'UltimoLogin' => Carbon::now(),
+            'Activo' => 1,
+            'FechaCreacion' => Carbon::now()
+
+        ]);
+        return redirect('/Admin/Usuarios')->with('mensaje', "Nuevo usuario agregado correctamente");
     }
+
+    public function prepare($id){
+        $user=User::where('Clave', $id)->get()->toArray();
+        $user = $user[0];
+        return view('Admin.Usuarios.delete', compact('user'));
+    }
+
     public function delete($id){
         $user = User::find($id);
         $user->delete();
-        return response()->json(['error'=>false]);
+        return redirect('/Admin/Usuarios')->with('mensajeAlert', "Usuario eliminado correctamente");
     }
-    public function update(Request $request){
-        $user = User::find($request->clave);        
-        $user->Clave_Compania=Auth::user()->Clave_Compania;
-        $user->Iniciales=$request->nombres[0];
-        $user->Nombres=$request->nombres;
-        $user->Correo=$request->correo;
-        $user->Clave_Area=$request->area;
-        $user->Clave_Puesto=$request->puesto;
-        $user->Clave_Rol=$request->rol;
-        $user->Activo=true;
-        $user->save();        
-        return response()->json(['usuario'=>$user]);
-    }
+    public function update(Request $request, $Clave){
+        $user = new User;
+        $company=$user->Clave_Compania=Auth::user()->Clave_Compania;
+        $user = User::where('Clave', $Clave)->firstOrFail();
+        $email = $request->input('correo');
+        $name = $request->input('nombres');
 
-    public function updatePassword(Request $request){
-        $user = User::find($request->clave);
-        $user->Contrasena= Hash::make($request->contrasena);        
-        $user->save();
-        return response()->json(['usuario'=>$user]);
-    }
-    public function UsersByProyect($proyecto){
-        $usuarios=DB::table('Usuarios')
-        ->leftJoin('RolesProyectos','RolesProyectos.Clave_Usuario','=','Usuarios.Clave')
-        ->where('RolesProyectos.Clave_Proyecto','=',$proyecto)
-        ->get();
-        return response()->json(['usuarios'=>$usuarios]);
-    }
+        if ($email == $user->Correo) {
+            if ($name == $user->Nombres) {
+                $user = $request->validate([
+                    'area' => ['required'],
+                    'puesto' => ['required'],
+                    'rol' => ['required']
+                ]);
 
-    public function UpdatesUsersByCompany(){
-        
+                User::where('Clave', $Clave)->update([
+                    'Clave_Area' => $user['area'],
+                    'Clave_Puesto' => $user['puesto'],
+                    'Clave_Rol' => $user['rol'],
+                ]);
+            }
+            else {
+                $user = $request->validate([
+                    'nombres' => ['required', 'max:150', 'string', 'unique:Usuarios'],
+                    'area' => ['required'],
+                    'puesto' => ['required'],
+                    'rol' => ['required']
+                ]);
+
+                $nombres = explode(" ", $request->input('nombres'));
+                $iniciales = "";
+
+                foreach ($nombres as $l) {
+                    $iniciales .= $l[0];
+                }
+                User::where('Clave', $Clave)->update([
+                    'Iniciales' => $iniciales,
+                    'Nombres' => $user['nombres'],
+                    'Clave_Area' => $user['area'],
+                    'Clave_Puesto' => $user['puesto'],
+                    'Clave_Rol' => $user['rol'],
+                ]);
+            }
+        }
+        else if ($name = $user->Nombres){
+            $user = $request->validate([
+                'correo' => ['required', 'max:150', 'email', 'unique:Usuarios'],
+                'area' => ['required'],
+                'puesto' => ['required'],
+                'rol' => ['required']
+            ]);
+
+            User::where('Clave', $Clave)->update([
+                'Correo' => $user['correo'],
+                'Clave_Area' => $user['area'],
+                'Clave_Puesto' => $user['puesto'],
+                'Clave_Rol' => $user['rol'],
+            ]);
+        }
+        else {
+            $nombres = explode(" ", $request->input('nombres'));
+            $iniciales = "";
+
+            foreach ($nombres as $l) {
+                $iniciales .= $l[0];
+            }
+            User::where('Clave', $Clave)->update([
+                'Iniciales' => $iniciales,
+                'Nombres' => $user['nombres'],
+                'Correo' => $user['correo'],
+                'Clave_Area' => $user['area'],
+                'Clave_Puesto' => $user['puesto'],
+                'Clave_Rol' => $user['rol'],
+            ]);
+        }
+
+        return redirect('/Admin/Usuarios')->with('mensaje', "El usuario fue editado correctamente");
     }
 
     public function changeCompany($id){
@@ -172,5 +191,4 @@ class UsuariosController extends Controller
         Auth::user()->fresh();
         return response()->json(['error'=>false]);
     }
-
 }
