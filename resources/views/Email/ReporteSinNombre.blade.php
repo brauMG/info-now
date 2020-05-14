@@ -5,7 +5,7 @@
     	<title>Reporte</title>
     	<link href="/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
-        <link href="/css/app.css" rel="stylesheet">      
+        <link href="/css/app.css" rel="stylesheet">
         <!---->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <!---->
@@ -13,38 +13,37 @@
 	</head>
 	<body>
     	<div class="container-fluid">
-			<div class="row"> 
+			<div class="row">
                 <div class="col-12">
                 	Hola, {{$data['Nombre']}}<br/>
                     Reporte de Asignaciones por Enfoque
                 </div>
             </div>
-            <div class="row"> 
+            <div class="row">
                 <div class="col-12">
                     <div class="table-responsive">
                         <table class="table table-hover" id="table">
                             <thead>
-                                <tr>                            
-                                    <th>Fases</th> 
+                                <tr>
+                                    <th>Fases</th>
                                     <th>Actividad</th>
-                                    <th>Usuario</th> 
-                                    <th>Rol</th>                                 
-                                    <th>Decision</th> 
-                                    <th>Fecha Accion</th> 
-                                    <th>Status</th>                                    
+                                    <th>Usuario</th>
+                                    <th>Rol</th>
+                                    <th>Decision</th>
+                                    <th>Fecha Accion</th>
+                                    <th>Status</th>
                                 </tr>
-                            </thead>                    
+                            </thead>
                             <tbody>
                                 @foreach ($data['Reporte'] as $item)
-                                    <tr>                                
+                                    <tr>
                                         <td>{{$item->Fases}}</td>
-                                        <td>{{$item->Actividad}}</td> 
+                                        <td>{{$item->Actividad}}</td>
                                         <td>{{$item->Usuario}}</td>
-                                        <td>{{$item->Clave_RASIC}}</td>      
-                                        <td>{{$item->Decision}}</td>   
-                                        <td>{{$item->FechaAccion}}</td>   
+                                        <td>{{$item->Clave_RASIC}}</td>
+                                        <td>{{$item->Decision}}</td>
+                                        <td>{{$item->FechaAccion}}</td>
                                         <td>{{$item->Status}}</td>
-                                        
                                     </tr>
                                 @endforeach
                             </tbody>

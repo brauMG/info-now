@@ -52,9 +52,9 @@ class HomeController extends Controller
                 array_push($proyectos,$proyecto);
             }
         }
-        
-        
-        
+
+
+
         $fases=Fase::where('Activo', 1)
                ->orderBy('Orden', 'asc')
                ->get();
@@ -67,12 +67,13 @@ class HomeController extends Controller
         return view('Admin.Home.index',['proyectos'=>$proyectos,'compania'=>$compania,'fases'=>$fases,'areas'=>$areas,'status'=>$status,'enfoques'=>$enfoques,'trabajos'=>$trabajos,'indicadores'=>$indicadores,'rolRASIC'=>$rolRASIC]);
     }
     public function selectCompany(Request $request){
-        $compania=Compania::all();
-        return view('Shared.SelectCompany',['companias'=>$compania]);
+        $companias=Compania::all();
+        $userCompany = Auth::user()->Clave_Compania;
+        return view('Shared.SelectCompany', compact('companias', 'userCompany'));
     }
-    public function create(Request $request){        
-        
-        $actividad = new Actividad;        
+    public function create(Request $request){
+
+        $actividad = new Actividad;
         $actividad->Clave_Compania=$request->compania;
         $actividad->Clave_Proyecto = $request->proyecto;
         $actividad->Clave_Fase = $request->fase;
@@ -97,8 +98,8 @@ class HomeController extends Controller
                     $RolProyecto->save();
 
                 }
-                                    
-            }    
+
+            }
         }else{
            if(RolProyecto::where('Clave_Usuario',$request->usuarios)->where('Clave_Proyecto','=',$proyecto->Clave)->count()>0){
 
@@ -110,17 +111,17 @@ class HomeController extends Controller
                     $RolProyecto->save();
 
                 }
-                                    
-            
+
+
         }*/
-        
+
         /*$obj =  array(
             'Nombre' =>'Cristian Santiago',
             'Reporte' =>[]
         );
         Mail::to("cristian.santiago.rosas@gmail.com")->send(new Email($obj));*/
 
-        
+
         $RolProyectos=RolProyecto::where('Clave_Proyecto',$request->proyecto)
             ->where('Clave_Fase','=',$request->fase)
             ->orWhere('Clave_Fase','=','8')
@@ -141,7 +142,7 @@ class HomeController extends Controller
         return response()->json(['error'=>false]);
     }
     public function AddUser(Request $request){
-        
+
         $rolPROYECTO = new RolProyecto;
         $rolPROYECTO->Clave_Proyecto = $request->proyecto;
         $rolPROYECTO->Clave_Fase = $request->fase;
@@ -157,13 +158,13 @@ class HomeController extends Controller
             ->orWhere('Clave_Fase','=','8')
             ->get();
         foreach ($rolesProyectos as $rolProyecto) {
-            $user=User::find($rolProyecto->Clave_Usuario);            
+            $user=User::find($rolProyecto->Clave_Usuario);
                 $obj =  array(
                     'Nombre' =>$user->Nombres,
                     'Descripcion' =>$request->descripcion,
                     'ProximaActividad'=>$request->decision,
                     'FechaProximaRevision'=>$request->fechaAccion
-                );        
+                );
                  $para      = $user->Correo;
                  //$para      = 'cristian.santiago.rosas@gmail.com';
                 $titulo    = 'Nueva Actividad';
@@ -349,24 +350,24 @@ class HomeController extends Controller
                                     Se ha creado una nueva actividad.
                                     <hr></hr>
                                     <h4 style="text-align: left;color: #555555;">
-                                        Descripci&oacute;n:                                        
+                                        Descripci&oacute;n:
                                     </h4>
                                     <p style="text-align: left;">
                                         '.$request->descripcion.'
                                     </p>
                                     <h4 style="text-align: left;color: #555555;">
-                                        Pr&oacute;xima Actividad:                                     
+                                        Pr&oacute;xima Actividad:
                                     </h4>
                                     <p style="text-align: left;">
                                         '.$request->decision.'
                                     </p>
                                     <h4 style="text-align: left;color: #555555;">
-                                        Fecha de pr&oacute;xima revisi&oacute;n:                               
+                                        Fecha de pr&oacute;xima revisi&oacute;n:
                                     </h4>
                                     <p style="text-align: left;">
                                         '.$request->fechaAccion.'
                                     </p>
-                                    <p style="font-size:10px;background-color:#424242;color: white;width: 100%;height: 20px;">Este mensaje es informativo, favor de no contestar.</p>                       
+                                    <p style="font-size:10px;background-color:#424242;color: white;width: 100%;height: 20px;">Este mensaje es informativo, favor de no contestar.</p>
                                 </td>
                             </tr>
                         </table>
@@ -382,14 +383,14 @@ class HomeController extends Controller
                             <table role="presentation" aria-hidden="true" border="0" cellpadding="0" cellspacing="0" align="center" width="100%" style="max-width:500px; margin: auto;">
                                 <tr>
                                     <td valign="middle" style="text-align: center; padding: 40px 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #ffffff;">
-                                        <!--Recuerda Visitarnos en avenzo.mx-->                                     
+                                        <!--Recuerda Visitarnos en avenzo.mx-->
                                     </td>
                                 </tr>
                             </table>
-                           
-                        </div>                      
+
+                        </div>
                     </td>
-                </tr>    
+                </tr>
             </table>
         </div>
     </center>
@@ -406,7 +407,7 @@ class HomeController extends Controller
                 mail($para, $titulo, $mensaje, $cabeceras);
 
                 //Mail::to($user->Correo)->send(new NuevaActividad($obj));
-            
+
         }
 
         $mensaje   = '
@@ -591,24 +592,24 @@ class HomeController extends Controller
                                     Se ha creado una nueva actividad.
                                     <hr></hr>
                                     <h4 style="text-align: left;color: #555555;">
-                                        Descripci&oacute;n:                                        
+                                        Descripci&oacute;n:
                                     </h4>
                                     <p style="text-align: left;">
                                         '.$request->descripcion.'
                                     </p>
                                     <h4 style="text-align: left;color: #555555;">
-                                        Pr&oacute;xima Actividad:                                     
+                                        Pr&oacute;xima Actividad:
                                     </h4>
                                     <p style="text-align: left;">
                                         '.$request->decision.'
                                     </p>
                                     <h4 style="text-align: left;color: #555555;">
-                                        Fecha de pr&oacute;xima revisi&oacute;n:                               
+                                        Fecha de pr&oacute;xima revisi&oacute;n:
                                     </h4>
                                     <p style="text-align: left;">
                                         '.$request->fechaAccion.'
                                     </p>
-                                    <p style="font-size:10px;background-color:#424242;color: white;width: 100%;height: 20px;">Este mensaje es informativo, favor de no contestar.</p>                       
+                                    <p style="font-size:10px;background-color:#424242;color: white;width: 100%;height: 20px;">Este mensaje es informativo, favor de no contestar.</p>
                                 </td>
                             </tr>
                         </table>
@@ -624,14 +625,14 @@ class HomeController extends Controller
                             <table role="presentation" aria-hidden="true" border="0" cellpadding="0" cellspacing="0" align="center" width="100%" style="max-width:500px; margin: auto;">
                                 <tr>
                                     <td valign="middle" style="text-align: center; padding: 40px 20px; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #ffffff;">
-                                        <!--Recuerda Visitarnos en avenzo.mx-->                                     
+                                        <!--Recuerda Visitarnos en avenzo.mx-->
                                     </td>
                                 </tr>
                             </table>
-                           
-                        </div>                      
+
+                        </div>
                     </td>
-                </tr>    
+                </tr>
             </table>
         </div>
     </center>

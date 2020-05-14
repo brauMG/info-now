@@ -189,6 +189,6 @@ class UsuariosController extends Controller
         $user->Clave_Compania=$id;
         $user->save();
         Auth::user()->fresh();
-        return response()->json(['error'=>false]);
+        return back();
     }
 }

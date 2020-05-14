@@ -34,24 +34,21 @@ class ActividadesController extends Controller
         return view('Admin.Actividades.index',['actividad'=>$actividad,'compania'=>$compania]);
     }
     public function edit($id){
-        $actividad=Actividad::find($id);
-        $compania=Compania::all();
+        $actividad=Actividad::where('Clave', $id)->get()->toArray();
         $proyectos=Proyecto::all();
         $fases=Fase::all();
         $status=Status::all();
-        return view('Admin.Actividades.edit',['actividad'=>$actividad,'proyectos'=>$proyectos,'compania'=>$compania,'fases'=>$fases,'status'=>$status]);
+        return view('Admin.Actividades.edit',compact('actividad','proyectos','fases', 'status'));
     }
 
-    public function new(){        
-        $compania=Compania::all();
+    public function new(){
         $proyectos=Proyecto::all();
         $fases=Fase::all();
         $status=Status::all();
-        return view('Admin.Actividades.new',['proyectos'=>$proyectos,'compania'=>$compania,'fases'=>$fases,'status'=>$status]);
+        return view('Admin.Actividades.new',compact('proyectos','fases', 'status'));
     }
-    public function create(Request $request){        
-        
-        $actividad = new Actividad;        
+    public function create(Request $request){
+        $actividad = new Actividad;
         $actividad->Clave_Compania=$request->compania;
         $actividad->Clave_Proyecto = $request->proyecto;
         $actividad->Clave_Fase = $request->fase;

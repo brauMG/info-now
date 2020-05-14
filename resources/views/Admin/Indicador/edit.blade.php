@@ -14,13 +14,31 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label>Indicador</label>
-                            <input class="form-control" type="text" id="descripcion" name="descripcion" value="{{$indicador['Descripcion']}}">
+                            <input class="form-control" type="text" id="descripcion" name="indicador" value="{{$indicador['Descripcion']}}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token"/>
                             <input type="hidden" name="clave" value="{{$indicador['Clave']}}" id="clave"/>
                             <div class="invalid-feedback" id="error_descripcion" style="display: none;"></div>
                         </div>
                     </div>
-
+                    <div class="col-6 col-md-4">
+                        <div class="form-group">
+                            <label for="compania">Compañia</label>
+                            <select class="form-control" id="compania" name="company" required>
+                                @php($count=0)
+                                @foreach($company as $item)
+                                    @if($item->Clave == $indicadorCompany)
+                                        <option selected value="{{ $item->Clave }}">{{ $item->Descripcion}}</option>
+                                    @else
+                                        <option value="{{ $item->Clave }}">{{ $item->Descripcion }}</option>
+                                    @endif
+                                    @php($count++)
+                                @endforeach
+                                @if($count ==0)
+                                    <option disabled selected>No Hay Compañias</option>
+                                @endif
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

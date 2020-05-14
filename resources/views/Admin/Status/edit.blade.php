@@ -19,7 +19,25 @@
                             <input type="hidden" name="clave" value="{{$status['Clave']}}" id="clave"/>
                         </div>
                     </div>
-
+                    <div class="col-6 col-md-4">
+                        <div class="form-group">
+                            <label for="compania">Compañia</label>
+                            <select class="form-control" id="compania" name="company" required>
+                                @php($count=0)
+                                @foreach($company as $item)
+                                    @if($item->Clave == $statusCompany)
+                                        <option selected value="{{ $item->Clave }}">{{ $item->Descripcion}}</option>
+                                    @else
+                                        <option value="{{ $item->Clave }}">{{ $item->Descripcion }}</option>
+                                    @endif
+                                    @php($count++)
+                                @endforeach
+                                @if($count ==0)
+                                    <option disabled selected>No Hay Compañias</option>
+                                @endif
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

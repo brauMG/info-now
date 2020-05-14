@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Status;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Compania;
 use App\Enfoque;
+use Illuminate\Support\Facades\DB;
+
 class EnfoquesController extends Controller
 {
     //
@@ -15,8 +18,12 @@ class EnfoquesController extends Controller
     }
     public function index(){
         if(Auth::user()->Clave_Rol==1 ){
-            $enfoque=Enfoque::all();
             $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+            $enfoque=DB::table('Enfoques')
+                ->leftJoin('Companias', 'Enfoques.Clave_Compania', '=', 'Companias.Clave')
+                ->select('Enfoques.Clave','Companias.Descripcion as Compania','Enfoques.Descripcion','Enfoques.FechaCreacion','Enfoques.Activo')
+                ->where('Enfoques.Clave_Compania','=',Auth::user()->Clave_Compania)
+                ->get();
             return view('Admin.Enfoques.index',['enfoque'=>$enfoque,'compania'=>$compania]);
         }else{
             return redirect('/');
@@ -26,7 +33,9 @@ class EnfoquesController extends Controller
         $enfoque=Enfoque::where('Clave', $id)->get()->toArray();
         $enfoqueId = $enfoque[0]['Clave'];
         $enfoque = $enfoque[0];
-        return view('Admin.Enfoques.edit', compact('enfoque', 'enfoqueId'));
+        $company = Compania::all();
+        $focusCompany = $enfoque['Clave_Compania'];
+        return view('Admin.Enfoques.edit', compact('enfoque', 'enfoqueId', 'focusCompany', 'company'));
     }
 
     public function prepare($id){
@@ -40,13 +49,15 @@ class EnfoquesController extends Controller
     }
 
     public function store(Request $request){
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $enfoque = $request->validate([
             'descripcion' => ['required', 'string', 'max:150', 'unique:Enfoques'],
         ]);
         Enfoque::create([
             'Descripcion' => $enfoque['descripcion'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
+            'FechaCreacion' => Carbon::now(),
+            'Clave_Compania' => $compania['Clave']
         ]);
         return redirect('/Admin/Enfoques')->with('mensaje', "Nuevo enfoque agregado correctamente");
     }
@@ -56,14 +67,31 @@ class EnfoquesController extends Controller
         return redirect('/Admin/Enfoques')->with('mensajeAlert', "Enfoque eliminado correctamente");
     }
     public function update(Request $request, $Clave){
-        $enfoque = $request->validate([
-            'descripcion' => ['required', 'string', 'max:150', 'unique:Enfoques'],
-        ]);
-        Enfoque::where('Clave', $Clave)->update([
-            'Descripcion' => $enfoque['descripcion'],
-            'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
-        ]);
+        $enfoque = Enfoque::where('Clave', $Clave)->firstOrFail();
+        $enfoqueNew = $request->input('status');
+
+        if ($enfoqueNew == $enfoque->Descripcion) {
+            $data = $request->validate([
+                'company' => ['required']
+            ]);
+            Status::where('Clave', $Clave)->update([
+                'Activo' => 1,
+                'FechaCreacion' => Carbon::now(),
+                'Clave_Compania' => $data['company']
+            ]);
+        }
+        else {
+            $data = $request->validate([
+                'enfoque' => ['required', 'string', 'max:150'],
+                'company' => ['required']
+            ]);
+            Enfoque::where('Clave', $Clave)->update([
+                'Descripcion' => $data['enfoque'],
+                'Activo' => 1,
+                'FechaCreacion' => Carbon::now(),
+                'Clave_Compania' => $data['company']
+            ]);
+        }
         return redirect('/Admin/Enfoques')->with('mensaje', "El enfoque fue editado correctamente");
     }
 

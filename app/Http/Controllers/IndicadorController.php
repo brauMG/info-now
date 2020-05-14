@@ -15,8 +15,12 @@ class IndicadorController extends Controller
     }
     public function index(){
         if(Auth::user()->Clave_Rol==1 ){
-            $indicador=Indicador::all();
             $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+            $indicador=DB::table('Indicador')
+                ->leftJoin('Companias', 'Indicador.Clave_Compania', '=', 'Companias.Clave')
+                ->select('Indicador.Clave','Companias.Descripcion as Compania','Indicador.Descripcion','Indicador.FechaCreacion','Indicador.Activo')
+                ->where('Indicador.Clave_Compania','=',Auth::user()->Clave_Compania)
+                ->get();
             return view('Admin.Indicador.index',['indicador'=>$indicador,'compania'=>$compania]);
         }
         else{
@@ -28,7 +32,9 @@ class IndicadorController extends Controller
         $indicador=Indicador::where('Clave', $id)->get()->toArray();
         $indicadorId = $indicador[0]['Clave'];
         $indicador = $indicador[0];
-        return view('Admin.Indicador.edit', compact('indicador', 'indicadorId'));
+        $company = Compania::all();
+        $indicadorCompany = $indicador['Clave_Compania'];
+        return view('Admin.Indicador.edit', compact('indicador', 'indicadorId', 'company', 'indicadorCompany'));
     }
 
     public function new(){
@@ -36,13 +42,15 @@ class IndicadorController extends Controller
     }
 
     public function store(Request $request){
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $indicador = $request->validate([
-            'descripcion' => ['required', 'string', 'max:150', 'unique:Indicador'],
+            'descripcion' => ['required', 'string', 'max:150'],
         ]);
         Indicador::create([
             'Descripcion' => $indicador['descripcion'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
+            'FechaCreacion' => Carbon::now(),
+            'Clave_Compania' => $compania['Clave']
         ]);
         return redirect('/Admin/Indicador')->with('mensaje', "Nuevo indicador agregado correctamente");
     }
@@ -59,14 +67,31 @@ class IndicadorController extends Controller
     }
 
     public function update(Request $request, $Clave){
-        $indicador = $request->validate([
-            'descripcion' => ['required', 'string', 'max:150', 'unique:Indicador'],
-        ]);
-        Indicador::where('Clave', $Clave)->update([
-            'Descripcion' => $indicador['descripcion'],
-            'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
-        ]);
+        $indicador = Indicador::where('Clave', $Clave)->firstOrFail();
+        $indicadorNew = $request->input('indicador');
+
+        if ($indicadorNew == $indicador->Descripcion) {
+            $data = $request->validate([
+                'company' => ['required']
+            ]);
+            Indicador::where('Clave', $Clave)->update([
+                'Activo' => 1,
+                'FechaCreacion' => Carbon::now(),
+                'Clave_Compania' => $data['company']
+            ]);
+        }
+        else {
+            $data = $request->validate([
+                'indicador' => ['required', 'string', 'max:150'],
+                'company' => ['required']
+            ]);
+            Indicador::where('Clave', $Clave)->update([
+                'Descripcion' => $data['indicador'],
+                'Activo' => 1,
+                'FechaCreacion' => Carbon::now(),
+                'Clave_Compania' => $data['company']
+            ]);
+        }
         return redirect('/Admin/Indicador')->with('mensaje', "El indicador fue editado correctamente");
     }
 }

@@ -79,9 +79,10 @@ Route::get('/Admin/Usuarios/ChangeCompany/{id}', 'UsuariosController@changeCompa
 Route::get('/Admin/Fases', 'FasesController@index');
 Route::get('/Admin/Fases/New', 'FasesController@new');
 Route::get('/Admin/Fases/Edit/{id}', 'FasesController@edit');
-Route::post('/Admin/Fases/Create', 'FasesController@create');
-Route::post('/Admin/Fases/Update', 'FasesController@update');
-Route::post('/Admin/Fases/Delete/{id}', 'FasesController@delete');
+Route::get('/Admin/Fases/Delete/{id}', 'EnfoquesController@prepare');
+Route::post('/Admin/Fases/Create', 'FasesController@store')->name('CreateFase');
+Route::put('/Admin/Fases/Update/{id}', 'FasesController@update')->name('UpdateFase');
+Route::post('/Admin/Fases/Delete/{id}', 'FasesController@delete')->name('DeleteFase');
 
 Route::get('/Admin/Roles', 'RolesController@index');
 Route::get('/Admin/Roles/New', 'RolesController@new');
