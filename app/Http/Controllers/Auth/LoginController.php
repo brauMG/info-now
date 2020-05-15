@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Compania;
+use App\Rol;
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -26,7 +31,6 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -37,7 +41,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function username()
     {
         return 'correo';
@@ -50,10 +54,22 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
     }
-    protected function authenticated(Request $request, $user){
-        
+    protected function authenticated(Request $request, $user)
+    {
         $now = new DateTime();
-        $user->UltimoLogin=$now;
+        $user->UltimoLogin = $now;
         $user->save();
+
+        if ($user->Clave_Rol == 1) {
+            return redirect('/Admin/Compania');
+        } elseif ($user->Clave_Rol == 2) {
+            return redirect('/Admin/Areas');
+        } elseif ($user->Clave_Rol == 3) {
+            return redirect('/Admin/MisProyectos');
+        } elseif ($user->Clave_Rol == 4) {
+            return redirect('/Admin/Proyectos');
+        } else {
+            return redirect('/login');
+        }
     }
 }

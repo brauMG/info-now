@@ -85,31 +85,5 @@
     </div>
     <script>
         $('.mydatatable').DataTable();
-
-        function AddActivity() {
-            $('#myModal').load( '{{ url('/Admin/Actividades/New') }}',function(response, status, xhr)
-            {
-                if (status == "success")
-                    $('#myModal').modal('show');
-            });
-        }
-
-        function edit(button){
-            var clave = $(button).attr('clave');
-            $('#myModal').load( '{{ url('/Admin/Actividades/Edit') }}/'+clave,function(response, status, xhr){
-                if ( status == "success" ) {
-                    $('#myModal').modal('show');
-                }
-            } );
-        }
-
-        function deleted(button){
-            var clave = $(button).attr('clave');
-            $('#myModal').load( '{{ url('/Admin/Actividades/Delete') }}/'+clave,function(response, status, xhr){
-                if ( status == "success" ) {
-                    $('#myModal').modal('show');
-                }
-            } );
-        }
     </script>
 @endsection

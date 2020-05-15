@@ -155,7 +155,7 @@ use Illuminate\Support\Facades\URL;
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Puestos')){ active } @else {} @endif" href="{{ url('/Admin/Puestos') }}"><i class="fas fa-users-cog"></i> Puestos</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==1)
+        @if(Auth::user()->Clave_Rol==1 || Auth::user()->Clave_Rol==2)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Status')){ active } @else {} @endif" href="{{ url('/Admin/Status') }}"><i class="fas fa-spinner"></i> Estado</a>
         @endif
 
@@ -171,28 +171,32 @@ use Illuminate\Support\Facades\URL;
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/RolesProyectos')){ active } @else {} @endif" href="{{ url('/Admin/RolesProyectos') }}"><i class="fas fa-address-book"></i> Roles en Proyectos</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==1)
+        @if(Auth::user()->Clave_Rol==1 || Auth::user()->Clave_Rol==2)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/RolesRASIC')){ active } @else {} @endif" href="{{ url('/Admin/RolesRASIC') }}"><i class="fas fa-check-square"></i> Roles RASIC</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==1)
+        @if(Auth::user()->Clave_Rol==1 || Auth::user()->Clave_Rol==2)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Indicador')){ active } @else {} @endif" href="{{ url('/Admin/Indicador') }}"><i class="fas fa-chart-line"></i> Indicadores</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==1)
+        @if(Auth::user()->Clave_Rol==1 || Auth::user()->Clave_Rol==2)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Fases')){ active } @else {} @endif" href="{{ url('/Admin/Fases') }}"><i class="fas fa-business-time"></i> Fases</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==1)
+        @if(Auth::user()->Clave_Rol==1 || Auth::user()->Clave_Rol==2)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Enfoques')){ active } @else {} @endif" href="{{ url('/Admin/Enfoques') }}"><i class="fas fa-calendar-week"></i> Enfoques</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==1)
+        @if(Auth::user()->Clave_Rol==1 || Auth::user()->Clave_Rol==2)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Trabajos')){ active } @else {} @endif" href="{{ url('/Admin/Trabajos') }}"><i class="fas fa-network-wired"></i> Trabajos</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol!=1)
+        @if(Auth::user()->Clave_Rol==2 || Auth::user()->Clave_Rol==4)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades')){ active } @else {} @endif" href="{{ url('/Admin/Actividades') }}"><i class="fas fa-clipboard-list"></i> Actividades</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==3 || Auth::user()->Clave_Rol==4)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades/New')){ active } @else {} @endif" href="{{ url('/Admin/Actividades/New') }}"><i class="fas fa-clipboard-list"></i> Registrar Actividades</a>
         @endif
     @endauth
 

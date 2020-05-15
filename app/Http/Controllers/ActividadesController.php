@@ -18,7 +18,7 @@ class ActividadesController extends Controller
     }
     public function index(){
         //dd( Auth::user());
-         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $actividad=DB::table('Actividades')
         ->leftJoin('Companias', 'Actividades.Clave_Compania', '=', 'Companias.Clave')
         ->leftJoin('Proyectos','Actividades.Clave_Proyecto','=','Proyectos.Clave')
@@ -42,12 +42,17 @@ class ActividadesController extends Controller
     }
 
     public function new(){
-        $proyectos=Proyecto::all();
-        $fases=Fase::all();
-        $status=Status::all();
-        return view('Admin.Actividades.new',compact('proyectos','fases', 'status'));
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $companiaId=Auth::user()->Clave_Compania;
+        $proyectos=Proyecto::where('Clave_Compania', $companiaId)->get()->toArray();
+        $fases=Fase::where('Clave_Compania', $companiaId)->get()->toArray();
+        $status=Status::where('Clave_Compania', $companiaId)->get()->toArray();
+        if (count($proyectos) > 0 & count($fases) > 0 & count($status) > 0 & count($areas) > 0){
+
+        }
+        return view('Admin.Actividades.new',compact('proyectos','fases', 'status', 'compania'));
     }
-    public function create(Request $request){
+    public function store(Request $request){
         $actividad = new Actividad;
         $actividad->Clave_Compania=$request->compania;
         $actividad->Clave_Proyecto = $request->proyecto;

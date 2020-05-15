@@ -102,7 +102,7 @@ Route::post('/Admin/Proyectos/Delete/{id}','ProyectosController@delete');
 Route::get('/Admin/Actividades', 'ActividadesController@index');
 Route::get('/Admin/Actividades/New', 'ActividadesController@new');
 Route::get('/Admin/Actividades/Edit/{id}', 'ActividadesController@edit');
-Route::post('/Admin/Actividades/Create', 'ActividadesController@create');
+Route::post('/Admin/Actividades/Create', 'ActividadesController@store')->name('CreateActivity');
 Route::post('/Admin/Actividades/Update', 'ActividadesController@update');
 Route::post('/Admin/Actividades/Delete/{id}', 'ActividadesController@delete');
 
