@@ -27,14 +27,10 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-});
-
 // resources/js/app.js
 require('./bootstrap');
 require('jquery-ujs');
-require('./remote');
+require('./Project');
 
 // resources/js/remote.js
 $(document).on('ajax:success', function(e, xhr){

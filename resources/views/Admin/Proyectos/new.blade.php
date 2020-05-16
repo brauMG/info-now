@@ -1,227 +1,196 @@
-<div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
+@inject('areas', 'App\Services\Area')
+<div class="modal-dialog modal-lg table-form" role="document">
+    <div class="modal-content" style="border: none !important;">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Nuevo Proyecto</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-12 col-md-4"  style="display: none;">
-                    <div class="form-group">
-                        <select class="form-control" name="compania" id="compania">
-                            @foreach ($company as $item)
-                                <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Description</label>
-                        <input class="form-control" type="text" id="descripcion" name="descripcion">
+        <div id="app">
+            <form action="{{route('CreateProject')}}" method="POST">
+                @csrf
+                <tr class="modal-body">
+                    <table class="table-responsive table-card-inline">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token"/>
-                        <div class="invalid-feedback" id="error_descripcion" style="display: none;"></div>
-                    </div>
-                </div>
 
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Area</label>
-                        <select class="form-control" id="area" name="area">
-                            @if($areas->count()==0)
-                                <option value="-1">Agrege primero las areas</option>
-                            @endif
-                            @foreach($areas as $item)
-                                <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                            @endforeach
-                        </select>
-                        @if($areas->count()==0)
-                             <div class="invalid-feedback" id="error_area">
-                                *El administrador tiene que crear las areas.
+                        <tr class="tr-card-complete">
+                            <div class="form-group">
+                                <th class="th-card">
+                                    <i class="fas fa-file-signature"></i> Descripción
+                                </th>
+                                <td class="td-card">
+                                    <input name="descripcion" type="text"
+                                           class="form-control  @error('nombres') is-invalid @enderror"
+                                           placeholder="Ingresa la descripción del proyecto (Nombre)" aria-label="descripcion"
+                                           aria-describedby="basic-addon1" required autocomplete="nombres" autofocus
+                                           value={{Request::old('nombres')}}>
+                                </td>
                             </div>
-                        @else
-                            <div class="invalid-feedback" id="error_area" style="display: none;"></div>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Enfoque</label>
-                        <select class="form-control" id="enfoque" name="enfoque">
-                            @if($enfoques->count()==0)
-                                <option value="-1">Agrege primero los enfoques</option>
-                            @endif
-                            @foreach($enfoques as $item)
-                                <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                            @endforeach
-                        </select>
-                        @if($enfoques->count()==0)
-                             <div class="invalid-feedback" id="error_enfoque">
-                                *El Admin tiene que crear los enfoques.
+                        </tr>
+
+                        <tr class="tr-card-complete">
+                            <div class="form-group">
+                                <th class="th-card">
+                                    <i class="fas fa-file-signature"></i> Objetivo
+                                </th>
+                                <td class="td-card">
+                                    <input name="objetivo" type="text"
+                                           class="form-control  @error('nombres') is-invalid @enderror"
+                                           placeholder="Ingresa el objetivo del proyecto" aria-label="firstName"
+                                           aria-describedby="basic-addon1" required autocomplete="objetivo" autofocus
+                                           value={{Request::old('objetivo')}}>
+                                </td>
                             </div>
-                        @else
-                            <div class="invalid-feedback" id="error_enfoque" style="display: none;"></div>
-                        @endif
+                        </tr>
+
+{{--                        <tr>--}}
+{{--                            <th for="inputGroupSelect01" class="th-card">--}}
+{{--                                <i class="fas fa-address-card"></i> Área--}}
+{{--                            </th>--}}
+{{--                            <td class="td-card">--}}
+{{--                                <select v-model="selected_area" @change="loadUsers" data-old="{{ old('area') }}"  type='text' required id="area" class="custom-select @error('area') is-invalid @enderror" name="area">--}}
+{{--                                    @foreach($areas->get() as $index => $area)--}}
+{{--                                        <option value="{{ $index }}">--}}
+{{--                                            {{ $area }}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                                @error('area')--}}
+{{--                                <span class="invalid-feedback" role="alert">--}}
+{{--                                    <strong>{{ $message }}</strong>--}}
+{{--                                </span>--}}
+{{--                                @enderror--}}
+{{--                            </td>--}}
+{{--                        </tr>--}}
+
+{{--                        <tr>--}}
+{{--                            <th for="inputGroupSelect01" class="th-card">--}}
+{{--                                <i class="fas fa-address-card"></i> Usuarios--}}
+{{--                            </th>--}}
+{{--                            <td class="td-card">--}}
+{{--                                <select v-model="selected_user" data-old="{{ old('user') }}"  type='text' required id="user" class="custom-select @error('usuario') is-invalid @enderror" name="usuario">--}}
+{{--                                    <option value="">Selecciona un usuario</option>--}}
+{{--                                    <option v-for="(user, index) in users" v-bind:value="index">--}}
+{{--                                        @{{user}}--}}
+{{--                                    </option>>--}}
+{{--                                </select>--}}
+{{--                                @error('usuario')--}}
+{{--                                <span class="invalid-feedback" role="alert">--}}
+{{--                                    <strong>{{ $message }}</strong>--}}
+{{--                                </span>--}}
+{{--                                @enderror--}}
+{{--                            </td>--}}
+{{--                        </tr>--}}
+
+                        <tr>
+                            <th for="inputGroupSelect01" class="th-card">
+                                <i class="fas fa-address-card"></i> RASIC
+                            </th>
+                            <td class="td-card"> <select name="rasic" type="text" class="custom-select  @error('rasic') is-invalid @enderror" required>
+                                    <option disabled selected>Seleccionar</option>
+                                    @foreach($rasic as $item)
+                                        <option value="{{ $item->Clave }}">{{ $item->RolRASIC }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th for="inputGroupSelect01" class="th-card">
+                                <i class="fas fa-address-card"></i> Fase
+                            </th>
+                            <td class="td-card"> <select name="fase" type="text" class="custom-select  @error('fase') is-invalid @enderror" required>
+                                    <option disabled selected>Seleccionar</option>
+                                    @php($count=0)
+                                    @foreach($fases as $item)
+                                        <option value="{{ $item->Clave }}">{{ $item->Descripcion }}</option>
+                                        @php($count++)
+                                    @endforeach
+                                    @if($count ==0)
+                                        <option disabled selected>No hay fases</option>
+                                    @endif
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th for="inputGroupSelect01" class="th-card">
+                                <i class="fas fa-address-card"></i> Enfoque
+                            </th>
+                            <td class="td-card"> <select name="enfoque" type="text" class="custom-select  @error('enfoque') is-invalid @enderror" required>
+                                    <option disabled selected>Seleccionar</option>
+                                    @php($count=0)
+                                    @foreach($enfoques as $item)
+                                        <option value="{{ $item->Clave }}">{{ $item->Descripcion }}</option>
+                                        @php($count++)
+                                    @endforeach
+                                    @if($count ==0)
+                                        <option disabled selected>No hay enfoques</option>
+                                    @endif
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th for="inputGroupSelect01" class="th-card">
+                                <i class="fas fa-address-card"></i> Trabajo
+                            </th>
+                            <td class="td-card"> <select name="trabajo" type="text" class="custom-select  @error('trabajo') is-invalid @enderror" required>
+                                    <option disabled selected>Seleccionar</option>
+                                    @php($count=0)
+                                    @foreach($trabajos as $item)
+                                        <option value="{{ $item->Clave }}">{{ $item->Descripcion }}</option>
+                                        @php($count++)
+                                    @endforeach
+                                    @if($count ==0)
+                                        <option disabled selected>No hay trabajos</option>
+                                    @endif
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th for="inputGroupSelect01" class="th-card">
+                                <i class="fas fa-address-card"></i> Indicador
+                            </th>
+                            <td class="td-card"> <select name="indicador" type="text" class="custom-select  @error('indicador') is-invalid @enderror" required>
+                                    <option disabled selected>Seleccionar</option>
+                                    @php($count=0)
+                                    @foreach($indicadores as $item)
+                                        <option value="{{ $item->Clave }}">{{ $item->Descripcion }}</option>
+                                        @php($count++)
+                                    @endforeach
+                                    @if($count ==0)
+                                        <option disabled selected>No hay indicadores</option>
+                                    @endif
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th for="inputGroupSelect01" class="th-card">
+                                <i class="fas fa-address-card"></i> Estado Inicial
+                            </th>
+                            <td class="td-card"> <select name="indicador" type="text" class="custom-select  @error('indicador') is-invalid @enderror" required>
+                                    <option disabled selected>Seleccionar</option>
+                                    @php($count=0)
+                                    @foreach($estados as $item)
+                                        <option value="{{ $item->Clave }}">{{ $item->status }}</option>
+                                        @php($count++)
+                                    @endforeach
+                                    @if($count ==0)
+                                        <option disabled selected>No hay estados</option>
+                                    @endif
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
                     </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Trabajo</label>
-                        <select class="form-control" id="trabajo" name="trabajo">
-                            @if($enfoques->count()==0)
-                                <option value="-1">Agrege primero los trabajos</option>
-                            @endif
-                            @foreach($trabajos as $item)
-                                <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                            @endforeach
-                        </select>
-                        @if($trabajos->count()==0)
-                             <div class="invalid-feedback" id="error_trabajo">
-                                *El Admin tiene que crear los trabajos.
-                            </div>
-                        @else
-                            <div class="invalid-feedback" id="error_trabajo" style="display: none;"></div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Fase</label>
-                        <select class="form-control" id="fase" name="fase">
-                            @if($fases->count()==0)
-                                <option value="-1">Agrege primero las fases</option>
-                            @endif
-                            @foreach($fases as $item)
-                                <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                            @endforeach
-                        </select>
-                        @if($fases->count()==0)
-                             <div class="invalid-feedback" id="error_fase">
-                                *El Admin tiene que crear las fases.
-                            </div>
-                        @else
-                            <div class="invalid-feedback" id="error_fase" style="display: none;"></div>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Indicador</label>
-                        <select class="form-control" id="indicador" name="indicador">
-                            @if($indicadores->count()==0)
-                                <option value="-1">Agrege primero los indicadores</option>
-                            @endif
-                            @foreach($indicadores as $item)
-                                <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                            @endforeach
-                        </select>
-                        @if($indicadores->count()==0)
-                             <div class="invalid-feedback" id="error_indicador">
-                                *El Admin tiene que crear los indicadores.
-                            </div>
-                        @else
-                            <div class="invalid-feedback" id="error_indicador" style="display: none;"></div>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Objetivo</label>
-                        <input class="form-control" id="objetivo" name="objetivo"/>
-                        <div class="invalid-feedback" id="error_objectivo" style="display: none;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close <i class="fas fa-times"></i></button>
-            <button type="button" class="btn btn-primary" id="save">Save <i class="fas fa-save"></i></button>
+            </form>
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function(){
-
-        $('#save').click(function(){
-            var error=false;
-            var table=$('#table').DataTable();
-            var compania=$('#compania').val();
-            var companiaText=$('#compania option:selected').text();
-
-            var descripcion=$('#descripcion').val();
-
-            var area=$('#area').val();
-            var areaText=$('#area option:selected').text();
-
-            var fase=$('#fase').val();
-            var faseText=$('#fase option:selected').text();
-
-            var enfoque=$('#enfoque').val();
-            var enfoqueText=$('#enfoque option:selected').text();
-
-            var trabajo=$('#trabajo').val();
-            var trabajoText=$('#trabajo option:selected').text();
-
-            var indicador=$('#indicador').val();
-            var indicadorText=$('#indicador option:selected').text();
-
-            var objectivo=$('#objetivo').val();
-            var token=$('#_token').val();
-
-            if(descripcion==""){
-                $('#descripcion').addClass('is-invalid');
-                $('#error_descripcion').html('*Ingresa una descripcion');
-                $('#error_descripcion').show();
-                error=true;
-            }
-            if('{{$areas->count()}}'=='0'){
-                error=true;
-            }
-
-            if('{{$enfoques->count()}}'=='0'){
-                error=true;
-            }
-            if('{{$trabajos->count()}}'=='0'){
-                error=true;
-            }
-            if('{{$fases->count()}}'=='0'){
-                error=true;
-            }
-            if('{{$indicadores->count()}}'=='0'){
-                error=true;
-            }
-
-            if(objetivo==""){
-                $('#objetivo').addClass('is-invalid');
-                $('#error_objetivo').html('*Ingresa un objectivo');
-                $('#error_objetivo').show();
-                error=true;
-            }
-            if(error==false){
-                $.post('{{ url('/Admin/Proyectos/Create')}}',{_token:token,compania:compania,descripcion:descripcion,area:area,fase:fase,enfoque:enfoque,trabajo:trabajo,indicador:indicador,objectivo:objectivo},function(data ){
-                    $('#Alert').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Listo!</strong> Se agrego correctamente<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                    var node=table.rows
-                    .add([{ 0:data.proyecto.Clave, 1:companiaText, 2:descripcion,3:areaText,4:faseText,5:enfoqueText,6:trabajoText,7:indicadorText,8:objectivo ,9:'<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-primary btn-sm edit" clave="'+data.proyecto.Clave+'" onclick="edit(this);">Editar <i class="fas fa-edit"></i></button><button type="button" class="btn btn-danger btn-sm delete" clave="'+data.proyecto.Clave+'" onclick="deleted(this);">Eliminar<i class="fas fa-trash-alt"></i></button></div>'}])
-                    .draw()
-                    .nodes();
-                    $( node ).find('td').eq(9).addClass('text-right');
-                    $('#myModal').modal('hide');
-                })
-                .fail(function(data) {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Error',
-                        text: data.responseJSON.message
-                    })
-                });
-            }
-
-        });
-    });
-</script>

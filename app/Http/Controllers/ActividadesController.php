@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Areas;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,7 @@ class ActividadesController extends Controller
         $proyectos=Proyecto::where('Clave_Compania', $companiaId)->get()->toArray();
         $fases=Fase::where('Clave_Compania', $companiaId)->get()->toArray();
         $status=Status::where('Clave_Compania', $companiaId)->get()->toArray();
+        $areas=Areas::where('Clave_Compania', $companiaId)->get()->toArray();
         if (count($proyectos) > 0 & count($fases) > 0 & count($status) > 0 & count($areas) > 0){
 
         }

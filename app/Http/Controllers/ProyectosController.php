@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\RolRASIC;
+use App\Status;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -40,14 +43,13 @@ class ProyectosController extends Controller
 		else{
 			return redirect('/');
 		}
-		
+
     }
     public function edit($id){
-		
+
 		if(Auth::user()->Clave_Rol==4){
 			$proyecto=Proyecto::find($id);
 			$compania=Compania::where('Clave','=',Auth::user()->Clave_Compania)->get();
-			
 			$area=Areas::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
 			$fase=Fase::all();
 			$enfoque=Enfoque::all();
@@ -57,39 +59,57 @@ class ProyectosController extends Controller
 		}
 		else{
 			return redirect('/');
-		}				
-    }
-    public function new(){
-		if(Auth::user()->Clave_Rol==4){
-			$company=Compania::where('Clave', Auth::user()->Clave_Compania)
-            ->get();
-			
-			$area=Areas::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
-			$fase=Fase::all();
-			$enfoque=Enfoque::all();
-			$trabajo=Trabajo::all();
-			$indicador=Indicador::all();
-			return view('Admin.Proyectos.new',['company'=>$company,'areas'=>$area,'fases'=>$fase,'enfoques'=>$enfoque,'trabajos'=>$trabajo,'indicadores'=>$indicador]);
 		}
-		else{
-			return redirect('/');
-		}	
-		
     }
-    public function create(Request $request){
-    	$proyecto = new Proyecto;
-		$proyecto->Clave_Compania = Auth::user()->Clave_Compania;
-		$proyecto->Descripcion = $request->descripcion;
-		$proyecto->Clave_Usuario =  Auth::user()->Clave;
-		$proyecto->Clave_Area = $request->area;
-		$proyecto->Clave_Fase = $request->fase;
-		$proyecto->Clave_Enfoque = $request->enfoque;
-		$proyecto->Clave_Trabajo = $request->trabajo;
-		$proyecto->Clave_Indicador = $request->indicador;
-		$proyecto->Objectivo = $request->objectivo;
-    	$proyecto->Activo=true;
-    	$proyecto->save();
-    	return response()->json(['proyecto'=>$proyecto]);
+
+    public function new(){
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $company=Compania::where('Clave', Auth::user()->Clave_Compania)->get();
+	    $areas=Areas::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
+	    $fases=Fase::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
+	    $enfoques=Enfoque::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
+	    $trabajos=Trabajo::all();
+	    $indicadores=Indicador::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
+        $usuarios=User::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
+        $rasic=RolRASIC::all();
+        $estados=Status::all();
+        $count = 0;
+        return view('Admin.Proyectos.new',['company'=>$company,'areas'=>$areas,'fases'=>$fases,'enfoques'=>$enfoques,'trabajos'=>$trabajos,'indicadores'=>$indicadores,'usuarios'=>$usuarios,'rasic'=>$rasic,'estados'=>$estados, 'count'=>$count,'compania'=>$compania]);
+	}
+
+    public function store(Request $request){
+        $user = new User;
+        $company=$user->Clave_Compania=Auth::user()->Clave_Compania;
+
+        $project = $request->validate([
+            'descripcion' => ['required', 'string', 'max:150'],
+            'objetivo' => ['required', 'string', 'max:150'],
+            'area' => ['required'],
+            'usuario' => ['required'],
+            'rasic' => ['required'],
+            'fase' => ['required'],
+            'enfoque' => ['required'],
+            'trabajo' => ['required'],
+            'indicador' => ['required'],
+            'estado' => ['required']
+        ]);
+
+        User::create([
+            'Clave_Compania' => $company,
+            'Descripcion' => $project['descripcion'],
+            'Clave_Usuario' => $project['usuario'],
+            'Clave_Area' => $project['area'],
+            'Clave_Fase' => $project['fase'],
+            'Clave_Enfoque' => $project['enfoque'],
+            'Clave_Trabajo' => $project['trabajo'],
+            'Clave_Indicador' => $project['indicador'],
+            'Clave_Status' => $project['estado'],
+            'Objectivo' => $project['objetivo'],
+            'Activo' => 1,
+            'FechaCreacion' => Carbon::now()
+
+        ]);
+        return redirect('/Admin/Proyectos')->with('mensaje', "Nuevo proyecto agregado correctamente");
     }
     public function delete($id){
     	$proyecto = Proyecto::find($id);
@@ -99,7 +119,7 @@ class ProyectosController extends Controller
     public function update(Request $request){
     	$proyecto = Proyecto::find($request->clave);
     	$proyecto->Clave_Compania = Auth::user()->Clave_Compania;
-		$proyecto->Descripcion = $request->descripcion;		
+		$proyecto->Descripcion = $request->descripcion;
 		$proyecto->Clave_Area = $request->area;
 		$proyecto->Clave_Fase = $request->fase;
 		$proyecto->Clave_Enfoque = $request->enfoque;
@@ -114,5 +134,27 @@ class ProyectosController extends Controller
     	$projects=Proyecto::where('Clave_Compania',$company)
         ->get();
         return response()->json(['proyectos'=>$projects]);
+    }
+
+    public function getUsers(Request $request)
+    {
+        if ($request->ajax()) {
+            $role = 3;
+            $i = 0;
+            $usersArray = array();
+            $UserArea = DB::table('Usuarios')->where('Clave_Area', '=', $request->area)->get();
+            $pluckUserArea = $UserArea->pluck('Clave');
+            foreach ($pluckUserArea as $user){
+                $users = DB::table('Usuarios')
+                    ->where('Clave','=', $pluckUserArea[$i])
+                    ->where('Clave_Rol', '=', $role)
+                    ->get();
+                foreach ($users as $user){
+                    $usersArray[$user->Clave] = $user->Nombres;
+                }
+                $i++;
+            }
+            return response()->json($usersArray);
+        }
     }
 }

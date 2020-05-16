@@ -95,9 +95,17 @@ Route::get('/Admin/Proyectos', 'ProyectosController@index');
 Route::get('/Admin/Proyectos/New','ProyectosController@new');
 Route::get('/Admin/Proyectos/Edit/{id}','ProyectosController@edit');
 Route::get('/Admin/Proyectos/ProyectByCompany/{company}','ProyectosController@ProyectByCompany');
-Route::post('/Admin/Proyectos/Create','ProyectosController@create');
-Route::post('/Admin/Proyectos/Update','ProyectosController@update');
-Route::post('/Admin/Proyectos/Delete/{id}','ProyectosController@delete');
+Route::post('/Admin/Proyectos/Create','ProyectosController@store')->name('CreateProject');
+Route::post('/Admin/Proyectos/Update/{id}','ProyectosController@update')->name('UpdateProject');
+Route::post('/Admin/Proyectos/Delete/{id}','ProyectosController@delete')->name('DeleteProject');
+Route::get('/Admin/Area/Project/Users', 'ProyectosController@getUsers');
+
+Route::get('/Admin/MisProyectos', 'MisProyectosController@index');
+Route::get('/Admin/MisProyectos/New','MisProyectosController@new');
+Route::get('/Admin/MisProyectos/Edit/{id}','MisProyectosController@edit');
+Route::post('/Admin/MisProyectos/Create','MisProyectosController@store')->name('CreateMyProject');
+Route::post('/Admin/MisProyectos/Update/{id}','MisProyectosController@update')->name('UpdateMyProject');
+Route::post('/Admin/MisProyectos/Delete/{id}','MisProyectosController@delete')->name('DeleteMyProject');
 
 Route::get('/Admin/Actividades', 'ActividadesController@index');
 Route::get('/Admin/Actividades/New', 'ActividadesController@new');
@@ -155,3 +163,7 @@ Route::get('/clear-cache', function() {
 });
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -45,7 +45,7 @@ use Illuminate\Support\Facades\URL;
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     {{--Required for tables--}}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -70,7 +70,7 @@ use Illuminate\Support\Facades\URL;
     @elseif (Auth::user()->Clave_Rol=='2')
         <a class="navbar-brand ml-auto nav-name">
             <i class="fas fa-user-tie"></i>
-            <h6 class="h6-less"><strong>Administrador, {{ Auth::user()->Nombres }}</strong></h6>
+            <h6 class="h6-less"><strong>Administrador de @yield('company','Sin Compañia'), {{ Auth::user()->Nombres }}</strong></h6>
         </a>
         <a class="navbar-brand ml-auto nav-name">
             <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
@@ -81,7 +81,7 @@ use Illuminate\Support\Facades\URL;
     @elseif (Auth::user()->Clave_Rol=='3')
         <a class="navbar-brand ml-auto nav-name">
             <i class="fas fa-user-tie"></i>
-            <h6 class="h6-less"><strong>Usuario, {{ Auth::user()->Nombres }}</strong></h6>
+            <h6 class="h6-less"><strong>Usuario de @yield('company','Sin Compañia'), {{ Auth::user()->Nombres }}</strong></h6>
         </a>
         <a class="navbar-brand ml-auto nav-name">
             <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
@@ -92,7 +92,7 @@ use Illuminate\Support\Facades\URL;
     @elseif (Auth::user()->Clave_Rol=='4')
         <a class="navbar-brand ml-auto nav-name">
             <i class="fas fa-user-tie"></i>
-            <h6 class="h6-less"><strong>PMO, {{ Auth::user()->Nombres }}</strong></h6>
+            <h6 class="h6-less"><strong>PMO de @yield('company','Sin Compañia'), {{ Auth::user()->Nombres }}</strong></h6>
         </a>
         <a class="navbar-brand ml-auto nav-name">
             <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
@@ -167,6 +167,10 @@ use Illuminate\Support\Facades\URL;
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Proyectos')){ active } @else {} @endif" href="{{ url('/Admin/Proyectos') }}"><i class="fas fa-tasks"></i> Proyectos</a>
         @endif
 
+        @if(Auth::user()->Clave_Rol==3)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/MisProyectos')){ active } @else {} @endif" href="{{ url('/Admin/MisProyectos') }}"><i class="fas fa-tasks"></i> Mis Proyectos</a>
+        @endif
+
         @if(Auth::user()->Clave_Rol==4)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/RolesProyectos')){ active } @else {} @endif" href="{{ url('/Admin/RolesProyectos') }}"><i class="fas fa-address-book"></i> Roles en Proyectos</a>
         @endif
@@ -193,10 +197,6 @@ use Illuminate\Support\Facades\URL;
 
         @if(Auth::user()->Clave_Rol==2 || Auth::user()->Clave_Rol==4)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades')){ active } @else {} @endif" href="{{ url('/Admin/Actividades') }}"><i class="fas fa-clipboard-list"></i> Actividades</a>
-        @endif
-
-        @if(Auth::user()->Clave_Rol==3 || Auth::user()->Clave_Rol==4)
-            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades/New')){ active } @else {} @endif" href="{{ url('/Admin/Actividades/New') }}"><i class="fas fa-clipboard-list"></i> Registrar Actividades</a>
         @endif
     @endauth
 
