@@ -14,19 +14,13 @@ class IndicadorController extends Controller
         $this->middleware('auth');
     }
     public function index(){
-        if(Auth::user()->Clave_Rol==1 ){
-            $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
-            $indicador=DB::table('Indicador')
-                ->leftJoin('Companias', 'Indicador.Clave_Compania', '=', 'Companias.Clave')
-                ->select('Indicador.Clave','Companias.Descripcion as Compania','Indicador.Descripcion','Indicador.FechaCreacion','Indicador.Activo')
-                ->where('Indicador.Clave_Compania','=',Auth::user()->Clave_Compania)
-                ->get();
-            return view('Admin.Indicador.index',['indicador'=>$indicador,'compania'=>$compania]);
-        }
-        else{
-            return redirect('/');
-        }
-
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $indicador=DB::table('Indicador')
+            ->leftJoin('Companias', 'Indicador.Clave_Compania', '=', 'Companias.Clave')
+            ->select('Indicador.Clave','Companias.Descripcion as Compania','Indicador.Descripcion','Indicador.FechaCreacion','Indicador.Activo')
+            ->where('Indicador.Clave_Compania','=',Auth::user()->Clave_Compania)
+            ->get();
+        return view('Admin.Indicador.index',['indicador'=>$indicador,'compania'=>$compania]);
     }
     public function edit($id){
         $indicador=Indicador::where('Clave', $id)->get()->toArray();

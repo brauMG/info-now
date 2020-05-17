@@ -13,19 +13,14 @@ class FasesController extends Controller
         $this->middleware('auth');
     }
     public function index(){
-        if(Auth::user()->Clave_Rol==1 ){
-            $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
-            $fase=DB::table('Fases')
-                ->leftJoin('Companias', 'Fases.Clave_Compania', '=', 'Companias.Clave')
-                ->select('Fases.Clave','Companias.Descripcion as Compania','Fases.Descripcion','Fases.FechaCreacion','Fases.Activo', 'Fases.Orden')
-                ->where('Fases.Clave_Compania','=',Auth::user()->Clave_Compania)
-                ->orderBy('Orden', 'asc')
-                ->get();
-            return view('Admin.Fases.index',['fase'=>$fase,'compania'=>$compania]);
-        }
-        else{
-            return redirect('/');
-        }
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $fase=DB::table('Fases')
+            ->leftJoin('Companias', 'Fases.Clave_Compania', '=', 'Companias.Clave')
+            ->select('Fases.Clave','Companias.Descripcion as Compania','Fases.Descripcion','Fases.FechaCreacion','Fases.Activo', 'Fases.Orden')
+            ->where('Fases.Clave_Compania','=',Auth::user()->Clave_Compania)
+            ->orderBy('Orden', 'asc')
+            ->get();
+        return view('Admin.Fases.index',['fase'=>$fase,'compania'=>$compania]);
     }
     public function edit($id){
         $fase=Fase::where('Clave', $id)->get()->toArray();

@@ -192,7 +192,7 @@ use Illuminate\Support\Facades\URL;
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Enfoques')){ active } @else {} @endif" href="{{ url('/Admin/Enfoques') }}"><i class="fas fa-calendar-week"></i> Enfoques</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==1 || Auth::user()->Clave_Rol==2)
+        @if(Auth::user()->Clave_Rol==1)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Trabajos')){ active } @else {} @endif" href="{{ url('/Admin/Trabajos') }}"><i class="fas fa-network-wired"></i> Trabajos</a>
         @endif
 

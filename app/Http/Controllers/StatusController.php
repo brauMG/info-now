@@ -17,19 +17,13 @@ class StatusController extends Controller
         $this->middleware('auth');
     }
     public function index(){
-        if(Auth::user()->Clave_Rol==1 ){
-            $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
-            $status=DB::table('Status')
-                ->leftJoin('Companias', 'Status.Clave_Compania', '=', 'Companias.Clave')
-                ->select('Status.Clave','Companias.Descripcion as Compania','Status.status','Status.FechaCreacion','Status.Activo')
-                ->where('Status.Clave_Compania','=',Auth::user()->Clave_Compania)
-                ->get();
-            return view('Admin.Status.index',['status'=>$status,'compania'=>$compania]);
-        }
-        else{
-            return redirect('/');
-        }
-
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $status=DB::table('Status')
+            ->leftJoin('Companias', 'Status.Clave_Compania', '=', 'Companias.Clave')
+            ->select('Status.Clave','Companias.Descripcion as Compania','Status.status','Status.FechaCreacion','Status.Activo')
+            ->where('Status.Clave_Compania','=',Auth::user()->Clave_Compania)
+            ->get();
+        return view('Admin.Status.index',['status'=>$status,'compania'=>$compania]);
     }
     public function edit($id){
         $status=Status::where('Clave', $id)->get()->toArray();
