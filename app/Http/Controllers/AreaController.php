@@ -44,7 +44,7 @@ class AreaController extends Controller
             'Descripcion' => $area['descripcion'],
             'Clave_Compania' => $area['compania'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
+            'FechaCreacion' => Carbon::today()->toDateString()
         ]);
         return redirect('/Admin/Areas')->with('mensaje', "Área editada correctamente");
     }
@@ -63,7 +63,7 @@ class AreaController extends Controller
             'Descripcion' => $area['descripcion'],
             'Clave_Compania' => $area['compania'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
+            'FechaCreacion' => Carbon::today()->toDateString()
         ]);
         return redirect('/Admin/Areas')->with('mensaje', "Nueva área agregada correctamente");
     }

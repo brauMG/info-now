@@ -51,7 +51,7 @@ class StatusController extends Controller
         Status::create([
             'Status' => $status['status'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now(),
+            'FechaCreacion' => Carbon::today()->toDateString(),
             'Clave_Compania' => $compania['Clave']
         ]);
         return redirect('/Admin/Status')->with('mensaje', "Nuevo estado agregado correctamente");
@@ -79,7 +79,7 @@ class StatusController extends Controller
             ]);
             Status::where('Clave', $Clave)->update([
                 'Activo' => 1,
-                'FechaCreacion' => Carbon::now(),
+                'FechaCreacion' => Carbon::today()->toDateString(),
                 'Clave_Compania' => $data['company']
             ]);
         }
@@ -91,7 +91,7 @@ class StatusController extends Controller
             Status::where('Clave', $Clave)->update([
                 'Status' => $data['status'],
                 'Activo' => 1,
-                'FechaCreacion' => Carbon::now(),
+                'FechaCreacion' => Carbon::today()->toDateString(),
                 'Clave_Compania' => $data['company']
             ]);
         }

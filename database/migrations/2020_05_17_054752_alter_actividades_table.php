@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DeleteColumsToProyectoTable extends Migration
+class AlterActividadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DeleteColumsToProyectoTable extends Migration
      */
     public function up()
     {
-        Schema::table('Proyectos', function (Blueprint $table) {
-            $table->dropColumn('Clave_Usuario');
+        Schema::table('Actividades', function (Blueprint $table) {
+            $table->dropColumn('Clave_Historial');
         });
     }
 
@@ -25,8 +25,8 @@ class DeleteColumsToProyectoTable extends Migration
      */
     public function down()
     {
-        Schema::table('Proyectos', function (Blueprint $table) {
-            $table->integer('Clave_Usuario');
+        Schema::table('Actividades', function (Blueprint $table) {
+            $table->integer('Clave_Historial');
         });
     }
 }

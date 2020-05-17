@@ -49,7 +49,7 @@ class IndicadorController extends Controller
         Indicador::create([
             'Descripcion' => $indicador['descripcion'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now(),
+            'FechaCreacion' => Carbon::today()->toDateString(),
             'Clave_Compania' => $compania['Clave']
         ]);
         return redirect('/Admin/Indicador')->with('mensaje', "Nuevo indicador agregado correctamente");
@@ -76,7 +76,7 @@ class IndicadorController extends Controller
             ]);
             Indicador::where('Clave', $Clave)->update([
                 'Activo' => 1,
-                'FechaCreacion' => Carbon::now(),
+                'FechaCreacion' => Carbon::today()->toDateString(),
                 'Clave_Compania' => $data['company']
             ]);
         }
@@ -88,7 +88,7 @@ class IndicadorController extends Controller
             Indicador::where('Clave', $Clave)->update([
                 'Descripcion' => $data['indicador'],
                 'Activo' => 1,
-                'FechaCreacion' => Carbon::now(),
+                'FechaCreacion' => Carbon::today()->toDateString(),
                 'Clave_Compania' => $data['company']
             ]);
         }

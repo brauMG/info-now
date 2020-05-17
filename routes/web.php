@@ -93,12 +93,14 @@ Route::post('/Admin/Roles/Delete/{id}', 'RolesController@delete');
 
 Route::get('/Admin/Proyectos', 'ProyectosController@index');
 Route::get('/Admin/Proyectos/New','ProyectosController@new');
-Route::get('/Admin/Proyectos/Edit/{id}','ProyectosController@edit');
-Route::get('/Admin/Proyectos/ProyectByCompany/{company}','ProyectosController@ProyectByCompany');
+Route::get('/Admin/Proyectos/ChangeStage/{id}','ProyectosController@editStage');
+Route::get('/Admin/Proyectos/ChangeStatus/{id}','ProyectosController@editStatus');
 Route::post('/Admin/Proyectos/Create','ProyectosController@store')->name('CreateProject');
-Route::post('/Admin/Proyectos/Update/{id}','ProyectosController@update')->name('UpdateProject');
-Route::post('/Admin/Proyectos/Delete/{id}','ProyectosController@delete')->name('DeleteProject');
+Route::put('/Admin/Proyectos/UpdateStage/{id}','ProyectosController@updateStage')->name('UpdateStage');
+Route::put('/Admin/Proyectos/UpdateStatus/{id}','ProyectosController@updateStatus')->name('UpdateStatus');
 Route::get('/Admin/Area/Project/Users', 'ProyectosController@getUsers');
+//Route::get('/Admin/Proyectos/ProyectByCompany/{company}','ProyectosController@ProyectByCompany');
+//Route::post('/Admin/Proyectos/Delete/{id}','ProyectosController@delete')->name('DeleteProject');
 
 Route::get('/Admin/MisProyectos', 'MisProyectosController@index');
 Route::get('/Admin/MisProyectos/New','MisProyectosController@new');
@@ -108,7 +110,8 @@ Route::post('/Admin/MisProyectos/Update/{id}','MisProyectosController@update')->
 Route::post('/Admin/MisProyectos/Delete/{id}','MisProyectosController@delete')->name('DeleteMyProject');
 
 Route::get('/Admin/Actividades', 'ActividadesController@index');
-Route::get('/Admin/Actividades/New', 'ActividadesController@new');
+Route::get('/Admin/Actividades/Type/{id}', 'ActividadesController@type')->name('TypeActivity');
+Route::get('/Admin/Actividades/New/{proyectoID}', 'ActividadesController@new')->name('NewActivity');
 Route::get('/Admin/Actividades/Edit/{id}', 'ActividadesController@edit');
 Route::post('/Admin/Actividades/Create', 'ActividadesController@store')->name('CreateActivity');
 Route::post('/Admin/Actividades/Update', 'ActividadesController@update');

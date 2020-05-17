@@ -36,7 +36,7 @@ use App\MaturityLevel;
 <nav class="navbar navbar-expand-md navbar-light bg-black shadow-sm">
     <div class="container">
         <a class="barText"style="text-transform: uppercase">
-            Rapidoss
+            Sistema de Enfoque Rapido
         </a>
     </div>
 </nav>

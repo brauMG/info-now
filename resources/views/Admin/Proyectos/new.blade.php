@@ -1,4 +1,4 @@
-@inject('areas', 'App\Services\Area')
+{{--@inject('areas', 'App\Services\Area')--}}
 <div class="modal-dialog modal-lg table-form" role="document">
     <div class="modal-content" style="border: none !important;">
         <div class="modal-header">
@@ -7,7 +7,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div id="app">
+{{--        <div id="app">--}}
             <form action="{{route('CreateProject')}}" method="POST">
                 @csrf
                 <tr class="modal-body">
@@ -42,6 +42,24 @@
                                            value={{Request::old('objetivo')}}>
                                 </td>
                             </div>
+                        </tr>
+
+                        <tr>
+                            <th for="inputGroupSelect01" class="th-card">
+                                <i class="fas fa-address-card"></i> Área
+                            </th>
+                            <td class="td-card"> <select name="area" type="text" class="custom-select  @error('area') is-invalid @enderror" required>
+                                    <option disabled selected>Seleccionar</option>
+                                    @php($count=0)
+                                    @foreach($areas as $item)
+                                        <option value="{{ $item->Clave }}">{{ $item->Descripcion}}</option>
+                                        @php($count++)
+                                    @endforeach
+                                    @if($count ==0)
+                                        <option disabled selected>No hay áreas</option>
+                                    @endif
+                                </select>
+                            </td>
                         </tr>
 
 {{--                        <tr>--}}
@@ -83,18 +101,18 @@
 {{--                            </td>--}}
 {{--                        </tr>--}}
 
-                        <tr>
-                            <th for="inputGroupSelect01" class="th-card">
-                                <i class="fas fa-address-card"></i> RASIC
-                            </th>
-                            <td class="td-card"> <select name="rasic" type="text" class="custom-select  @error('rasic') is-invalid @enderror" required>
-                                    <option disabled selected>Seleccionar</option>
-                                    @foreach($rasic as $item)
-                                        <option value="{{ $item->Clave }}">{{ $item->RolRASIC }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                        </tr>
+{{--                        <tr>--}}
+{{--                            <th for="inputGroupSelect01" class="th-card">--}}
+{{--                                <i class="fas fa-address-card"></i> RASIC--}}
+{{--                            </th>--}}
+{{--                            <td class="td-card"> <select name="rasic" type="text" class="custom-select  @error('rasic') is-invalid @enderror" required>--}}
+{{--                                    <option disabled selected>Seleccionar</option>--}}
+{{--                                    @foreach($rasic as $item)--}}
+{{--                                        <option value="{{ $item->Clave }}">{{ $item->RolRASIC }}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </td>--}}
+{{--                        </tr>--}}
 
                         <tr>
                             <th for="inputGroupSelect01" class="th-card">
@@ -170,9 +188,9 @@
 
                         <tr>
                             <th for="inputGroupSelect01" class="th-card">
-                                <i class="fas fa-address-card"></i> Estado Inicial
+                                <i class="fas fa-address-card"></i> Estado Inicial del Proyecto
                             </th>
-                            <td class="td-card"> <select name="indicador" type="text" class="custom-select  @error('indicador') is-invalid @enderror" required>
+                            <td class="td-card"> <select name="estado" type="text" class="custom-select  @error('estado') is-invalid @enderror" required>
                                     <option disabled selected>Seleccionar</option>
                                     @php($count=0)
                                     @foreach($estados as $item)
@@ -191,6 +209,6 @@
                         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
                     </div>
             </form>
-        </div>
+{{--        </div>--}}
     </div>
 </div>

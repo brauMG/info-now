@@ -8,10 +8,8 @@
         <main role="main" class="ml-sm-auto">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2 h2-less">Actividades</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <button type="button" class="btn-less btn btn-info" id="new" onclick="AddActivity();"><i class="fas fa-plus"></i> Agregar </button>
-                    </div>
+                <div class="btn-group mr-2">
+                    <a type="button" class="btn-less btn btn-info" id="new" href="{{url('/Admin/Proyectos')}}"><i class="fas fa-plus"></i> Agregar Actividad</a>
                 </div>
             </div>
         </main>
@@ -20,11 +18,6 @@
     @if ( session('mensaje') )
         <div class="container-edits" style="margin-top: 2%">
             <div class="alert alert-success" class='message' id='message'>{{ session('mensaje') }}</div>
-        </div>
-    @endif
-    @if ( session('mensajeAlert') )
-        <div class="container-edits" style="margin-top: 2%">
-            <div class="alert alert-warning" class='message' id='message'>{{ session('mensajeAlert') }}</div>
         </div>
     @endif
     @if ( session('mensajeDanger') )
@@ -49,36 +42,58 @@
                 <table class="table table-striped table-bordered mydatatable">
                     <thead class="table-header">
                     <tr>
-                            <th scope="col" style="text-transform: uppercase">Clave</th>
-                            <th scope="col" style="text-transform: uppercase">Compañía</th>
-                            <th scope="col" style="text-transform: uppercase">Proyecto</th>
-                            <th scope="col" style="text-transform: uppercase">Fase</th>
-                            <th scope="col" style="text-transform: uppercase">Descripción</th>
-                            <th scope="col" style="text-transform: uppercase">Fecha acción</th>
-                            <th scope="col" style="text-transform: uppercase">Decision</th>
-                            <th scope="col" style="text-transform: uppercase">Estado</th>
-                            <th scope="col" style="text-transform: uppercase">Acciones</th>
+                        <th scope="col" style="text-transform: uppercase">Cod. de Seguimiento</th>
+                        <th scope="col" style="text-transform: uppercase">Creación</th>
+                        <th scope="col" style="text-transform: uppercase">Proyecto</th>
+                        <th scope="col" style="text-transform: uppercase">Descripción</th>
+                        <th scope="col" style="text-transform: uppercase">Usuario</th>
+                        <th scope="col" style="text-transform: uppercase">Decisión</th>
+                        <th scope="col" style="text-transform: uppercase">Revisada</th>
+                        <th scope="col" style="text-transform: uppercase">Proxima Revisión</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($actividad as $item)
                             <tr id="{{$item->Clave}}">
-                                <td class="td td-center">{{$item->Clave}}</td>
-                                <td class="td td-center">{{$item->Compania}}</td>
+                                <td class="td td-center">{{$item->Clave_Historial}}</td>
+                                <td class="td td-center">{{$item->FechaCreacion}}</td>
                                 <td class="td td-center">{{$item->Proyecto}}</td>
-                                <td class="td td-center">{{$item->Fase}}</td>
                                 <td class="td td-center">{{$item->Descripcion}}</td>
-                                <td class="td td-center">{{$item->FechaAccion}}</td>
+                                <td class="td td-center">{{$item->Usuario}}</td>
                                 <td class="td td-center">{{$item->Decision}}</td>
-                                <td class="td td-center">{{$item->Status}}</td>
-                                <td class="td td-center">
-                                    <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="edit(this);"><i class="fas fa-edit"></i>Editar</a>
-                                    <a class="btn-row btn btn-danger no-href" clave="{{$item->Clave}}" onclick="deleted(this);"><i class="fas fa-trash-alt"></i>Eliminar</a>
-                                </td>
+                                @if($item->Activo == 1)
+                                    <td class="td td-center">
+                                        <a class="btn btn btn-dark no-href"><i class="fas fa-times"></i> No</a>
+                                    </td>
+                                @else
+                                    <td class="td td-center">
+                                        <a class="btn btn btn-success no-href"><i class="fas fa-check-circle"></i> Si</a>
+                                    </td>
+                                @endif
+                                @if($item->Activo == 1)
+                                    <td class="td td-center">
+                                        <a class="btn btn btn-dark no-href"><i class="fas fa-calendar-times"></i> Se revisa el: {{$item->FechaAccion}}</a>
+                                    </td>
+                                @else
+                                    <td class="td td-center">
+                                        <a class="btn btn btn-success no-href"><i class="fas fa-calendar-check"></i> Fue revisada el: {{$item->FechaAccion}}</a>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
-
                     </tbody>
+                    <tfoot class="table-footer">
+                    <tr>
+                        <th scope="col" style="text-transform: uppercase">Cod. de Seguimiento</th>
+                        <th scope="col" style="text-transform: uppercase">Creación</th>
+                        <th scope="col" style="text-transform: uppercase">Proyecto</th>
+                        <th scope="col" style="text-transform: uppercase">Descripción</th>
+                        <th scope="col" style="text-transform: uppercase">Usuario</th>
+                        <th scope="col" style="text-transform: uppercase">Decisión</th>
+                        <th scope="col" style="text-transform: uppercase">Revisada</th>
+                        <th scope="col" style="text-transform: uppercase">Proxima Revisión</th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

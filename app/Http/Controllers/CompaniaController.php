@@ -49,7 +49,7 @@ class CompaniaController extends Controller
             'Descripcion' => $company['descripcion'],
             'Dominio' => $company['dominio'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
+            'FechaCreacion' => Carbon::today()->toDateString()
         ]);
         return redirect('/Admin/Compania')->with('mensaje', "Nueva compañia agregada correctamente");
     }
@@ -74,7 +74,7 @@ class CompaniaController extends Controller
             'Descripcion' => $company['descripcion'],
             'Dominio' => $company['dominio'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
+            'FechaCreacion' => Carbon::today()->toDateString()
         ]);
         return redirect('/Admin/Compania')->with('mensaje', "Compañia editada correctamente");
     }

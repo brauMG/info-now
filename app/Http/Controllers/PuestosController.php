@@ -47,7 +47,7 @@ class PuestosController extends Controller
             'Puesto' => $puesto['puesto'],
             'Clave_Compania' => $puesto['compania'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
+            'FechaCreacion' => Carbon::today()->toDateString()
         ]);
         return redirect('/Admin/Puestos')->with('mensaje', "Nuevo puesto agregado correctamente");
     }
@@ -73,7 +73,7 @@ class PuestosController extends Controller
             'Puesto' => $puesto['puesto'],
             'Clave_Compania' => $puesto['compania'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
+            'FechaCreacion' => Carbon::today()->toDateString()
         ]);
         return redirect('/Admin/Puestos')->with('mensaje', "El puesto fue editado correctamente");
     }

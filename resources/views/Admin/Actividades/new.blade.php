@@ -1,158 +1,101 @@
-@extends('Shared.layout')
-@section('content')
-    @if($compania!=null)
-@section('company',$compania->Descripcion)
+@extends('layouts.app')
+@if($compania!=null)
+    @section('company',$compania->Descripcion)
 @endif
-@section('title', 'Nueva Actividad')
-<div class="row">
-    @include('Shared.sidebar')
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-
-            <h1 class="h2">Actividades</h1>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <input class="form-control" type="text" id="descripcion" name="descripcion">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token"/>
-                </div>
+@section('content')
+    @include('layouts.top-nav')
+    <div class="container container-rapi2">
+        <main role="main" class="ml-sm-auto">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2 h2-less">Proyectos en @yield('company','Sin Compañia')</h1>
             </div>
+        </main>
+        <div id="Alert"></div>
+    </div>
+<div class="container">
+    <div data-simplebar class="card-height-add-user-to-company" style="height: 700px !important;; padding-top: 0% !important;">
+        <div class="col text-center">
+            <div class="justify-content-center">
+                <div class="card card-add-company">
 
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label>Proyectos</label>
-                    <select class="form-control" name="proyectos" id="proyectos" onchange="getUsers()">
-                        <option selected="true" value disabled="true">Selecciona Proyecto</option>
-                        @foreach ($proyectos as $item)
-                            <option value="{{$item->Clave}}" area="{{$item->Clave_Area}}" fase="{{$item->Clave_Fase}}" enfoque="{{$item->Clave_Enfoque}}" trabajo="{{$item->Clave_Trabajo}}" indicador="{{$item->Clave_Indicador}}" objectivo="{{$item->Objectivo}}">{{$item->Descripcion}}</option>
-                        @endforeach
-                    </select>
+                    <div class="card-header card-header-cute" style="background-color: #055e76 !important;">
+                        <h4 class="no-bottom" style="text-transform: uppercase">Registrar Nueva Actividad</h4>
+                    </div>
 
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label>Áreas</label>
-                    <select class="form-control" name="areas" id="areas" disabled="true">
-                        <option selected="true" value disabled="true">Selecciona Proyecto</option>
-                        @foreach ($areas as $item)
-                            <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            @if(Auth::user()->Clave_Rol!=4)
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Fases</label>
-                        <select class="form-control" name="fases" id="fases" disabled="true">
-                            @foreach ($fases as $item)
-                                <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                            @endforeach
-                        </select>
+                    <div class="card-body">
+                        <form method="POST" action="{{route('CreateActivity')}}">
+                            @csrf
+                            <input type="hidden" name="proyecto" value="{{$proyectoID}}">
+                            <input type="hidden" name="compania" value="{{$companiaId}}">
+                            <input type="hidden" name="usuario" value="{{$usuarioId}}">
+                            <input type="hidden" name="tipo" value="{{$tipo}}">
+
+                            <table class="table-responsive table-card-inline" id="tAdmin">
+
+                                <tr class="tr-card-complete">
+                                    <th class="th-card"><i class="fas fa-user-check"></i>Descripción
+                                    </th>
+                                    <td class="td-card"> <input type="text"
+                                                                class="form-control @error('descripcion') is-invalid @enderror"
+                                                                name="descripcion" value="{{ old('descripcion') }}" required
+                                                                autocomplete="descripcion" autofocus>
+                                        @error('descripcion')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </td>
+                                </tr>
+
+                                <tr class="tr-card-complete">
+                                    <th class="th-card"><i class="fas fa-user-check"></i>Decisión
+                                    </th>
+                                    <td class="td-card"> <input type="text"
+                                                                class="form-control @error('decision') is-invalid @enderror"
+                                                                name="decision" value="{{ old('decision') }}" required
+                                                                autocomplete="decision" autofocus>
+                                        @error('decision')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </td>
+                                </tr>
+
+                                <tr class="tr-card-complete">
+                                    <th class="th-card"><i class="fas fa-user-check"></i>Revisión
+                                    </th>
+                                    <td class="td-card">
+                                        <div id="example">
+                                            <input type="date" name="revision" class="form-control" required>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="tr-card-complete">
+                                    <th class="th-card"><i class="fas fa-user-check"></i>Código de Seguimiento
+                                    </th>
+                                    <td class="td-card"> <input type="text"
+                                                                class="form-control @error('Clave_Historial') is-invalid @enderror"
+                                                                name="Clave_Historial" value="{{ old('Clave_Historial') }}" required
+                                                                autocomplete="Clave_Historial" autofocus>
+                                        @error('seguimiento')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="container">
+                                <button type="submit" class="button-size-08 btn btn-add btn-primary">Guardar Datos</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            @else
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Fases</label>
-                        <select class="form-control" name="fases" id="fases">
-                            @foreach ($fases as $item)
-                                <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            @endif
-        </div>
-        <div class="row">
-
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label>Estado</label>
-                    <select class="form-control" name="status" id="status">
-                        @foreach ($status as $item)
-                            <option value="{{$item->Clave}}">{{$item->Status}}</option>
-                        @endforeach
-                    </select>
-
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label>Próxima Actividad</label>
-                    <input class="form-control" name="decision" id="decision"/>
-
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label>Enfoque</label>
-                    <select class="form-control" id="enfoque" disabled="true">
-                        <option>Seleccionar proyecto</option>
-                        @foreach($enfoques as $enfoque)
-                            <option value="{{$enfoque->Clave}}">{{$enfoque->Descripcion}}</option>
-                        @endforeach
-                    </select>
-
-                </div>
             </div>
         </div>
-        <div class="row">
-
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label>Trabajo</label>
-                    <select class="form-control" id="trabajo" disabled="true" disabled="true">
-                        <option>Seleccionar proyecto</option>
-                        @foreach($trabajos as $trabajo)
-                            <option value="{{$trabajo->Clave}}">{{$trabajo->Descripcion}}</option>
-                        @endforeach
-                    </select>
-
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label>Indicador</label>
-                    <select class="form-control" id="indicador" disabled="true">
-                        <option>Seleccionar proyecto</option>
-                        @foreach($indicadores as $indicador)
-                            <option value="{{$indicador->Clave}}">{{$indicador->Descripcion}}</option>
-                        @endforeach
-                    </select>
-
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label>Objectivo</label>
-                    <input type="text" class="form-control" id="objectivo" disabled="true">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label>Fecha de próxima revisión</label>
-                    <input class="form-control" name="FechaAccion" id="FechaAccion" type="date" />
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-12">
-                <div class="form-group">
-                    <button class="btn btn-success" id="btn_save">Guardar Actividad <i class="fas fa-save"></i> </button>
-                </div>
-            </div>
-        </div>
-
-
-    </main>
+    </div>
 </div>
 @endsection

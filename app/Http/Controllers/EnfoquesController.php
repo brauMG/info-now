@@ -56,7 +56,7 @@ class EnfoquesController extends Controller
         Enfoque::create([
             'Descripcion' => $enfoque['descripcion'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now(),
+            'FechaCreacion' => Carbon::today()->toDateString(),
             'Clave_Compania' => $compania['Clave']
         ]);
         return redirect('/Admin/Enfoques')->with('mensaje', "Nuevo enfoque agregado correctamente");
@@ -76,7 +76,7 @@ class EnfoquesController extends Controller
             ]);
             Status::where('Clave', $Clave)->update([
                 'Activo' => 1,
-                'FechaCreacion' => Carbon::now(),
+                'FechaCreacion' => Carbon::today()->toDateString(),
                 'Clave_Compania' => $data['company']
             ]);
         }
@@ -88,7 +88,7 @@ class EnfoquesController extends Controller
             Enfoque::where('Clave', $Clave)->update([
                 'Descripcion' => $data['enfoque'],
                 'Activo' => 1,
-                'FechaCreacion' => Carbon::now(),
+                'FechaCreacion' => Carbon::today()->toDateString(),
                 'Clave_Compania' => $data['company']
             ]);
         }

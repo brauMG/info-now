@@ -22,6 +22,11 @@
             <div class="alert alert-success" class='message' id='message'>{{ session('mensaje') }}</div>
         </div>
     @endif
+    @isset($mensaje)
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-warning" class='message' id='message'>{{ $mensaje }}</div>
+        </div>
+    @endisset
     @if ( session('mensajeAlert') )
         <div class="container-edits" style="margin-top: 2%">
             <div class="alert alert-warning" class='message' id='message'>{{ session('mensajeAlert') }}</div>
@@ -51,13 +56,14 @@
                     <tr>
                         <th scope="col" style="text-transform: uppercase">Identificador</th>
                         <th scope="col" style="text-transform: uppercase">Descripción</th>
+                        <th scope="col" style="text-transform: uppercase">Objetivo</th>
                         <th scope="col" style="text-transform: uppercase">Área</th>
                         <th scope="col" style="text-transform: uppercase">Fase</th>
                         <th scope="col" style="text-transform: uppercase">Enfoque</th>
                         <th scope="col" style="text-transform: uppercase">Trabajo</th>
                         <th scope="col" style="text-transform: uppercase">Indicador</th>
-                        <th scope="col" style="text-transform: uppercase">Objectivo</th>
-                        <th scope="col" style="text-transform: uppercase">Acción</th>
+                        <th scope="col" style="text-transform: uppercase">Estado</th>
+                        <th scope="col" style="text-transform: uppercase">Registro</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -65,14 +71,19 @@
                         <tr id="{{$item->Clave}}">
                             <td class="td td-center">{{$item->Clave}}</td>
                             <td class="td td-center">{{$item->Descripcion}}</td>
+                            <td class="td td-center">{{$item->Objectivo}}</td>
                             <td class="td td-center">{{$item->Area}}</td>
-                            <td class="td td-center">{{$item->Fase}}</td>
+                            <td class="td td-center">
+                                <a class="btn btn btn-success no-href" clave="{{$item->Clave}}" onclick="changeFase(this);"><i class="fas fa-edit"></i> {{$item->Fase}}</a>
+                            </td>
                             <td class="td td-center">{{$item->Enfoque}}</td>
                             <td class="td td-center">{{$item->Trabajo}}</td>
                             <td class="td td-center">{{$item->Indicador}}</td>
-                            <td class="td td-center">{{$item->Objectivo}}</td>
                             <td class="td td-center">
-                                <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="add(this);"><i class="fas fa-edit"></i> Registrar Actividad</a>
+                                <a class="btn btn btn-warning no-href" clave="{{$item->Clave}}" onclick="changeEstado(this);"><i class="fas fa-edit"></i> {{$item->Status}}</a>
+                            </td>
+                            <td class="td td-center">
+                                <a class="btn btn btn-info no-href" href="{{route('TypeActivity', $item->Clave)}}"><i class="fas fa-edit"></i> Registrar Actividad</a>
                             </td>
                         </tr>
                     @endforeach
@@ -81,13 +92,14 @@
                     <tr>
                         <th style="text-transform: uppercase">Identificador</th>
                         <th style="text-transform: uppercase">Descripción</th>
+                        <th style="text-transform: uppercase">Objetivo</th>
                         <th style="text-transform: uppercase">Área</th>
                         <th style="text-transform: uppercase">Fase</th>
                         <th style="text-transform: uppercase">Enfoque</th>
                         <th style="text-transform: uppercase">Trabajo</th>
                         <th style="text-transform: uppercase">Indicador</th>
-                        <th style="text-transform: uppercase">Objectivo</th>
-                        <th style="text-transform: uppercase">Acción</th>
+                        <th scope="col" style="text-transform: uppercase">Estado</th>
+                        <th style="text-transform: uppercase">Registro</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -103,6 +115,24 @@
                 if (status == "success")
                     $('#myModal').modal('show');
             });
+        }
+
+        function changeEstado(button){
+            var clave = $(button).attr('clave');
+            $('#myModal').load( '{{ url('/Admin/Proyectos/ChangeStatus') }}/'+clave,function(response, status, xhr){
+                if ( status == "success" ) {
+                    $('#myModal').modal('show');
+                }
+            } );
+        }
+
+        function changeFase(button){
+            var clave = $(button).attr('clave');
+            $('#myModal').load( '{{ url('/Admin/Proyectos/ChangeStage') }}/'+clave,function(response, status, xhr){
+                if ( status == "success" ) {
+                    $('#myModal').modal('show');
+                }
+            } );
         }
 
         function add(button){

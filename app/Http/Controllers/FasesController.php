@@ -49,7 +49,7 @@ class FasesController extends Controller
         Fase::create([
             'Descripcion' => $fase['descripcion'],
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now(),
+            'FechaCreacion' => Carbon::today()->toDateString(),
             'Clave_Compania' => $compania['Clave'],
             'Orden' => $fase['orden']
         ]);
@@ -80,7 +80,7 @@ class FasesController extends Controller
                 ]);
                 Fase::where('Clave', $Clave)->update([
                     'Activo' => 1,
-                    'FechaCreacion' => Carbon::now(),
+                    'FechaCreacion' => Carbon::today()->toDateString(),
                     'Clave_Compania' => $data['company']
                 ]);
             }
@@ -91,7 +91,7 @@ class FasesController extends Controller
                 ]);
                 Fase::where('Clave', $Clave)->update([
                     'Activo' => 1,
-                    'FechaCreacion' => Carbon::now(),
+                    'FechaCreacion' => Carbon::today()->toDateString(),
                     'Clave_Compania' => $data['company'],
                     'Orden' => $data['orden']
                 ]);
@@ -104,7 +104,7 @@ class FasesController extends Controller
             ]);
             Fase::where('Clave', $Clave)->update([
                 'Activo' => 1,
-                'FechaCreacion' => Carbon::now(),
+                'FechaCreacion' => Carbon::today()->toDateString(),
                 'Clave_Compania' => $data['company'],
                 'Descripcion' => $data['fase']
             ]);
@@ -119,7 +119,7 @@ class FasesController extends Controller
                 'Descripcion' => $data['fase'],
                 'Orden' => $data['orden'],
                 'Activo' => 1,
-                'FechaCreacion' => Carbon::now(),
+                'FechaCreacion' => Carbon::today()->toDateString(),
                 'Clave_Compania' => $data['company']
             ]);
         }

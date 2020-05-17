@@ -86,9 +86,9 @@ class UsuariosController extends Controller
             'Clave_Puesto' => $user['puesto'],
             'Clave_Rol' => $user['rol'],
             'Contrasena' => Hash::make($user['password']),
-            'UltimoLogin' => Carbon::now(),
+            'UltimoLogin' => Carbon::today()->toDateString(),
             'Activo' => 1,
-            'FechaCreacion' => Carbon::now()
+            'FechaCreacion' => Carbon::today()->toDateString()
 
         ]);
         return redirect('/Admin/Usuarios')->with('mensaje', "Nuevo usuario agregado correctamente");

@@ -1,6 +1,6 @@
 <nav class="navbar fixed-top flex-md-nowrap p-0 shadow" style="background-color:#16a5b8;color:black;">
 
-    <a class="col-6 navbar-brand col-sm-3 col-md-2 mr-0" href="#" style="color:white;">Rapidoss</a>
+    <a class="col-6 navbar-brand col-sm-3 col-md-2 mr-0" href="#" style="color:white;">Sistema de Enfoque Rapido</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="navbar-toggler-button" onclick="toggleMenu()">
 
       <span class="fas fa-bars navbar-toggler-icon"></span>
