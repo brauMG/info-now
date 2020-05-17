@@ -23,12 +23,13 @@ class FasesController extends Controller
         return view('Admin.Fases.index',['fase'=>$fase,'compania'=>$compania]);
     }
     public function edit($id){
+        $userRol = Auth::user()->Clave_Rol;
         $fase=Fase::where('Clave', $id)->get()->toArray();
         $faseId = $fase[0]['Clave'];
         $fase = $fase[0];
         $company = Compania::all();
         $faseCompany = $fase['Clave_Compania'];
-        return view('Admin.Fases.edit', compact('fase', 'faseId', 'company', 'faseCompany'));
+        return view('Admin.Fases.edit', compact('fase', 'faseId', 'company', 'faseCompany', 'userRol'));
     }
 
     public function new(){

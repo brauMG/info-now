@@ -38,6 +38,7 @@ class UsuariosController extends Controller
     }
 
     public function edit($id){
+        $userRol = Auth::user()->Clave_Rol;
         $usuario=User::where('Clave', $id)->get()->toArray();
         $userId = $usuario[0]['Clave'];
         $usuario = $usuario[0];
@@ -48,7 +49,7 @@ class UsuariosController extends Controller
         $rol=Rol::all();
         $puesto=Puesto::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->get();
-        return view('Admin.Usuarios.edit', compact('usuario', 'userId', 'area', 'rol', 'puesto', 'compania', 'usuarioArea', 'usuarioRol', 'usuarioPuesto'));
+        return view('Admin.Usuarios.edit', compact('userRol','usuario', 'userId', 'area', 'rol', 'puesto', 'compania', 'usuarioArea', 'usuarioRol', 'usuarioPuesto'));
     }
 
     public function new(){

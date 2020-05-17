@@ -26,12 +26,13 @@ class StatusController extends Controller
         return view('Admin.Status.index',['status'=>$status,'compania'=>$compania]);
     }
     public function edit($id){
+        $userRol = Auth::user()->Clave_Rol;
         $status=Status::where('Clave', $id)->get()->toArray();
         $statusId = $status[0]['Clave'];
         $status = $status[0];
         $company = Compania::all();
         $statusCompany = $status['Clave_Compania'];
-        return view('Admin.Status.edit', compact('status', 'statusId', 'company', 'statusCompany'));
+        return view('Admin.Status.edit', compact('status', 'statusId', 'company', 'statusCompany', 'userRol'));
     }
 
     public function new(){

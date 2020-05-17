@@ -28,11 +28,12 @@ class AreaController extends Controller
         }
     }
     public function edit($id){
+        $userRol = Auth::user()->Clave_Rol;
         $area=Areas::where('Clave', $id)->get()->toArray();
         $company=Compania::where('Clave', Auth::user()->Clave_Compania)->get();
         $areaId = $area[0]['Clave'];
         $area = $area[0];
-        return view('Admin.Areas.edit', compact('area', 'company', 'areaId'));
+        return view('Admin.Areas.edit', compact('area', 'company', 'areaId', 'userRol'));
     }
 
     public function update(Request $request, $Clave){

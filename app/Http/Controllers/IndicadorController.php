@@ -23,12 +23,13 @@ class IndicadorController extends Controller
         return view('Admin.Indicador.index',['indicador'=>$indicador,'compania'=>$compania]);
     }
     public function edit($id){
+        $userRol = Auth::user()->Clave_Rol;
         $indicador=Indicador::where('Clave', $id)->get()->toArray();
         $indicadorId = $indicador[0]['Clave'];
         $indicador = $indicador[0];
         $company = Compania::all();
         $indicadorCompany = $indicador['Clave_Compania'];
-        return view('Admin.Indicador.edit', compact('indicador', 'indicadorId', 'company', 'indicadorCompany'));
+        return view('Admin.Indicador.edit', compact('indicador', 'indicadorId', 'company', 'indicadorCompany', 'userRol'));
     }
 
     public function new(){

@@ -26,11 +26,12 @@ class PuestosController extends Controller
         }
     }
     public function edit($id){
+        $userRol = Auth::user()->Clave_Rol;
         $puesto=Puesto::where('Clave', $id)->get()->toArray();
         $company=Compania::where('Clave', Auth::user()->Clave_Compania)->get();
         $puestoId = $puesto[0]['Clave'];
         $puesto = $puesto[0];
-        return view('Admin.Puestos.edit', compact('company', 'puesto', 'puestoId'));
+        return view('Admin.Puestos.edit', compact('company', 'puesto', 'puestoId', 'userRol'));
     }
 
     public function new(){

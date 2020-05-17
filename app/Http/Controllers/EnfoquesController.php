@@ -17,21 +17,22 @@ class EnfoquesController extends Controller
         $this->middleware('auth');
     }
     public function index(){
-        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
-        $enfoque=DB::table('Enfoques')
-            ->leftJoin('Companias', 'Enfoques.Clave_Compania', '=', 'Companias.Clave')
-            ->select('Enfoques.Clave','Companias.Descripcion as Compania','Enfoques.Descripcion','Enfoques.FechaCreacion','Enfoques.Activo')
-            ->where('Enfoques.Clave_Compania','=',Auth::user()->Clave_Compania)
-            ->get();
-        return view('Admin.Enfoques.index',['enfoque'=>$enfoque,'compania'=>$compania]);
+            $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+            $enfoque=DB::table('Enfoques')
+                ->leftJoin('Companias', 'Enfoques.Clave_Compania', '=', 'Companias.Clave')
+                ->select('Enfoques.Clave','Companias.Descripcion as Compania','Enfoques.Descripcion','Enfoques.FechaCreacion','Enfoques.Activo')
+                ->where('Enfoques.Clave_Compania','=',Auth::user()->Clave_Compania)
+                ->get();
+            return view('Admin.Enfoques.index',['enfoque'=>$enfoque,'compania'=>$compania]);
     }
     public function edit($id){
+        $userRol = Auth::user()->Clave_Rol;
         $enfoque=Enfoque::where('Clave', $id)->get()->toArray();
         $enfoqueId = $enfoque[0]['Clave'];
         $enfoque = $enfoque[0];
         $company = Compania::all();
         $focusCompany = $enfoque['Clave_Compania'];
-        return view('Admin.Enfoques.edit', compact('enfoque', 'enfoqueId', 'focusCompany', 'company'));
+        return view('Admin.Enfoques.edit', compact('enfoque', 'enfoqueId', 'focusCompany', 'company', 'userRol'));
     }
 
     public function prepare($id){

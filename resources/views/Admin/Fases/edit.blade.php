@@ -31,7 +31,7 @@
                     <div class="col-6 col-md-4">
                         <div class="form-group">
                             <label for="compania">Compañia</label>
-                            <select class="form-control" id="compania" name="company" required>
+                            <select class="form-control" id="compania" name="company" required @if($userRol == 2) disabled @else @endif>
                                 @php($count=0)
                                 @foreach($company as $item)
                                     @if($item->Clave == $faseCompany)

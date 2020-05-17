@@ -23,7 +23,7 @@
                     <div class="col-12 col-md-4" style="display: none;">
                         <div class="form-group">
                             <label>Compañía</label>
-                            <select class="form-control" name="compania" id="compania">
+                            <select class="form-control" name="compania" id="compania" @if($userRol == 2) disabled @else @endif>
                                 @foreach ($company as $item)
                                     <option value="{{$item['Clave']}}">{{$item['Descripcion']}}</option>
                                 @endforeach

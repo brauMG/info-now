@@ -55,7 +55,7 @@
                                     @endif                                    @php($count++)
                                 @endforeach
                                 @if($count ==0)
-                                    <option disabled selected>No Hay Áreas</option>
+                                    <option disabled selected>No hay áreas</option>
                                 @endif
                             </select>
                         </td>
