@@ -12,6 +12,7 @@ class FasesController extends Controller
     public function __construct(){
         $this->middleware('auth');
     }
+
     public function index(){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $fase=DB::table('Fases')
@@ -22,6 +23,7 @@ class FasesController extends Controller
             ->get();
         return view('Admin.Fases.index',['fase'=>$fase,'compania'=>$compania]);
     }
+
     public function edit($id){
         $userRol = Auth::user()->Clave_Rol;
         $fase=Fase::where('Clave', $id)->get()->toArray();
@@ -61,7 +63,7 @@ class FasesController extends Controller
     public function delete($id){
         $fase = Fase::find($id);
         $fase->delete();
-        return response()->json(['error'=>false]);
+        return redirect('/Admin/Fases')->with('mensajeAlert', "Fase eliminada correctamente");
     }
 
     public function update(Request $request, $Clave){

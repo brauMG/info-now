@@ -17,32 +17,26 @@ class RolesProyectosController extends Controller
     public function __construct(){
         $this->middleware('auth');
     }
-     public function index(){                
-        if(Auth::user()->Clave_Rol==4)
-        {
+     public function index(){
             $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
             $rolPROYECTO=DB::table('RolesProyectos')
-            ->leftJoin('Proyectos', 'RolesProyectos.Clave_Proyecto', '=', 'Proyectos.Clave')            
-            ->leftJoin('Fases', 'RolesProyectos.Clave_Fase', '=', 'Fases.Clave')
-            ->leftJoin('RolesRASIC', 'RolesProyectos.Clave_Rol_RASIC', '=', 'RolesRASIC.Clave')
-            ->leftJoin('Usuarios', 'RolesProyectos.Clave_Usuario', '=', 'Usuarios.Clave')
-            ->select('RolesProyectos.Clave as Clave','Proyectos.Descripcion as Proyecto','Usuarios.Nombres as Usuario','Fases.Descripcion as Fase','RolesRASIC.RolRASIC as RolRASIC')
-            ->where('Proyectos.Clave_Compania','=',Auth::user()->Clave_Compania)
-            ->get();
-            return view('Admin.RolesProyectos.index',['rolPROYECTO'=>$rolPROYECTO,'compania'=>$compania]);    
-        }        
-        else{
-            return redirect('/');
-        }
-        
+                ->leftJoin('Proyectos', 'RolesProyectos.Clave_Proyecto', '=', 'Proyectos.Clave')
+                ->leftJoin('RolesRASIC', 'RolesProyectos.Clave_Rol_RASIC', '=', 'RolesRASIC.Clave')
+                ->leftJoin('Usuarios', 'RolesProyectos.Clave_Usuario', '=', 'Usuarios.Clave')
+                ->leftJoin('Puestos', 'Usuarios.Clave_Puesto', '=', 'Puestos.Clave')
+                ->leftJoin('Fases', 'Usuarios.Clave_Puesto', '=', 'Puestos.Clave')
+                ->select('RolesProyectos.Clave as Clave','Proyectos.Descripcion as Proyecto','Usuarios.Nombres as Usuario','Puestos.Puesto as Puesto','RolesRASIC.RolRASIC as RolRASIC')
+                ->where('Proyectos.Clave_Compania','=',Auth::user()->Clave_Compania)
+                ->get();
+            return view('Admin.RolesProyectos.index',['rolPROYECTO'=>$rolPROYECTO,'compania'=>$compania]);
     }
-    public function edit($id){        
+    public function edit($id){
         if(Auth::user()->Clave_Rol==4)
         {
             $fases=Fase::where('Activo',1)->orderBy('Orden')->get();
             $rolRASIC=RolRASIC::all();
-            $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();        
-            $rolPROYECTO=RolProyecto::find($id);            
+            $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+            $rolPROYECTO=RolProyecto::find($id);
             $proyecto=Proyecto::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
             $usuario=User::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
             return view('Admin.RolesProyectos.edit',['rolPROYECTO'=>$rolPROYECTO,'proyectos'=>$proyecto,'fases'=>$fases,'rolesRASIC'=>$rolRASIC,'usuarios'=>$usuario,'compania'=>$compania]);
@@ -52,12 +46,12 @@ class RolesProyectosController extends Controller
         }
     }
 
-    public function new(){        
+    public function new(){
         if(Auth::user()->Clave_Rol==4)
         {
             $fases=Fase::where('Activo',1)->orderBy('Orden')->get();
             $rolRASIC=RolRASIC::all();
-            $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();        
+            $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
             $proyecto=Proyecto::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
             $usuario=User::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
             return view('Admin.RolesProyectos.new',['proyectos'=>$proyecto,'fases'=>$fases,'rolesRASIC'=>$rolRASIC,'usuarios'=>$usuario,'compania'=>$compania]);
@@ -91,5 +85,5 @@ class RolesProyectosController extends Controller
         $rolPROYECTO->Activo=true;
         $rolPROYECTO->save();
         return response()->json(['rolPROYECTO'=>$rolPROYECTO]);
-    }  
+    }
 }

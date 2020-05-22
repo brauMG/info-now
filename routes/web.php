@@ -84,6 +84,14 @@ Route::post('/Admin/Fases/Create', 'FasesController@store')->name('CreateFase');
 Route::put('/Admin/Fases/Update/{id}', 'FasesController@update')->name('UpdateFase');
 Route::post('/Admin/Fases/Delete/{id}', 'FasesController@delete')->name('DeleteFase');
 
+Route::get('/Admin/Etapas', 'EtapasController@index');
+Route::get('/Admin/Etapas/New', 'EtapasController@new');
+Route::get('/Admin/Etapas/Edit/{id}', 'EtapasController@edit');
+Route::get('/Admin/Etapas/Delete/{id}', 'EtapasController@prepare');
+Route::post('/Admin/Etapas/Create', 'EtapasController@store')->name('CreateEtapa');
+Route::put('/Admin/Etapas/Update/{id}', 'EtapasController@update')->name('UpdateEtapa');
+Route::post('/Admin/Etapas/Delete/{id}', 'EtapasController@delete')->name('DeleteEtapa');
+
 Route::get('/Admin/Roles', 'RolesController@index');
 Route::get('/Admin/Roles/New', 'RolesController@new');
 Route::get('/Admin/Roles/Edit/{id}', 'RolesController@edit');
@@ -102,12 +110,7 @@ Route::get('/Admin/Area/Project/Users', 'ProyectosController@getUsers');
 //Route::get('/Admin/Proyectos/ProyectByCompany/{company}','ProyectosController@ProyectByCompany');
 //Route::post('/Admin/Proyectos/Delete/{id}','ProyectosController@delete')->name('DeleteProject');
 
-Route::get('/Admin/MisProyectos', 'MisProyectosController@index');
-Route::get('/Admin/MisProyectos/New','MisProyectosController@new');
-Route::get('/Admin/MisProyectos/Edit/{id}','MisProyectosController@edit');
-Route::post('/Admin/MisProyectos/Create','MisProyectosController@store')->name('CreateMyProject');
-Route::post('/Admin/MisProyectos/Update/{id}','MisProyectosController@update')->name('UpdateMyProject');
-Route::post('/Admin/MisProyectos/Delete/{id}','MisProyectosController@delete')->name('DeleteMyProject');
+Route::get('/Admin/MisProyectos', 'ProyectosController@index');
 
 Route::get('/Admin/Actividades', 'ActividadesController@index');
 Route::get('/Admin/Actividades/Type/{id}', 'ActividadesController@type')->name('TypeActivity');

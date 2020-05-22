@@ -114,7 +114,7 @@ class ProyectosController extends Controller
     public function delete($id){
     	$proyecto = Proyecto::find($id);
     	$proyecto->delete();
-    	return response()->json(['error'=>false]);
+        return redirect('/Admin/Proyectos')->with('mensajeAlert', "Proyecto eliminado correctamente");
     }
     public function update(Request $request){
     	$proyecto = Proyecto::find($request->clave);

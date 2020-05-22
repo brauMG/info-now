@@ -168,6 +168,10 @@ use Illuminate\Support\Facades\URL;
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Proyectos')){ active } @else {} @endif" href="{{ url('/Admin/Proyectos') }}"><i class="fas fa-tasks"></i> Proyectos</a>
         @endif
 
+        @if(Auth::user()->Clave_Rol==4)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Etapas')){ active } @else {} @endif" href="{{ url('/Admin/Etapas') }}"><i class="fas fa-address-book"></i> Etapas</a>
+        @endif
+
         @if(Auth::user()->Clave_Rol==3)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/MisProyectos')){ active } @else {} @endif" href="{{ url('/Admin/MisProyectos') }}"><i class="fas fa-tasks"></i> Mis Proyectos</a>
         @endif

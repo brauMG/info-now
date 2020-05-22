@@ -19,14 +19,14 @@ class RolesController extends Controller
         }else{
             return redirect('/');
         }
-        
+
     }
     public function edit($id){
         $rol=Rol::find($id);
         return view('Admin.Roles.edit',['rol'=>$rol]);
     }
 
-    public function new(){        
+    public function new(){
         return view('Admin.Roles.new');
     }
     public function create(Request $request){
@@ -38,7 +38,6 @@ class RolesController extends Controller
     }
     public function delete($id){
         $rol = Rol::find($id);
-
         $rol->delete();
         return response()->json(['error'=>false]);
     }

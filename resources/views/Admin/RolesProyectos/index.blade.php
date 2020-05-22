@@ -1,140 +1,142 @@
-@extends('Shared.layout')
-@section('content')
+@extends('layouts.app')
 @if($compania!=null)
     @section('company',$compania->Descripcion)
 @endif
-@section('title', 'Roles Proyectos')
-    <div class="row">
-        @include('Shared.sidebar') 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">           
+@section('content')
+    @include('layouts.top-nav')
+    <div class="container container-rapi2">
+        <main role="main" class="ml-sm-auto">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Agregar usuarios al Proyecto</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary" id="new">Agregar<i class="fas fa-plus"></i></button>                        
-                    </div>                    
-                </div>
-            </div>
-            <div id="Alert">
-                
-            </div>            
-            <div class="table-responsive">
-                <table class="table table-hover" id="table">
-                    <thead>
-                        <tr>
-                            <th>Clave</th>                            
-                            <th>Proyecto</th>
-                            <th>Fase</th>
-                            <th>Rol RASIC</th>
-                            <th>Usuario</th>                                                  
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($rolPROYECTO as $item)
-                            <tr id="{{$item->Clave}}">
-                                <td>{{$item->Clave}}</td>
-                                
-                                <td>{{$item->Proyecto}}</td>
-                                <td>{{$item->Fase}}</td>
-                                <td>{{$item->RolRASIC}}</td>                                
-                                <td>{{$item->Usuario}}</td>
-                                <td class="text-right">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-primary btn-sm edit" clave="{{$item->Clave}}" onclick="edit(this);">Editar <i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm delete" clave="{{$item->Clave}}" onclick="deleted(this);">Eliminar <i class="fas fa-trash-alt"></i></button>                                            
-                                    </div>
-                                </td>
-                            </tr>    
-                        @endforeach
-                                         
-                    </tbody>
-                </table>
+                <h1 class="h2 h2-less">Roles en Proyectos de @yield('company','Sin Compañia')</h1>
             </div>
         </main>
+        <div id="Alert"></div>
+    </div>
+    @if ( session('mensaje') )
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-success" class='message' id='message'>{{ session('mensaje') }}</div>
+        </div>
+    @endif
+    @isset($mensaje)
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-warning" class='message' id='message'>{{ $mensaje }}</div>
+        </div>
+    @endisset
+    @if ( session('mensajeAlert') )
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-warning" class='message' id='message'>{{ session('mensajeAlert') }}</div>
+        </div>
+    @endif
+    @if ( session('mensajeDanger') )
+        <div class="container-edits" style="margin-top: 2%">
+            <div class="alert alert-danger" class='message' id='message'>{{ session('mensajeDanger') }}</div>
+        </div>
+    @endif
+    @if($errors->any())
+        <div class="container-edits" style="margin-top: 1%">
+            <div class="alert alert-danger" class='message' id='message'>
+                Se encontraron los siguientes errores: <br>
+                @foreach($errors->all() as $error)
+                    <br>
+                    {{'• '.$error }}
+                @endforeach
+            </div>
+        </div>
+    @endif
+    <div class="container">
+        <div data-simplebar class="table-responsive table-height">
+            <div class="col text-center">
+                <table class="table table-striped table-bordered mydatatable">
+                    <thead class="table-header">
+                    <tr>
+                        <th scope="col" style="text-transform: uppercase">Identificador</th>
+                        <th scope="col" style="text-transform: uppercase">Descripción</th>
+                        <th scope="col" style="text-transform: uppercase">Usuario</th>
+                        <th scope="col" style="text-transform: uppercase">Puesto en la empresa</th>
+                        <th scope="col" style="text-transform: uppercase">Rol RASIC</th>
+                        <th scope="col" style="text-transform: uppercase">Enfoque</th>
+                        <th scope="col" style="text-transform: uppercase">Trabajo</th>
+                        <th scope="col" style="text-transform: uppercase">Indicador</th>
+                        <th scope="col" style="text-transform: uppercase">Estado</th>
+                        <th scope="col" style="text-transform: uppercase">Registro</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($proyecto as $item)
+                        <tr id="{{$item->Clave}}">
+                            <td class="td td-center">{{$item->Clave}}</td>
+                            <td class="td td-center">{{$item->Descripcion}}</td>
+                            <td class="td td-center">{{$item->Usuario}}</td>
+                            <td class="td td-center">{{$item->Puesto}}</td>
+                            <td class="td td-center">
+                                <a class="btn btn btn-success no-href" clave="{{$item->Clave}}" onclick="changeFase(this);"><i class="fas fa-edit"></i> {{$item->Fase}}</a>
+                            </td>
+                            <td class="td td-center">{{$item->RASIC}}</td>
+                            <td class="td td-center">{{$item->Trabajo}}</td>
+                            <td class="td td-center">{{$item->Indicador}}</td>
+                            <td class="td td-center">
+                                <a class="btn btn btn-warning no-href" clave="{{$item->Clave}}" onclick="changeEstado(this);"><i class="fas fa-edit"></i> {{$item->Status}}</a>
+                            </td>
+                            <td class="td td-center">
+                                <a class="btn btn btn-info no-href" href="{{route('TypeActivity', $item->Clave)}}"><i class="fas fa-edit"></i> Registrar Actividad</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                    <tfoot class="table-footer">
+                    <tr>
+                        <th style="text-transform: uppercase">Identificador</th>
+                        <th style="text-transform: uppercase">Descripción</th>
+                        <th style="text-transform: uppercase">Objetivo</th>
+                        <th style="text-transform: uppercase">Área</th>
+                        <th style="text-transform: uppercase">Fase</th>
+                        <th style="text-transform: uppercase">Enfoque</th>
+                        <th style="text-transform: uppercase">Trabajo</th>
+                        <th style="text-transform: uppercase">Indicador</th>
+                        <th scope="col" style="text-transform: uppercase">Estado</th>
+                        <th style="text-transform: uppercase">Registro</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
     <script>
-        function edit(button){
+        $('.mydatatable').DataTable();
+
+        function AddProject() {
+            $('#myModal').load( '{{ url('/Admin/Proyectos/New') }}',function(response, status, xhr)
+            {
+                if (status == "success")
+                    $('#myModal').modal('show');
+            });
+        }
+
+        function changeEstado(button){
             var clave = $(button).attr('clave');
-            $('#myModal').load( '{{ url('/Admin/RolesProyectos/Edit') }}/'+clave,function(response, status, xhr){
-                if ( status == "success" ) {                        
+            $('#myModal').load( '{{ url('/Admin/Proyectos/ChangeStatus') }}/'+clave,function(response, status, xhr){
+                if ( status == "success" ) {
                     $('#myModal').modal('show');
                 }
             } );
         }
-        function deleted(button){
-            var table=$('#table').DataTable();
+
+        function changeFase(button){
             var clave = $(button).attr('clave');
-            var tr=$(button).closest('tr');
-            Swal.fire({
-                title: '¿Está seguro?',
-                text: "¡No podrá revertir esto!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar!'
-            }).then(function(result){                    
-                if (result.value) {                        
-                    $.post('{{ url('/Admin/RolesProyectos/Delete/') }}/'+clave,{_token:'{{ csrf_token() }}'},function(data){                            
-                        if(data.error==false){
-                            table
-                            .row(tr )
-                            .remove()
-                            .draw();
-                            Swal.fire(
-                                'Eliminado!',
-                                'Registro eliminado.',
-                                'success'
-                            )
-                        }
-                    })
-                    .fail(function(data){
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Error',
-                            text: data.responseJSON.message
-                        })
-                    });                        
+            $('#myModal').load( '{{ url('/Admin/Proyectos/ChangeStage') }}/'+clave,function(response, status, xhr){
+                if ( status == "success" ) {
+                    $('#myModal').modal('show');
                 }
-            })
+            } );
         }
-        $(document).ready(function(){
-            var table=$('#table').DataTable({
-                language:
-                {
-                    processing: "Cargando",
-                    search: "_INPUT_",
-                    searchPlaceholder: "Buscar en Registros",
-                    lengthMenu: "Mostrar _MENU_ Registros",
-                    info: "Registros _START_  al  _END_  de _TOTAL_",
-                    infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros)",
-                    oPaginate:
-                        {
-                            sFirst: "Primero",
-                            sPrevious: "Anterior",
-                            sNext: "Siguiente",
-                            sLast: "Ultimo"
-                        },
-                    zeroRecords: "No hay registros"
+
+        function add(button){
+            var clave = $(button).attr('clave');
+            $('#myModal').load( '{{ url('/Admin/Actividades/New') }}/'+clave,function(response, status, xhr){
+                if ( status == "success" ) {
+                    $('#myModal').modal('show');
                 }
-            });
-            $('#new').click(function(){                
-                $('#myModal').load( '{{ url('/Admin/RolesProyectos/New') }}',function(response, status, xhr){
-                    if ( status == "success" ) {                        
-                        $('#myModal').modal('show');
-                    }else{
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Error',
-                            text: response
-                        })
-                    }
-                });                
-            });
-            $("#nav-RolesProyectos").addClass("active");
-            $('#nav-RolesProyectos').css({"background": "#9b9634","color": "white"});     
-        });
+            } );
+        }
     </script>
 @endsection

@@ -52,6 +52,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cerrar</button>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Actualizar</button>
                 </div>
+            </div>
         </form>
     </div>
 </div>
