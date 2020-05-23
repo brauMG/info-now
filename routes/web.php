@@ -119,6 +119,8 @@ Route::get('/Admin/Actividades/Edit/{id}', 'ActividadesController@edit');
 Route::post('/Admin/Actividades/Create', 'ActividadesController@store')->name('CreateActivity');
 Route::post('/Admin/Actividades/Update', 'ActividadesController@update');
 Route::post('/Admin/Actividades/Delete/{id}', 'ActividadesController@delete');
+Route::get('/Admin/Actividades/ChangeStatus/{id}','ActividadesController@editStatus');
+Route::put('/Admin/Actividades/UpdateStatus/{id}','ActividadesController@updateStatus')->name('UpdateStatusActivity');
 
 Route::get('/Admin/RolesProyectos', 'RolesProyectosController@index');
 Route::get('/Admin/RolesProyectos/New', 'RolesProyectosController@new');

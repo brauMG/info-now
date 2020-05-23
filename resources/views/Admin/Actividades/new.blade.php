@@ -28,7 +28,7 @@
                             <input type="hidden" name="proyecto" value="{{$proyectoID}}">
                             <input type="hidden" name="compania" value="{{$companiaId}}">
                             <input type="hidden" name="usuario" value="{{$usuarioId}}">
-                            <input type="hidden" name="tipo" value="{{$tipo}}">
+                            <input type="hidden" name="etapa" value="{{$etapa}}">
 
                             <table class="table-responsive table-card-inline" id="tAdmin">
 
@@ -55,31 +55,6 @@
                                                                 name="decision" value="{{ old('decision') }}" required
                                                                 autocomplete="decision" autofocus>
                                         @error('decision')
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </td>
-                                </tr>
-
-                                <tr class="tr-card-complete">
-                                    <th class="th-card"><i class="fas fa-user-check"></i>Revisión
-                                    </th>
-                                    <td class="td-card">
-                                        <div id="example">
-                                            <input type="date" name="revision" class="form-control" required>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr class="tr-card-complete">
-                                    <th class="th-card"><i class="fas fa-user-check"></i>Código de Seguimiento
-                                    </th>
-                                    <td class="td-card"> <input type="text"
-                                                                class="form-control @error('Clave_Historial') is-invalid @enderror"
-                                                                name="Clave_Historial" value="{{ old('Clave_Historial') }}" required
-                                                                autocomplete="Clave_Historial" autofocus>
-                                        @error('seguimiento')
                                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

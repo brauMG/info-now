@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Areas;
+use App\Etapas;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -19,15 +20,21 @@ class ActividadesController extends Controller
         $this->middleware('auth');
     }
     public function index(){
-        //dd( Auth::user());
+        $rol = Auth::user()->Clave_Rol;
+        $datetime = Carbon::now();
+        $datetime->setTimezone('GMT-7');
+        $date = $datetime->toDateString();
+        $time = $datetime->toTimeString();
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $actividad=DB::table('Actividades')
-        ->leftJoin('Companias', 'Actividades.Clave_Compania', '=', 'Companias.Clave')
-        ->leftJoin('Proyectos','Actividades.Clave_Proyecto','=','Proyectos.Clave')
-        ->leftJoin('Usuarios','Actividades.Clave_Usuario','=','Usuarios.Clave')
-        ->select('Actividades.Clave','Companias.Descripcion as Compania','Proyectos.Descripcion as Proyecto','Actividades.Descripcion','Actividades.FechaAccion','Actividades.Decision','Usuarios.nombres as Usuario','Actividades.FechaCreacion','Actividades.Activo', 'Actividades.Orden', 'Actividades.Clave_Historial')
+            ->leftJoin('Companias', 'Actividades.Clave_Compania', '=', 'Companias.Clave')
+            ->leftJoin('Proyectos','Actividades.Clave_Proyecto','=','Proyectos.Clave')
+            ->leftJoin('Usuarios','Actividades.Clave_Usuario','=','Usuarios.Clave')
+            ->leftJoin('Etapas','Actividades.Clave_Etapa','=','Etapas.Clave')
+            ->leftJoin('Fases','Actividades.Clave_Fase','=','Fases.Clave')
+            ->select('Actividades.Clave','Companias.Descripcion as Compania','Proyectos.Descripcion as Proyecto','Etapas.Descripcion as Etapa','Fases.Descripcion as Fase','Actividades.Descripcion','Actividades.Fecha_Vencimiento', 'Actividades.Hora_Vencimiento','Actividades.Fecha_Revision','Actividades.Hora_Revision','Actividades.Decision','Usuarios.nombres as Usuario','Actividades.FechaCreacion','Actividades.Estado')
         ->get();
-        return view('Admin.Actividades.index',['actividad'=>$actividad,'compania'=>$compania]);
+        return view('Admin.Actividades.index',['actividad'=>$actividad,'compania'=>$compania,'date'=>$date,'time'=>$time, 'rol'=>$rol]);
     }
     public function edit($id){
         $actividad=Actividad::where('Clave', $id)->get()->toArray();
@@ -37,99 +44,80 @@ class ActividadesController extends Controller
         return view('Admin.Actividades.edit',compact('actividad','proyectos','fases', 'status'));
     }
 
+    public function editStatus($id) {
+        $actividadEstado=Actividad::where('Clave', $id)->get()->toArray();
+        $actividadEstado = $actividadEstado[0];
+        $estados= [
+            1,
+            2
+        ];
+        return view('Admin.Actividades.editStatus', compact('estados', 'actividadEstado'));
+    }
+
+    public function updateStatus(Request $request, $Clave){
+        $datetime = Carbon::now();
+        $datetime->setTimezone('GMT-7');
+        $date = $datetime->toDateString();
+        $time = $datetime->toTimeString();
+        $status = $request->validate([
+            'status' => ['required']
+        ]);
+
+        Actividad::where('Clave', $Clave)->update([
+            'Estado' => $status['status'],
+            'Fecha_Revision' => $date,
+            'Hora_Revision' => $time
+        ]);
+        return redirect('/Admin/Actividades')->with('mensaje', "El estado de la revisión fue actualizado correctamente");
+    }
+
     public function type($id){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $proyectoID = $id;
-        $tipos = [
-            0,
-            1
-        ];
-        return view('Admin.Actividades.type',compact('proyectoID', 'tipos', 'compania', 'tipos'));
+        $datetime = Carbon::now();
+        $datetime->setTimezone('GMT-7');
+        $date = $datetime->toDateString();
+        $etapas = Etapas::where('Clave_Proyecto', $proyectoID)->where('Fecha_Vencimiento', '>', $date)->get();
+        return view('Admin.Actividades.type',compact('proyectoID', 'tipos', 'compania', 'etapas'));
     }
 
     public function new(Request $request, $proyectoID){
-        $tipo = $request->input('tipo');
+        $etapa = $request->input('etapa');
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $companiaId=Auth::user()->Clave_Compania;
         $usuarioId=Auth::user()->Clave;
-        $actividades=Actividad::where('Clave_Proyecto','=', $proyectoID)->where('Activo','=', 1)->get();
-        $count = 0;
 
-        if ($tipo == 0) {
-            return view('Admin.Actividades.new',compact('tipo','proyectoID', 'companiaId', 'usuarioId', 'compania'));
-        }
-        if ($tipo == 1) {
-            return view('Admin.Actividades.follow',compact('tipo','proyectoID', 'companiaId', 'usuarioId', 'compania', 'actividades', 'count'));
-        }
+        return view('Admin.Actividades.new',compact('etapa','proyectoID', 'companiaId', 'usuarioId', 'compania'));
     }
 
     public function store(Request $request){
-        $tipo= $request->input('tipo');
+        $etapa = $request->input('etapa');
+        $etapaData = Etapas::where('Clave', $etapa)->first();
 
-        if ($tipo == 0) {
+        $companiaId= $request->input('compania');
+        $proyectoId= $request->input('proyecto');
+        $usuarioId= $request->input('usuario');
 
-            $companiaId= $request->input('compania');
-            $proyectoId= $request->input('proyecto');
-            $usuarioId= $request->input('usuario');
+        $actividad = $request->validate([
+            'descripcion' => ['required', 'string', 'max:150'],
+            'decision' => ['required', 'string', 'max:150']
+        ]);
 
-            $actividad = $request->validate([
-                'descripcion' => ['required', 'string', 'max:150'],
-                'decision' => ['required', 'string', 'max:150'],
-                'revision' => ['required', 'date'],
-                'Clave_Historial' => ['required', 'string', 'unique:Actividades']
-            ]);
+        Actividad::create([
+            'Clave_Compania' => $companiaId,
+            'Clave_Proyecto' => $proyectoId,
+            'Descripcion' => $actividad['descripcion'],
+            'Decision' => $actividad['decision'],
+            'FechaCreacion' => Carbon::now(),
+            'Estado' => 0,
+            'Clave_Usuario' => $usuarioId,
+            'Clave_Fase' => $etapaData->Clave_Fase,
+            'Clave_Etapa' => $etapaData->Clave,
+            'Fecha_Vencimiento' => $etapaData->Fecha_Vencimiento,
+            'Hora_Vencimiento' => $etapaData->Hora_Vencimiento,
+        ]);
 
-            Actividad::create([
-                'Clave_Compania' => $companiaId,
-                'Clave_Proyecto' => $proyectoId,
-                'Descripcion' => $actividad['descripcion'],
-                'FechaAccion' => $actividad['revision'],
-                'Decision' => $actividad['decision'],
-                'FechaCreacion' => Carbon::today()->toDateString(),
-                'Activo' => 1,
-                'Clave_Usuario' => $usuarioId,
-                'Orden' => 1,
-                'Clave_Historial' => $actividad['Clave_Historial']
-            ]);
-        }
-        if ($tipo == 1) {
-
-            $companiaId= $request->input('compania');
-            $proyectoId= $request->input('proyecto');
-            $usuarioId= $request->input('usuario');
-            $actividadId = $request->input('actividad');
-
-            $actividad = $request->validate([
-                'descripcion' => ['required', 'string', 'max:150'],
-                'decision' => ['required', 'string', 'max:150'],
-                'revision' => ['required', 'date']
-            ]);
-
-            $actividadOld = Actividad::where('Clave', $actividadId)->get()->toArray();
-            $actividadOld = $actividadOld[0];
-            $codigo = $actividadOld['Clave_Historial'];
-            $orden = $actividadOld['Orden'];
-            $orden = ($orden + 1);
-
-            Actividad::create([
-                'Clave_Compania' => $companiaId,
-                'Clave_Proyecto' => $proyectoId,
-                'Descripcion' => $actividad['descripcion'],
-                'FechaAccion' => $actividad['revision'],
-                'Decision' => $actividad['decision'],
-                'FechaCreacion' => Carbon::today()->toDateString(),
-                'Activo' => 1,
-                'Clave_Usuario' => $usuarioId,
-                'Orden' => $orden,
-                'Clave_Historial' => $codigo
-            ]);
-
-            Actividad::where('Clave', $actividadId)->update([
-                'Activo' => 0,
-                'FechaAccion' => Carbon::today()->toDateString()
-            ]);
-        }
-        return redirect('/Admin/Proyectos')->with('mensaje', "Nueva actividad agregada correctamente");
+        return redirect('/Admin/Actividades')->with('mensaje', "Nueva actividad agregada correctamente");
     }
     public function delete($id){
         $actividad = Actividad::find($id);

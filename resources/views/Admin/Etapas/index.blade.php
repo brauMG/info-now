@@ -66,38 +66,35 @@
                             <td class="td td-center">{{$item->Proyecto}}</td>
                             <td class="td td-center">{{$item->Fase}}</td>
                             <td class="td td-center">{{$item->Descripcion}}</td>
-                            @if($date >= $item->Fecha_Vencimiento)
+                            @if($date == $item->Fecha_Vencimiento)
                                 @if($time > $item->Hora_Vencimiento)
                                     <td class="td td-center">
-                                        <a class="btn btn btn-danger no-href"><i class="fas fa-calendar-times"></i> Vencio el: {{$item->Fecha_Vencimiento}}</a>
+                                        <a class="btn btn btn-danger no-href"><i class="fas fa-calendar-times"></i> Vencio hoy: {{$item->Fecha_Vencimiento}}</a>
                                     </td>
-                                @else
-                                <td class="td td-center">
-                                    <a class="btn btn btn-warning no-href"><i class="fas fa-calendar-times"></i> Vence el: {{$item->Fecha_Vencimiento}}</a>
-                                </td>
-                                @endif
-                            @else
-                                <td class="td td-center">
-                                    <a class="btn btn btn-success no-href"><i class="fas fa-calendar-times"></i> Vence el: {{$item->Fecha_Vencimiento}}</a>
-                                </td>
-                            @endif
-                            @if($date > $item->Fecha_Vencimiento)
-                                <td class="td td-center">
-                                    <a class="btn btn btn-danger no-href"><i class="fas fa-stopwatch"></i> Vencio a las: {{$item->Hora_Vencimiento}} horas</a>
-                                </td>
-                            @elseif($date >= $item->Fecha_Vencimiento)
-                                @if($time > $item->Hora_Vencimiento)
                                     <td class="td td-center">
-                                        <a class="btn btn btn-danger no-href"><i class="fas fa-stopwatch"></i> Vencio a las: {{$item->Hora_Vencimiento}} horas</a>
+                                        <a class="btn btn btn-danger no-href"><i class="fas fa-hourglass-end"></i> Vencio hoy a las: {{$item->Hora_Vencimiento}}</a>
                                     </td>
                                 @else
-                                <td class="td td-center">
-                                    <a class="btn btn btn-warning no-href"><i class="fas fa-stopwatch"></i> Vence a las: {{$item->Hora_Vencimiento}} horas</a>
-                                </td>
+                                    <td class="td td-center">
+                                        <a class="btn btn btn-warning no-href"><i class="fas fa-calendar"></i> Vence hoy: {{$item->Fecha_Vencimiento}}</a>
+                                    </td>
+                                    <td class="td td-center">
+                                        <a class="btn btn btn-warning no-href"><i class="fas fa-hourglass-half"></i> Vence hoy a las: {{$item->Hora_Vencimiento}}</a>
+                                    </td>
                                 @endif
+                            @elseif($date < $item->Fecha_Vencimiento)
+                                <td class="td td-center">
+                                    <a class="btn btn btn-success no-href"><i class="fas fa-calendar"></i> Vence el: {{$item->Fecha_Vencimiento}}</a>
+                                </td>
+                                <td class="td td-center">
+                                    <a class="btn btn btn-success no-href"><i class="fas fa-hourglass-start"></i> Vence a las: {{$item->Hora_Vencimiento}}</a>
+                                </td>
                             @else
                                 <td class="td td-center">
-                                    <a class="btn btn btn-success no-href"><i class="fas fa-stopwatch"></i> Vence a las: {{$item->Hora_Vencimiento}} horas</a>
+                                    <a class="btn btn btn-danger no-href"><i class="fas fa-calendar-times"></i> Vencio el: {{$item->Fecha_Vencimiento}}</a>
+                                </td>
+                                <td class="td td-center">
+                                    <a class="btn btn btn-danger no-href"><i class="fas fa-hourglass-end"></i> Vencio a las: {{$item->Hora_Vencimiento}}</a>
                                 </td>
                             @endif
                             <td class="td td-center">

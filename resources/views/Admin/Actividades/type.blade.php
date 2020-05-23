@@ -19,25 +19,21 @@
                     <div class="card card-add-company">
 
                         <div class="card-header card-header-cute" style="background-color: #055e76 !important;">
-                            <h4 class="no-bottom" style="text-transform: uppercase">Tipo de Actividad</h4>
+                            <h4 class="no-bottom" style="text-transform: uppercase">Selecciona la etapa</h4>
                         </div>
 
                         <form class="card-body" action="{{route('NewActivity', $proyectoID)}}">
                                 <table class="table-responsive table-card-inline" id="tAdmin">
                                     <tr class="tr-card-complete">
                                         <div class="input-group mb-3">
-                                            <th class="th-card" id="area address"><i class="fas fa-envelope-open-text"></i> Tipo</th>
+                                            <th class="th-card" id="area address"><i class="fas fa-envelope-open-text"></i> Etapas disponibles en este proyecto</th>
                                             <td class="td-card">
-                                                <select required id="tipo" type='text' class="custom-select @error('tipo') is-invalid @enderror"  name="tipo" >
-                                                    @foreach($tipos as $tipo)
-                                                        @if($tipo == 0)
-                                                            <option class='min' value="{{$tipo}}">Nueva</option>
-                                                        @else
-                                                            <option class='min' value="{{$tipo}}">De Seguimiento</option>
-                                                        @endif
+                                                <select required id="etapa" type='text' class="custom-select @error('etapa') is-invalid @enderror"  name="etapa" >
+                                                    @foreach($etapas as $etapa)
+                                                        <option class='min' value="{{$etapa->Clave}}">{{$etapa->Descripcion}}</option>
                                                     @endforeach
                                                 </select>
-                                                @error('name')
+                                                @error('etapa')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
