@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Areas;
 use App\Etapas;
+use App\RolProyecto;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -15,27 +16,55 @@ use App\Proyecto;
 use App\Status;
 class ActividadesController extends Controller
 {
-    //
     public function __construct(){
         $this->middleware('auth');
     }
-    public function index(){
-        $rol = Auth::user()->Clave_Rol;
-        $datetime = Carbon::now();
-        $datetime->setTimezone('GMT-7');
-        $date = $datetime->toDateString();
-        $time = $datetime->toTimeString();
-        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
-        $actividad=DB::table('Actividades')
-            ->leftJoin('Companias', 'Actividades.Clave_Compania', '=', 'Companias.Clave')
-            ->leftJoin('Proyectos','Actividades.Clave_Proyecto','=','Proyectos.Clave')
-            ->leftJoin('Usuarios','Actividades.Clave_Usuario','=','Usuarios.Clave')
-            ->leftJoin('Etapas','Actividades.Clave_Etapa','=','Etapas.Clave')
-            ->leftJoin('Fases','Actividades.Clave_Fase','=','Fases.Clave')
-            ->select('Actividades.Clave','Companias.Descripcion as Compania','Proyectos.Descripcion as Proyecto','Etapas.Descripcion as Etapa','Fases.Descripcion as Fase','Actividades.Descripcion','Actividades.Fecha_Vencimiento', 'Actividades.Hora_Vencimiento','Actividades.Fecha_Revision','Actividades.Hora_Revision','Actividades.Decision','Usuarios.nombres as Usuario','Actividades.FechaCreacion','Actividades.Estado')
-        ->get();
-        return view('Admin.Actividades.index',['actividad'=>$actividad,'compania'=>$compania,'date'=>$date,'time'=>$time, 'rol'=>$rol]);
+    public function index()
+    {
+        if (Auth::user()->Clave_Rol == 4) {
+            $rol = Auth::user()->Clave_Rol;
+            $companyId = Auth::user()->Clave_Compania;
+            $datetime = Carbon::now();
+            $datetime->setTimezone('GMT-7');
+            $date = $datetime->toDateString();
+            $time = $datetime->toTimeString();
+            $compania = Compania::where('Clave', Auth::user()->Clave_Compania)->first();
+            $actividad = DB::table('Actividades')
+                ->leftJoin('Companias', 'Actividades.Clave_Compania', '=', 'Companias.Clave')
+                ->leftJoin('Proyectos', 'Actividades.Clave_Proyecto', '=', 'Proyectos.Clave')
+                ->leftJoin('Usuarios', 'Actividades.Clave_Usuario', '=', 'Usuarios.Clave')
+                ->leftJoin('Etapas', 'Actividades.Clave_Etapa', '=', 'Etapas.Clave')
+                ->leftJoin('Fases', 'Actividades.Clave_Fase', '=', 'Fases.Clave')
+                ->select('Actividades.Clave as Clave', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Proyecto', 'Etapas.Descripcion as Etapa', 'Fases.Descripcion as Fase', 'Actividades.Descripcion', 'Actividades.Fecha_Vencimiento', 'Actividades.Hora_Vencimiento', 'Actividades.Fecha_Revision', 'Actividades.Hora_Revision', 'Actividades.Decision', 'Usuarios.nombres as Usuario', 'Actividades.FechaCreacion', 'Actividades.Estado')
+                ->where('Actividades.Clave_Compania', '=', $companyId)
+                ->get();
+            return view('Admin.Actividades.index', ['actividad' => $actividad, 'compania' => $compania, 'date' => $date, 'time' => $time, 'rol' => $rol]);
+        }
+
+        if (Auth::user()->Clave_Rol == 3) {
+            $rol = Auth::user()->Clave_Rol;
+            $companyId = Auth::user()->Clave_Compania;
+            $datetime = Carbon::now();
+            $datetime->setTimezone('GMT-7');
+            $date = $datetime->toDateString();
+            $time = $datetime->toTimeString();
+            $compania = Compania::where('Clave', Auth::user()->Clave_Compania)->first();
+
+            $actividad = DB::table('Actividades')
+                ->leftJoin('Companias', 'Actividades.Clave_Compania', '=', 'Companias.Clave')
+                ->leftJoin('RolesProyectos', 'Actividades.Clave_Proyecto', '=', 'RolesProyectos.Clave_Proyecto')
+                ->leftJoin('Proyectos', 'RolesProyectos.Clave_Proyecto', '=', 'Proyectos.Clave')
+                ->leftJoin('Usuarios', 'Actividades.Clave_Usuario', '=', 'Usuarios.Clave')
+                ->leftJoin('Etapas', 'Actividades.Clave_Etapa', '=', 'Etapas.Clave')
+                ->leftJoin('Fases', 'Actividades.Clave_Fase', '=', 'Fases.Clave')
+                ->select('Actividades.Clave as Clave', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Proyecto', 'Etapas.Descripcion as Etapa', 'Fases.Descripcion as Fase', 'Actividades.Descripcion', 'Actividades.Fecha_Vencimiento', 'Actividades.Hora_Vencimiento', 'Actividades.Fecha_Revision', 'Actividades.Hora_Revision', 'Actividades.Decision', 'Usuarios.nombres as Usuario', 'Actividades.FechaCreacion', 'Actividades.Estado')
+                ->where('Actividades.Clave_Compania', '=', $companyId)
+                ->where('RolesProyectos.Clave_Usuario', Auth::user()->Clave)
+                ->get();
+            return view('Admin.Actividades.index', ['actividad' => $actividad, 'compania' => $compania, 'date' => $date, 'time' => $time, 'rol' => $rol]);
+        }
     }
+
     public function edit($id){
         $actividad=Actividad::where('Clave', $id)->get()->toArray();
         $proyectos=Proyecto::all();

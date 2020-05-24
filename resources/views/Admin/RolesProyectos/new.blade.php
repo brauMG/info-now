@@ -1,99 +1,81 @@
-<div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Nuevo Rol Proyecto</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token"/>
-            <div class="row">
-                 <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Proyectos</label>
-                        <select class="form-control" name="proyecto" id="proyecto">
-                            @foreach ($proyectos as $item)
-                                <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                            @endforeach
-                        </select>                        
-                    </div>
-                </div>
-                 <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Fase</label>
-                        <select class="form-control" name="fase" id="fase">
-                            @foreach ($fases as $item)
-                                <option value="{{$item->Clave}}">{{$item->Descripcion}}</option>
-                            @endforeach
-                        </select>                        
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Rol RASIC</label>
-                        <select class="form-control" name="rolRASIC" id="rolRASIC">
-                            @foreach ($rolesRASIC as $item)
-                                <option value="{{$item->Clave}}">{{$item->RolRASIC}}</option>
-                            @endforeach
-                        </select>                        
-                    </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12 col-md-4">
-                    <div class="form-group">
-                        <label>Usuario</label>
-                        <select class="form-control" name="usuarios" id="usuarios">
-                            @foreach ($usuarios as $item)
-                                <option value="{{$item->Clave}}">{{$item->Nombres}}</option>
-                            @endforeach
-                        </select>                        
+@extends('layouts.app')
+@if($compania!=null)
+    @section('company',$compania->Descripcion)
+@endif
+@section('content')
+    @include('layouts.top-nav')
+    <div class="container container-rapi2">
+        <main role="main" class="ml-sm-auto">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2 h2-less">Proyectos en @yield('company','Sin Compañia')</h1>
+            </div>
+        </main>
+        <div id="Alert"></div>
+    </div>
+    <div class="container">
+        <div data-simplebar class="card-height-add-user-to-company" style="height: 700px !important;; padding-top: 0% !important;">
+            <div class="col text-center">
+                <div class="justify-content-center">
+                    <div class="card card-add-company">
+
+                        <div class="card-header card-header-cute" style="background-color: #055e76 !important;">
+                            <h4 class="no-bottom" style="text-transform: uppercase">Registrar Nueva Actividad</h4>
+                        </div>
+
+                        <div class="card-body">
+                            <form method="POST" action="{{route('CreateProjectUser')}}">
+                                @csrf
+                                <input type="hidden" name="proyectoId" value="{{$proyectoId}}">
+                                <input type="hidden" name="faseId" value="{{$faseId}}">
+
+                                <table class="table-responsive table-card-inline" id="tAdmin">
+
+                                    <tr>
+                                        <th for="inputGroupSelect01" class="th-card">
+                                            <i class="fas fa-address-card"></i> Usuario
+                                        </th>
+                                        <td class="td-card"> <select name="usuario" type="text" class="custom-select  @error('usuario') is-invalid @enderror" required>
+                                                <option disabled selected>Seleccionar...</option>
+                                                @php($count=0)
+                                                @foreach($usuarios as $item)
+                                                    <option value="{{ $item->Clave }}">{{ $item->Nombres }}</option>
+                                                    @php($count++)
+                                                @endforeach
+                                                @if($count ==0)
+                                                    <option disabled selected>No hay usuarios</option>
+                                                @endif
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th for="inputGroupSelect01" class="th-card">
+                                            <i class="fas fa-address-card"></i> Rol RASIC dentro del proyecto
+                                        </th>
+                                        <td class="td-card"> <select name="rol" type="text" class="custom-select  @error('rol') is-invalid @enderror" required>
+                                                <option disabled selected>Seleccionar...</option>
+                                                @php($count=0)
+                                                @foreach($roles as $item)
+                                                    <option value="{{ $item->Clave }}">{{ $item->RolRASIC }}</option>
+                                                    @php($count++)
+                                                @endforeach
+                                                @if($count ==0)
+                                                    <option disabled selected>No hay roles rasic</option>
+                                                @endif
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                                <div class="container">
+                                    <button type="submit" class="button-size-08 btn btn-add btn-primary">Guardar Datos</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar<i class="fas fa-times"></i></button>
-            <button type="button" class="btn btn-primary" id="save">Guardar<i class="fas fa-save"></i></button>
-        </div>
     </div>
-</div>
-<script>
-    $(document).ready(function(){
-        
-        $('#save').click(function(){
-            var table=$('#table').DataTable();
-            
-            var proyecto=$('#proyecto').val();
-            var proyectoText=$('#proyecto option:selected').text();
-
-            var fase=$('#fase').val();
-            var faseText=$('#fase option:selected').text();
-
-            var rolRASIC=$('#rolRASIC').val();
-            var rolRASICText=$('#rolRASIC option:selected').text();
-
-            var usuario=$('#usuarios').val();
-            var usuarioText=$('#usuarios option:selected').text();
-
-            var token=$('#_token').val();
-            $.post('{{ url('/Admin/RolesProyectos/Create')}}',{_token:token,proyecto:proyecto,fase:fase,rolRASIC:rolRASIC,usuario:usuario},function(data ){                             
-                $('#Alert').html('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Listo!</strong> Se agregó correctamente.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');                                              
-                var node=table.rows
-                .add([{ 0:data.rolPROYECTO.Clave, 1:proyectoText,2:faseText,3:rolRASICText, 4:usuarioText,5:'<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-primary btn-sm edit" clave="'+data.rolPROYECTO.Clave+'" onclick="edit(this);">Editar <i class="fas fa-edit"></i></button><button type="button" class="btn btn-danger btn-sm delete" clave="'+data.rolPROYECTO.Clave+'" onclick="deleted(this);">Eliminar<i class="fas fa-trash-alt"></i></button></div>'}])
-                .draw()
-                .nodes();                
-                $( node ).find('td').eq(5).addClass('text-right');
-                $('#myModal').modal('hide');
-            })
-            .fail(function(data) {                
-                Swal.fire({
-                    type: 'error',
-                    title: 'Error',
-                    text: data.responseJSON.message
-                })
-            });                        
-        });
-    });
-</script>
+@endsection

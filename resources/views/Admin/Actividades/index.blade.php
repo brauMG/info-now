@@ -8,9 +8,11 @@
         <main role="main" class="ml-sm-auto">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2 h2-less">Actividades</h1>
-                <div class="btn-group mr-2">
-                    <a type="button" class="btn-less btn btn-info" id="new" href="{{url('/Admin/Proyectos')}}"><i class="fas fa-plus"></i> Agregar Actividad</a>
-                </div>
+                @if($rol == 4 || $rol == 3)
+                    <div class="btn-group mr-2">
+                        <a type="button" class="btn-less btn btn-info" id="new" href="{{url('/Admin/Proyectos')}}"><i class="fas fa-plus"></i> Agregar Actividad</a>
+                    </div>
+                @endif
             </div>
         </main>
         <div id="Alert"></div>

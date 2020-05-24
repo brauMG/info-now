@@ -25,29 +25,56 @@ class ProyectosController extends Controller
         $this->middleware('auth');
     }
     public function index(){
-	    $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $rol = Auth::user()->Clave_Rol;
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
 
-	    $proyecto=DB::table('Proyectos')
-			->leftJoin('Companias', 'Proyectos.Clave_Compania', '=', 'Companias.Clave')
-			->leftJoin('Status','Status.Clave','=','Proyectos.Clave_Status')
-			->leftJoin('Areas','Areas.Clave','=','Proyectos.Clave_Area')
-			->leftJoin('Fases','Fases.Clave','=','Proyectos.Clave_Fase')
-			->leftJoin('Enfoques','Enfoques.Clave','=','Proyectos.Clave_Enfoque')
-			->leftJoin('Trabajos','Trabajos.Clave','=','Proyectos.Clave_Trabajo')
-			->leftJoin('Indicador','Indicador.Clave','=','Proyectos.Clave_Indicador')
-			->select('Proyectos.Clave','Companias.Descripcion as Compania','Proyectos.Descripcion as Descripcion','Status.status as Status','Areas.Descripcion as Area','Fases.Descripcion as Fase','Enfoques.Descripcion AS Enfoque','Trabajos.Descripcion As Trabajo','Indicador.Descripcion As Indicador','Objectivo')
-			->where('Proyectos.Clave_Compania','=',Auth::user()->Clave_Compania)
-			->get();
 
-	    $url = url()->previous();
-	    $url = basename($url);
-            if ($url == 'Actividades'){
+        if (Auth::user()->Clave_Rol == 4) {
+            $proyecto = DB::table('Proyectos')
+                ->leftJoin('Companias', 'Proyectos.Clave_Compania', '=', 'Companias.Clave')
+                ->leftJoin('Status', 'Status.Clave', '=', 'Proyectos.Clave_Status')
+                ->leftJoin('Areas', 'Areas.Clave', '=', 'Proyectos.Clave_Area')
+                ->leftJoin('Fases', 'Fases.Clave', '=', 'Proyectos.Clave_Fase')
+                ->leftJoin('Enfoques', 'Enfoques.Clave', '=', 'Proyectos.Clave_Enfoque')
+                ->leftJoin('Trabajos', 'Trabajos.Clave', '=', 'Proyectos.Clave_Trabajo')
+                ->leftJoin('Indicador', 'Indicador.Clave', '=', 'Proyectos.Clave_Indicador')
+                ->select('Proyectos.Clave', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Descripcion', 'Status.status as Status', 'Areas.Descripcion as Area', 'Fases.Descripcion as Fase', 'Enfoques.Descripcion AS Enfoque', 'Trabajos.Descripcion As Trabajo', 'Indicador.Descripcion As Indicador', 'Objectivo')
+                ->where('Proyectos.Clave_Compania', '=', Auth::user()->Clave_Compania)
+                ->get();
+
+            $url = url()->previous();
+            $url = basename($url);
+            if ($url == 'Actividades') {
                 $mensaje = 'Selecciona el proyecto en el cual registraras una actividad';
-                return view('Admin.Proyectos.index',['proyecto'=>$proyecto,'compania'=>$compania, 'mensaje'=>$mensaje]);
+                return view('Admin.Proyectos.index', ['proyecto' => $proyecto, 'compania' => $compania, 'mensaje' => $mensaje, 'rol' => $rol]);
+            } else {
+                return view('Admin.Proyectos.index', ['proyecto' => $proyecto, 'compania' => $compania, 'rol' => $rol]);
             }
-            else {
-                return view('Admin.Proyectos.index', ['proyecto' => $proyecto, 'compania' => $compania]);
+        }
+
+        if (Auth::user()->Clave_Rol == 3) {
+            $proyecto = DB::table('RolesProyectos')
+                ->leftJoin('Proyectos', 'RolesProyectos.Clave_Proyecto', '=', 'Proyectos.Clave')
+                ->leftJoin('Companias', 'Proyectos.Clave_Compania', '=', 'Companias.Clave')
+                ->leftJoin('Status', 'Status.Clave', '=', 'Proyectos.Clave_Status')
+                ->leftJoin('Areas', 'Areas.Clave', '=', 'Proyectos.Clave_Area')
+                ->leftJoin('Fases', 'Fases.Clave', '=', 'Proyectos.Clave_Fase')
+                ->leftJoin('Enfoques', 'Enfoques.Clave', '=', 'Proyectos.Clave_Enfoque')
+                ->leftJoin('Trabajos', 'Trabajos.Clave', '=', 'Proyectos.Clave_Trabajo')
+                ->leftJoin('Indicador', 'Indicador.Clave', '=', 'Proyectos.Clave_Indicador')
+                ->select('Proyectos.Clave', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Descripcion', 'Status.status as Status', 'Areas.Descripcion as Area', 'Fases.Descripcion as Fase', 'Enfoques.Descripcion AS Enfoque', 'Trabajos.Descripcion As Trabajo', 'Indicador.Descripcion As Indicador', 'Objectivo')
+                ->where('RolesProyectos.Clave_Usuario', '=', Auth::user()->Clave)
+                ->get();
+
+            $url = url()->previous();
+            $url = basename($url);
+            if ($url == 'Actividades') {
+                $mensaje = 'Selecciona el proyecto en el cual registraras una actividad';
+                return view('Admin.Proyectos.index', ['proyecto' => $proyecto, 'compania' => $compania, 'mensaje' => $mensaje, 'rol' => $rol]);
+            } else {
+                return view('Admin.Proyectos.index', ['proyecto' => $proyecto, 'compania' => $compania, 'rol' => $rol]);
             }
+        }
     }
 
     public function edit($id){

@@ -164,16 +164,12 @@ use Illuminate\Support\Facades\URL;
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Usuarios')){ active } @else {} @endif" href="{{ url('/Admin/Usuarios') }}"><i class="fas fa-users"></i> Usuarios</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==4)
+        @if(Auth::user()->Clave_Rol==4 || Auth::user()->Clave_Rol==3)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Proyectos')){ active } @else {} @endif" href="{{ url('/Admin/Proyectos') }}"><i class="fas fa-tasks"></i> Proyectos</a>
         @endif
 
         @if(Auth::user()->Clave_Rol==4)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Etapas')){ active } @else {} @endif" href="{{ url('/Admin/Etapas') }}"><i class="fas fa-address-book"></i> Etapas</a>
-        @endif
-
-        @if(Auth::user()->Clave_Rol==3)
-            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/MisProyectos')){ active } @else {} @endif" href="{{ url('/Admin/MisProyectos') }}"><i class="fas fa-tasks"></i> Mis Proyectos</a>
         @endif
 
         @if(Auth::user()->Clave_Rol==4)
@@ -200,7 +196,7 @@ use Illuminate\Support\Facades\URL;
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Trabajos')){ active } @else {} @endif" href="{{ url('/Admin/Trabajos') }}"><i class="fas fa-network-wired"></i> Trabajos</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==2 || Auth::user()->Clave_Rol==4)
+        @if(Auth::user()->Clave_Rol==2 || Auth::user()->Clave_Rol==4 || Auth::user()->Clave_Rol==3)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades')){ active } @else {} @endif" href="{{ url('/Admin/Actividades') }}"><i class="fas fa-clipboard-list"></i> Actividades</a>
         @endif
     @endauth

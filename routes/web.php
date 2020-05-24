@@ -123,11 +123,11 @@ Route::get('/Admin/Actividades/ChangeStatus/{id}','ActividadesController@editSta
 Route::put('/Admin/Actividades/UpdateStatus/{id}','ActividadesController@updateStatus')->name('UpdateStatusActivity');
 
 Route::get('/Admin/RolesProyectos', 'RolesProyectosController@index');
-Route::get('/Admin/RolesProyectos/New', 'RolesProyectosController@new');
-Route::get('/Admin/RolesProyectos/Edit/{id}', 'RolesProyectosController@edit');
-Route::post('/Admin/RolesProyectos/Create', 'RolesProyectosController@create');
-Route::post('/Admin/RolesProyectos/Update', 'RolesProyectosController@update');
-Route::post('/Admin/RolesProyectos/Delete/{id}', 'RolesProyectosController@delete');
+Route::get('/Admin/RolesProyectos/New', 'RolesProyectosController@new')->name('NewProjectUser');
+Route::get('/Admin/RolesProyectos/Select', 'RolesProyectosController@select')->name('Select');
+Route::post('/Admin/RolesProyectos/Create', 'RolesProyectosController@store')->name('CreateProjectUser');
+Route::get('/Admin/RolesProyectos/ChangeStatus/{id}','RolesProyectosController@editStatus');
+Route::put('/Admin/RolesProyectos/UpdateStatus/{id}','RolesProyectosController@updateStatus')->name('UpdateStatusProjectUser');
 
 
 Route::get('/Admin/Trabajos', 'TrabajosController@index');

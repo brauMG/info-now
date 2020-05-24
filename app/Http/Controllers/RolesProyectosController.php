@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,66 +25,88 @@ class RolesProyectosController extends Controller
                 ->leftJoin('RolesRASIC', 'RolesProyectos.Clave_Rol_RASIC', '=', 'RolesRASIC.Clave')
                 ->leftJoin('Usuarios', 'RolesProyectos.Clave_Usuario', '=', 'Usuarios.Clave')
                 ->leftJoin('Puestos', 'Usuarios.Clave_Puesto', '=', 'Puestos.Clave')
-                ->leftJoin('Fases', 'Usuarios.Clave_Puesto', '=', 'Puestos.Clave')
-                ->select('RolesProyectos.Clave as Clave','Proyectos.Descripcion as Proyecto','Usuarios.Nombres as Usuario','Puestos.Puesto as Puesto','RolesRASIC.RolRASIC as RolRASIC')
+                ->leftJoin('Fases', 'Proyectos.Clave_Fase', '=', 'Fases.Clave')
+                ->select('RolesProyectos.Clave as Clave','Proyectos.Descripcion as Proyecto','Usuarios.Nombres as Usuario','Puestos.Puesto as Puesto','RolesRASIC.RolRASIC as RolRASIC', 'Fases.Descripcion as Fase', 'RolesProyectos.Activo', 'RolesProyectos.FechaCreacion')
                 ->where('Proyectos.Clave_Compania','=',Auth::user()->Clave_Compania)
                 ->get();
             return view('Admin.RolesProyectos.index',['rolPROYECTO'=>$rolPROYECTO,'compania'=>$compania]);
     }
-    public function edit($id){
-        if(Auth::user()->Clave_Rol==4)
-        {
-            $fases=Fase::where('Activo',1)->orderBy('Orden')->get();
-            $rolRASIC=RolRASIC::all();
-            $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
-            $rolPROYECTO=RolProyecto::find($id);
-            $proyecto=Proyecto::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
-            $usuario=User::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
-            return view('Admin.RolesProyectos.edit',['rolPROYECTO'=>$rolPROYECTO,'proyectos'=>$proyecto,'fases'=>$fases,'rolesRASIC'=>$rolRASIC,'usuarios'=>$usuario,'compania'=>$compania]);
-        }
-        else{
-            return redirect('/');
-        }
+
+    public function editStatus($id) {
+        $rolProyectoEstado=RolProyecto::where('Clave', $id)->get()->toArray();
+        $rolProyectoEstado = $rolProyectoEstado[0];
+        $estados= [
+            1,
+            2
+        ];
+        return view('Admin.RolesProyectos.editStatus', compact('estados', 'rolProyectoEstado'));
     }
 
-    public function new(){
-        if(Auth::user()->Clave_Rol==4)
-        {
-            $fases=Fase::where('Activo',1)->orderBy('Orden')->get();
-            $rolRASIC=RolRASIC::all();
-            $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
-            $proyecto=Proyecto::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
-            $usuario=User::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
-            return view('Admin.RolesProyectos.new',['proyectos'=>$proyecto,'fases'=>$fases,'rolesRASIC'=>$rolRASIC,'usuarios'=>$usuario,'compania'=>$compania]);
+    public function select(){
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $companyId =Auth::user()->Clave_Compania;
+        $proyectos =  Proyecto::where('Clave_Compania', $companyId)->get();
+        return view('Admin.RolesProyectos.select',compact('companyId', 'proyectos', 'compania'));
+    }
+
+    public function updateStatus(Request $request, $Clave){
+        $status = $request->validate([
+            'status' => ['required']
+        ]);
+
+        RolProyecto::where('Clave', $Clave)->update([
+            'Activo' => $status['status']
+        ]);
+        return redirect('/Admin/RolesProyectos')->with('mensaje', "El estado del usuario dentro del proyecto fue actualizado correctamente");
+    }
+
+    public function new(Request $request){
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $proyectoId = $request->input('proyecto');
+        $proyecto = Proyecto::where('Clave', $proyectoId)->first();
+        $faseId = $proyecto->Clave_Fase;
+        $companyId =Auth::user()->Clave_Compania;
+        $usuarios = User::where('Clave_Compania', $companyId)->where('Clave_Rol', 3)->get();
+        $roles = RolRASIC::all();
+
+        return view('Admin.RolesProyectos.new',compact('proyectoId','usuarios', 'roles', 'faseId', 'compania'));
+    }
+
+    public function store(Request $request){
+        $faseId = $request->input('faseId');
+        $proyectoId = $request->input('proyectoId');
+
+        $data = $request->validate([
+            'usuario' => ['required'],
+            'rol' => ['required']
+        ]);
+
+        $i = 0;
+
+        $actualData = RolProyecto::all()->toArray();
+
+        foreach ($actualData as $project) {
+            if ($project['Clave_Proyecto'] == $proyectoId){
+                if ($project['Clave_Usuario'] == $data['usuario']){
+                    $i = 1;
+                }
+            }
         }
-        else{
-            return redirect('/');
+
+        if ($i == 0) {
+            RolProyecto::create([
+                'Clave_Proyecto' => $proyectoId,
+                'Clave_Fase' => $faseId,
+                'Clave_Rol_RASIC' => $data['rol'],
+                'FechaCreacion' => Carbon::now(),
+                'Activo' => 1,
+                'Clave_Usuario' => $data['usuario']
+            ]);
+
+            return redirect('/Admin/RolesProyectos')->with('mensaje', "Usuario agregado correctamente al proyecto");
         }
-    }
-    public function create(Request $request){
-        //proyecto:proyecto,rolRASIC:rolRASIC,usuario:usuario
-        $rolPROYECTO = new RolProyecto;
-        $rolPROYECTO->Clave_Proyecto = $request->proyecto;
-        $rolPROYECTO->Clave_Fase = $request->fase;
-        $rolPROYECTO->Clave_Rol_RASIC = $request->rolRASIC;
-        $rolPROYECTO->Clave_Usuario=$request->usuario;
-        $rolPROYECTO->Activo=true;
-        $rolPROYECTO->save();
-        return response()->json(['rolPROYECTO'=>$rolPROYECTO]);
-    }
-    public function delete($id){
-        $rolPROYECTO = RolProyecto::find($id);
-        $rolPROYECTO->delete();
-        return response()->json(['error'=>false]);
-    }
-    public function update(Request $request){
-        $rolPROYECTO = RolProyecto::find($request->clave);
-        $rolPROYECTO->Clave_Proyecto = $request->proyecto;
-        $rolPROYECTO->Clave_Fase = $request->fase;
-        $rolPROYECTO->Clave_Rol_RASIC = $request->rolRASIC;
-        $rolPROYECTO->Clave_Usuario=$request->usuario;
-        $rolPROYECTO->Activo=true;
-        $rolPROYECTO->save();
-        return response()->json(['rolPROYECTO'=>$rolPROYECTO]);
+        else {
+            return redirect('/Admin/RolesProyectos')->with('mensajeDanger', "Ese usuario ya esta agregado al proyecto");
+        }
     }
 }

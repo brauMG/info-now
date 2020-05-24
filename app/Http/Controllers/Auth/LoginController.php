@@ -65,7 +65,7 @@ class LoginController extends Controller
         } elseif ($user->Clave_Rol == 2) {
             return redirect('/Admin/Areas');
         } elseif ($user->Clave_Rol == 3) {
-            return redirect('/Admin/MisProyectos');
+            return redirect('/Admin/Proyectos');
         } elseif ($user->Clave_Rol == 4) {
             return redirect('/Admin/Proyectos');
         } else {

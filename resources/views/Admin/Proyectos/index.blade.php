@@ -74,13 +74,13 @@
                             <td class="td td-center">{{$item->Objectivo}}</td>
                             <td class="td td-center">{{$item->Area}}</td>
                             <td class="td td-center">
-                                <a class="btn btn btn-success no-href" clave="{{$item->Clave}}" onclick="changeFase(this);"><i class="fas fa-edit"></i> {{$item->Fase}}</a>
+                                <a class="btn btn btn-success no-href" @if($rol == 4) clave="{{$item->Clave}}" onclick="changeFase(this);" @endif><i class="fas fa-edit"></i> {{$item->Fase}}</a>
                             </td>
                             <td class="td td-center">{{$item->Enfoque}}</td>
                             <td class="td td-center">{{$item->Trabajo}}</td>
                             <td class="td td-center">{{$item->Indicador}}</td>
                             <td class="td td-center">
-                                <a class="btn btn btn-warning no-href" clave="{{$item->Clave}}" onclick="changeEstado(this);"><i class="fas fa-edit"></i> {{$item->Status}}</a>
+                                <a class="btn btn btn-warning no-href" @if($rol == 4)clave="{{$item->Clave}}" onclick="changeEstado(this);" @endif><i class="fas fa-edit"></i> {{$item->Status}}</a>
                             </td>
                             <td class="td td-center">
                                 <a class="btn btn btn-info no-href" href="{{route('TypeActivity', $item->Clave)}}"><i class="fas fa-edit"></i> Registrar Actividad</a>
