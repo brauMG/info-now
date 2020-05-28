@@ -49,6 +49,7 @@ class EtapasController
 
     public function store(Request $request){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+
         $etapa = $request->validate([
             'descripcion' => ['required', 'string', 'max:150'],
             'fechaV' => ['required', 'date'],
@@ -66,8 +67,8 @@ class EtapasController
             'Fecha_Vencimiento' => $etapa['fechaV'],
             'Hora_Vencimiento' => $etapa['horaV'],
             'Clave_Proyecto' => $etapa['proyecto'],
-            'Clave_Compania' => $faseId,
-            'Clave_Fase' => $companyId
+            'Clave_Compania' => $companyId,
+            'Clave_Fase' => $faseId
         ]);
         return redirect('/Admin/Etapas')->with('mensaje', "Nueva etapa agregada correctamente");
     }

@@ -101,8 +101,8 @@
                                 <a class="btn btn btn-dark no-href"><i class="fas fa-calendar-plus"></i> {{$item->Creado}}</a>
                             </td>
                             <td class="td td-center">
-                                <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="edit(this);"><i class="fas fa-edit"></i>Editar</a>
-                                <a class="btn-row btn btn-danger no-href" clave="{{$item->Clave}}" onclick="deleted(this);"><i class="fas fa-trash-alt"></i>Eliminar</a>
+                                <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="edit(this);" style="font-size: 0.65em !important; width: 60% !important;"><i class="fas fa-edit"></i> Editar</a>
+                                <a class="btn-row btn btn-danger no-href" clave="{{$item->Clave}}" onclick="deleted(this);" style="font-size: 0.65em !important; width: 60% !important;"><i class="fas fa-trash-alt"></i> Eliminar</a>
                             </td>
                         </tr>
                     @endforeach

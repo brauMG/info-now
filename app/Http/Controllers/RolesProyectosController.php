@@ -66,7 +66,7 @@ class RolesProyectosController extends Controller
         $proyecto = Proyecto::where('Clave', $proyectoId)->first();
         $faseId = $proyecto->Clave_Fase;
         $companyId =Auth::user()->Clave_Compania;
-        $usuarios = User::where('Clave_Compania', $companyId)->where('Clave_Rol', 3)->get();
+        $usuarios = User::where('Clave_Compania', $companyId)->where('Clave_Rol', 3)->orWhere('Clave_Rol', 4)->get();
         $roles = RolRASIC::all();
 
         return view('Admin.RolesProyectos.new',compact('proyectoId','usuarios', 'roles', 'faseId', 'compania'));
