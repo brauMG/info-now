@@ -167,4 +167,9 @@ class ActividadesController extends Controller
         $actividad->save();
         return response()->json(['actividad'=>$actividad]);
     }
+
+    public function preparePdf(Request $request) {
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        return view('Admin.Actividades.prepare', compact('proyectos', 'fases', 'usuarios', 'etapas', 'estados', 'compania'));
+    }
 }

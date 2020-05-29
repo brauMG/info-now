@@ -10,7 +10,7 @@
                 <h1 class="h2 h2-less">Proyectos en @yield('company','Sin Compañia')</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
-                        <a type="button" class="btn-less btn btn-info" id="new" @if($rol == 4) clave="{{$item->Clave}}" onclick="AddProject();" @endif><i class="fas fa-plus"></i> Agregar Proyecto</a>
+                        <a type="button" class="btn-less btn btn-info" id="new" @if($rol == 4) onclick="AddProject();" @endif><i class="fas fa-plus"></i> Agregar Proyecto</a>
                     </div>
                 </div>
             </div>

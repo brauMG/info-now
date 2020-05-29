@@ -110,17 +110,21 @@ use Illuminate\Support\Facades\URL;
               style="display: none;">
             @csrf
         </form>
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-cool" style="margin-top: 0% !important;">
-            <span><strong>Reportes</strong></span>
-        </h6>
-        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/ActividadesEmpresaPorEnfoque')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Actividades Por Enfoque
-        </a>
-        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/ActividadesEmpresaPorStatus')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Actividades Por Estado
-        </a>
-        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/Proyectos')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Asignaciones Por Enfoque
-        </a>
-        <a class="side-font sidebar-margin-elements" href="{{url('/Reportes/Recursos')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Recursos
-        </a>
+            @if(Auth::user()->Clave_Rol==2 || Auth::user()->Clave_Rol==4)
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-cool" style="margin-top: 0% !important;">
+                <span><strong>Reportes </strong></span>
+            </h6>
+            <a class="side-font sidebar-margin-elements" href="{{route('FiltersActivities')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Actividades </a>
+            <a class="side-font sidebar-margin-elements" href="{{route('FiltersStages')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Etapas </a>
+            <a class="side-font sidebar-margin-elements" href="{{route('FiltersProjects')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Proyectos </a>
+            <a class="side-font sidebar-margin-elements" href="{{route('FiltersUsers')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Usuarios </a>
+            <a class="side-font sidebar-margin-elements" href="{{route('FiltersUsersProjects')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Usuarios en Proyectos </a>
+            @endif
+            @if(Auth::user()->Clave_Rol==2 || Auth::user()->Clave_Rol==4)
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-cool" style="margin-top: 0% !important;">
+                    <span><strong>Gráficas </strong></span>
+                </h6>
+            @endif
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-cool">
         <span>
             <strong>
