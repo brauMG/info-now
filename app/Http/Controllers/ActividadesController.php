@@ -210,19 +210,48 @@ class ActividadesController extends Controller
             ->join('Companias', 'Actividades.Clave_Compania', '=', 'Companias.Clave')
             ->where('Actividades.Clave_Compania', '=', Auth::user()->Clave_Compania)
             ->join('Proyectos', 'Actividades.Clave_Proyecto', '=', 'Proyectos.Clave')
-            ->whereIn('Actividades.Clave_Proyecto', $proyectos)
+            ->where(function($query) use ($proyectos, $request) {
+                if ($proyectos != null) {
+                    $query->whereIn('Actividades.Clave_Proyecto', $proyectos);
+                }
+            })
             ->join('Usuarios', 'Actividades.Clave_Usuario', '=', 'Usuarios.Clave')
-            ->whereIn('Actividades.Clave_Usuario', $usuarios)
+            ->where(function($query) use ($usuarios, $request) {
+                if ($usuarios != null) {
+                    $query->whereIn('Actividades.Clave_Usuario', $usuarios);
+                }
+            })
             ->join('Etapas', 'Actividades.Clave_Etapa', '=', 'Etapas.Clave')
-            ->whereIn('Actividades.Clave_Etapa', $etapas)
+            ->where(function($query) use ($etapas, $request) {
+                if ($etapas != null) {
+                    $query->whereIn('Actividades.Clave_Etapa', $etapas);
+                }
+            })
             ->join('Fases', 'Actividades.Clave_Fase', '=', 'Fases.Clave')
-            ->whereIn('Actividades.Clave_Fase', $fases)
-            ->whereBetween('Actividades.FechaCreacion', [$desde, $hasta])
-            ->whereIn('Actividades.Estado', $estados)
+            ->where(function($query) use ($fases, $request) {
+                if ($fases != null) {
+                    $query->whereIn('Actividades.Clave_Fase', $fases);
+                }
+            })
+            ->where(function($query) use ($desde, $request) {
+                if ($desde != null) {
+                    $query->whereDate('Actividades.FechaCreacion', '>=', $desde);
+                }
+            })
+            ->where(function($query) use ($hasta, $request) {
+                if ($hasta != null) {
+                    $query->whereDate('Actividades.FechaCreacion', '<=', $hasta);
+                }
+            })
+            ->where(function($query) use ($estados, $request) {
+                if ($estados != null) {
+                    $query->whereIn('Actividades.Estado', $estados);
+                }
+            })
             ->select('Actividades.*', 'Etapas.Descripcion as Etapa', 'Companias.Descripcion as Compania', 'Fases.Descripcion as Fase', 'Usuarios.Nombres as Usuario', 'Proyectos.Descripcion as Proyecto')
             ->get();
 
-
+        dd($actividades);
 
         $pdf = PDF::loadView('pdf.activities', compact('actividades', 'date', 'time'));
 
