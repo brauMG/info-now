@@ -7,7 +7,7 @@
     <div class="container container-rapi2">
         <main role="main" class="ml-sm-auto">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2 h2-less">Etapas</h1>
+                <h1 class="h2 h2-less">Roles en Proyectos</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
                         <a type="button" class="btn-less btn btn-info" id="new" href="{{route('Select')}}"><i class="fas fa-plus"></i> Agregar Usuario a Proyecto</a>

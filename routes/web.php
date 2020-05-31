@@ -129,7 +129,8 @@ Route::post('/Admin/Actividades/Delete/{id}', 'ActividadesController@delete');
 Route::get('/Admin/Actividades/ChangeStatus/{id}','ActividadesController@editStatus');
 Route::put('/Admin/Actividades/UpdateStatus/{id}','ActividadesController@updateStatus')->name('UpdateStatusActivity');
 Route::get('/Admin/Actividades/Prepare','ActividadesController@preparePdf')->name('FiltersActivities');
-Route::get('/Admin/Actividades/PDF','ActividadesController@exportPdf')->name('ActivitiesPDF');
+Route::post('/Admin/Actividades/PDF','ActividadesController@exportPdf')->name('ActivitiesPDF');
+Route::get('/Admin/PDF/activities','ActividadesController@exportPdf')->name('DownloadActivitiesPDF');
 
 Route::get('/Admin/RolesProyectos', 'RolesProyectosController@index');
 Route::get('/Admin/RolesProyectos/New', 'RolesProyectosController@new')->name('NewProjectUser');

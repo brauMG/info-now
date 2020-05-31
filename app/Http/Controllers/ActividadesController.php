@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Areas;
 use App\Etapas;
 use App\RolProyecto;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -14,6 +15,8 @@ use App\Actividad;
 use App\Fase;
 use App\Proyecto;
 use App\Status;
+use PDF;
+
 class ActividadesController extends Controller
 {
     public function __construct(){
@@ -120,6 +123,9 @@ class ActividadesController extends Controller
     }
 
     public function store(Request $request){
+        $datetime = Carbon::now();
+        $datetime->setTimezone('GMT-7');
+        $date = $datetime->toDateString();
         $etapa = $request->input('etapa');
         $etapaData = Etapas::where('Clave', $etapa)->first();
 
@@ -137,7 +143,7 @@ class ActividadesController extends Controller
             'Clave_Proyecto' => $proyectoId,
             'Descripcion' => $actividad['descripcion'],
             'Decision' => $actividad['decision'],
-            'FechaCreacion' => Carbon::now(),
+            'FechaCreacion' => $date,
             'Estado' => 0,
             'Clave_Usuario' => $usuarioId,
             'Clave_Fase' => $etapaData->Clave_Fase,
@@ -169,7 +175,57 @@ class ActividadesController extends Controller
     }
 
     public function preparePdf(Request $request) {
+        $etapas = DB::table('Etapas')
+            ->leftJoin('Proyectos', 'Etapas.Clave_Proyecto', '=', 'Proyectos.Clave')
+            ->select('Etapas.Clave as Clave', 'Proyectos.Descripcion as Proyecto', 'Etapas.Descripcion as Etapa')
+            ->where('Etapas.Clave_Compania', '=', Auth::user()->Clave_Compania)
+            ->get();
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $proyectos = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $fases = Fase::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $usuarios = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 3)->orWhere('Clave_Rol', 4)->get();
+        $estados = [
+            0,
+            1,
+            2
+        ];
         return view('Admin.Actividades.prepare', compact('proyectos', 'fases', 'usuarios', 'etapas', 'estados', 'compania'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $proyectos = $request->input('proyectos');
+        $etapas = $request->input('etapas');
+        $desde = $request->input('desde');
+        $hasta = $request->input('hasta');
+        $usuarios = $request->input('usuarios');
+        $fases = $request->input('fases');
+        $estados = $request->input('estados');
+        $datetime = Carbon::now();
+        $datetime->setTimezone('GMT-7');
+        $date = $datetime->toDateString();
+        $time = $datetime->toTimeString();
+
+        $actividades = DB::table('Actividades')
+            ->join('Companias', 'Actividades.Clave_Compania', '=', 'Companias.Clave')
+            ->where('Actividades.Clave_Compania', '=', Auth::user()->Clave_Compania)
+            ->join('Proyectos', 'Actividades.Clave_Proyecto', '=', 'Proyectos.Clave')
+            ->whereIn('Actividades.Clave_Proyecto', $proyectos)
+            ->join('Usuarios', 'Actividades.Clave_Usuario', '=', 'Usuarios.Clave')
+            ->whereIn('Actividades.Clave_Usuario', $usuarios)
+            ->join('Etapas', 'Actividades.Clave_Etapa', '=', 'Etapas.Clave')
+            ->whereIn('Actividades.Clave_Etapa', $etapas)
+            ->join('Fases', 'Actividades.Clave_Fase', '=', 'Fases.Clave')
+            ->whereIn('Actividades.Clave_Fase', $fases)
+            ->whereBetween('Actividades.FechaCreacion', [$desde, $hasta])
+            ->whereIn('Actividades.Estado', $estados)
+            ->select('Actividades.*', 'Etapas.Descripcion as Etapa', 'Companias.Descripcion as Compania', 'Fases.Descripcion as Fase', 'Usuarios.Nombres as Usuario', 'Proyectos.Descripcion as Proyecto')
+            ->get();
+
+
+
+        $pdf = PDF::loadView('pdf.activities', compact('actividades', 'date', 'time'));
+
+        return $pdf->download('actividades.pdf');
     }
 }
