@@ -251,8 +251,6 @@ class ActividadesController extends Controller
             ->select('Actividades.*', 'Etapas.Descripcion as Etapa', 'Companias.Descripcion as Compania', 'Fases.Descripcion as Fase', 'Usuarios.Nombres as Usuario', 'Proyectos.Descripcion as Proyecto')
             ->get();
 
-        dd($actividades);
-
         $pdf = PDF::loadView('pdf.activities', compact('actividades', 'date', 'time'));
 
         return $pdf->download('actividades.pdf');
