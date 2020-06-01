@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
+
 
 class EtapasController
 {
@@ -166,5 +168,56 @@ class EtapasController
             ]);
         }
         return redirect('/Admin/Etapas')->with('mensaje', "La etapa fue editada correctamente");
+    }
+
+    public function preparePdf(Request $request) {
+        $etapas = DB::table('Etapas')
+            ->leftJoin('Proyectos', 'Etapas.Clave_Proyecto', '=', 'Proyectos.Clave')
+            ->select('Etapas.Clave as Clave', 'Proyectos.Descripcion as Proyecto', 'Etapas.Descripcion as Etapa')
+            ->where('Etapas.Clave_Compania', '=', Auth::user()->Clave_Compania)
+            ->get();
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $proyectos = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $fases = Fase::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+
+        return view('Admin.Etapas.prepare', compact('proyectos', 'fases', 'etapas', 'compania'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $proyectos = $request->input('proyectos');
+        $etapas2 = $request->input('etapas');
+        $fases = $request->input('fases');
+        $datetime = Carbon::now();
+        $datetime->setTimezone('GMT-7');
+        $date = $datetime->toDateString();
+        $time = $datetime->toTimeString();
+
+        $etapas = DB::table('Etapas')
+            ->where(function($query) use ($etapas2, $request) {
+                if ($etapas2 != null) {
+                    $query->whereIn('Etapas.Clave', $etapas2);
+                }
+            })
+            ->join('Companias', 'Etapas.Clave_Compania', '=', 'Companias.Clave')
+            ->where('Etapas.Clave_Compania', '=', Auth::user()->Clave_Compania)
+            ->join('Proyectos', 'Etapas.Clave_Proyecto', '=', 'Proyectos.Clave')
+            ->where(function($query) use ($proyectos, $request) {
+                if ($proyectos != null) {
+                    $query->whereIn('Etapas.Clave_Proyecto', $proyectos);
+                }
+            })
+            ->join('Fases', 'Etapas.Clave_Fase', '=', 'Fases.Clave')
+            ->where(function($query) use ($fases, $request) {
+                if ($fases != null) {
+                    $query->whereIn('Etapas.Clave_Fase', $fases);
+                }
+            })
+            ->select('Etapas.*', 'Companias.Descripcion as Compania', 'Fases.Descripcion as Fase', 'Proyectos.Descripcion as Proyecto')
+            ->get();
+
+        $pdf = PDF::loadView('pdf.stages', compact('etapas', 'date', 'time'));
+
+        return $pdf->download('etapas.pdf');
     }
 }

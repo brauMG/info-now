@@ -17,6 +17,8 @@ use App\Fase;
 use App\Enfoque;
 use App\Trabajo;
 use App\Indicador;
+use PDF;
+
 
 class ProyectosController extends Controller
 {
@@ -223,5 +225,82 @@ class ProyectosController extends Controller
             }
             return response()->json($usersArray);
         }
+    }
+
+    public function preparePdf(Request $request) {
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+        $areas=Areas::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $enfoques=Enfoque::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $trabajos=Trabajo::all();
+        $indicadores=Indicador::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $estados=Status::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $proyectos = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $fases = Fase::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+
+        return view('Admin.Proyectos.prepare', compact('proyectos', 'fases', 'estados', 'compania', 'areas', 'enfoques', 'trabajos', 'indicadores'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $proyectos2 = $request->input('proyectos');
+        $fases = $request->input('fases');
+        $estados = $request->input('estados');
+        $indicadores = $request->input('indicadores');
+        $trabajos = $request->input('trabajos');
+        $enfoques = $request->input('enfoques');
+        $areas = $request->input('areas');
+        $datetime = Carbon::now();
+        $datetime->setTimezone('GMT-7');
+        $date = $datetime->toDateString();
+        $time = $datetime->toTimeString();
+
+        $proyectos = DB::table('Proyectos')
+            ->where(function($query) use ($proyectos2, $request) {
+                if ($proyectos2 != null) {
+                    $query->whereIn('Proyectos.Clave', $proyectos2);
+                }
+            })
+            ->join('Fases', 'Proyectos.Clave_Fase', '=', 'Fases.Clave')
+            ->where(function($query) use ($fases, $request) {
+                if ($fases != null) {
+                    $query->whereIn('Proyectos.Clave_Fase', $fases);
+                }
+            })
+            ->join('Status', 'Proyectos.Clave_Status', '=', 'Status.Clave')
+            ->where(function($query) use ($estados, $request) {
+                if ($estados != null) {
+                    $query->whereIn('Proyectos.Clave_Status', $estados);
+                }
+            })
+            ->join('Indicador', 'Proyectos.Clave_Indicador', '=', 'Indicador.Clave')
+            ->where(function($query) use ($indicadores, $request) {
+                if ($indicadores != null) {
+                    $query->whereIn('Proyectos.Clave_Indicador', $indicadores);
+                }
+            })
+            ->join('Trabajos', 'Proyectos.Clave_Trabajo', '=', 'Trabajos.Clave')
+            ->where(function($query) use ($trabajos, $request) {
+                if ($trabajos != null) {
+                    $query->whereIn('Proyectos.Clave_Trabajo', $trabajos);
+                }
+            })
+            ->join('Enfoques', 'Proyectos.Clave_Enfoque', '=', 'Enfoques.Clave')
+            ->where(function($query) use ($enfoques, $request) {
+                if ($enfoques != null) {
+                    $query->whereIn('Proyectos.Clave_Enfoque', $enfoques);
+                }
+            })
+            ->join('Areas', 'Proyectos.Clave_Area', '=', 'Areas.Clave')
+            ->where(function($query) use ($areas, $request) {
+                if ($areas != null) {
+                    $query->whereIn('Proyectos.Clave_Area', $areas);
+                }
+            })
+            ->select('Proyectos.*', 'Fases.Descripcion as Fase', 'Status.status as Estado', 'Indicador.Descripcion as Indicador', 'Trabajos.Descripcion as Trabajo', 'Enfoques.Descripcion as Enfoque', 'Areas.Descripcion as Area')
+            ->get();
+
+        $pdf = PDF::loadView('pdf.projects', compact('proyectos', 'date', 'time'));
+
+        return $pdf->download('proyectos.pdf');
     }
 }

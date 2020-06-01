@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Areas;
+use App\Puesto;
+use App\Rol;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -108,5 +111,60 @@ class RolesProyectosController extends Controller
         else {
             return redirect('/Admin/RolesProyectos')->with('mensajeDanger', "Ese usuario ya esta agregado al proyecto");
         }
+    }
+
+    public function preparePdf(Request $request) {
+        $proyectos=Proyecto::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $fases=Fase::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $rasics=RolRASIC::all();
+        $usuarios=User::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+
+
+        return view('Admin.RolesProyectos.prepare', compact('proyectos', 'fases', 'rasics', 'usuarios', 'compania'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $proyectos = $request->input('proyectos');
+        $fases = $request->input('fases');
+        $rasics = $request->input('rasics');
+        $usuarios = $request->input('usuarios');
+        $datetime = Carbon::now();
+        $datetime->setTimezone('GMT-7');
+        $date = $datetime->toDateString();
+        $time = $datetime->toTimeString();
+
+        $rolesUser = DB::table('RolesProyectos')
+            ->join('Proyectos', 'RolesProyectos.Clave_Proyecto', '=', 'Proyectos.Clave')
+            ->where(function($query) use ($proyectos, $request) {
+                if ($proyectos != null) {
+                    $query->whereIn('RolesProyectos.Clave_Proyecto', $proyectos);
+                }
+            })
+            ->join('Fases', 'RolesProyectos.Clave_Fase', '=', 'Fases.Clave')
+            ->where(function($query) use ($fases, $request) {
+                if ($fases != null) {
+                    $query->whereIn('RolesProyectos.Clave_Fase', $fases);
+                }
+            })
+            ->join('RolesRASIC', 'RolesProyectos.Clave_Rol_RASIC', '=', 'RolesRASIC.Clave')
+            ->where(function($query) use ($rasics, $request) {
+                if ($rasics != null) {
+                    $query->whereIn('RolesProyectos.Clave_Rol_RASIC', $rasics);
+                }
+            })
+            ->join('Usuarios', 'RolesProyectos.Clave_Usuario', '=', 'Usuarios.Clave')
+            ->where(function($query) use ($usuarios, $request) {
+                if ($usuarios != null) {
+                    $query->whereIn('RolesProyectos.Clave_Usuario', $usuarios);
+                }
+            })
+            ->select('Proyectos.Descripcion as Proyecto', 'Fases.Descripcion as Fase', 'RolesRASIC.RolRASIC as RolRASIC', 'Usuarios.Nombres as Usuario')
+            ->get();
+
+        $pdf = PDF::loadView('pdf.userproject', compact('rolesUser', 'date', 'time'));
+
+        return $pdf->download('roles_en_proyectos.pdf');
     }
 }

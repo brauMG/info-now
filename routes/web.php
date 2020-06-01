@@ -76,7 +76,7 @@ Route::get('/Admin/Usuarios/ChangeCompany/{id}', 'UsuariosController@changeCompa
 //Route::get('/Admin/Usuarios/ChangePassword/{id}', 'UsuariosController@changePassword');
 //Route::get('/Admin/Usuarios/ImportExcelIndex', 'UsuariosController@ImportExcelIndex');
 Route::get('/Admin/Usuarios/Prepare','UsuariosController@preparePdf')->name('FiltersUsers');
-Route::get('/Admin/Usuarios/PDF','UsuariosController@exportPdf')->name('UsersPDF');
+Route::post('/Admin/Usuarios/PDF','UsuariosController@exportPdf')->name('UsersPDF');
 
 
 Route::get('/Admin/Fases', 'FasesController@index');
@@ -95,7 +95,7 @@ Route::post('/Admin/Etapas/Create', 'EtapasController@store')->name('CreateEtapa
 Route::put('/Admin/Etapas/Update/{id}', 'EtapasController@update')->name('UpdateEtapa');
 Route::post('/Admin/Etapas/Delete/{id}', 'EtapasController@delete')->name('DeleteEtapa');
 Route::get('/Admin/Etapas/Prepare','EtapasController@preparePdf')->name('FiltersStages');
-Route::get('/Admin/Etapas/PDF','EtapasController@exportPdf')->name('StagesPDF');
+Route::post('/Admin/Etapas/PDF','EtapasController@exportPdf')->name('StagesPDF');
 
 Route::get('/Admin/Roles', 'RolesController@index');
 Route::get('/Admin/Roles/New', 'RolesController@new');
@@ -115,7 +115,7 @@ Route::get('/Admin/Area/Project/Users', 'ProyectosController@getUsers');
 //Route::get('/Admin/Proyectos/ProyectByCompany/{company}','ProyectosController@ProyectByCompany');
 //Route::post('/Admin/Proyectos/Delete/{id}','ProyectosController@delete')->name('DeleteProject');
 Route::get('/Admin/Proyectos/Prepare','ProyectosController@preparePdf')->name('FiltersProjects');
-Route::get('/Admin/Proyectos/PDF','ProyectosController@exportPdf')->name('ProjectsPDF');
+Route::post('/Admin/Proyectos/PDF','ProyectosController@exportPdf')->name('ProjectsPDF');
 
 Route::get('/Admin/MisProyectos', 'ProyectosController@index');
 
@@ -130,7 +130,6 @@ Route::get('/Admin/Actividades/ChangeStatus/{id}','ActividadesController@editSta
 Route::put('/Admin/Actividades/UpdateStatus/{id}','ActividadesController@updateStatus')->name('UpdateStatusActivity');
 Route::get('/Admin/Actividades/Prepare','ActividadesController@preparePdf')->name('FiltersActivities');
 Route::post('/Admin/Actividades/PDF','ActividadesController@exportPdf')->name('ActivitiesPDF');
-Route::get('/Admin/PDF/activities','ActividadesController@exportPdf')->name('DownloadActivitiesPDF');
 
 Route::get('/Admin/RolesProyectos', 'RolesProyectosController@index');
 Route::get('/Admin/RolesProyectos/New', 'RolesProyectosController@new')->name('NewProjectUser');
@@ -139,7 +138,7 @@ Route::post('/Admin/RolesProyectos/Create', 'RolesProyectosController@store')->n
 Route::get('/Admin/RolesProyectos/ChangeStatus/{id}','RolesProyectosController@editStatus');
 Route::put('/Admin/RolesProyectos/UpdateStatus/{id}','RolesProyectosController@updateStatus')->name('UpdateStatusProjectUser');
 Route::get('/Admin/RolesProyectos/Prepare','RolesProyectosController@preparePdf')->name('FiltersUsersProjects');
-Route::get('/Admin/RolesProyectos/PDF','RolesProyectosController@exportPdf')->name('UsersProjectsPDF');
+Route::post('/Admin/RolesProyectos/PDF','RolesProyectosController@exportPdf')->name('UsersProjectsPDF');
 
 
 Route::get('/Admin/Trabajos', 'TrabajosController@index');

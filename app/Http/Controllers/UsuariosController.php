@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enfoque;
+use App\Fase;
+use App\Indicador;
+use App\Proyecto;
+use App\Status;
+use App\Trabajo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +19,8 @@ use Excel;
 use App\Rol;
 use App\Puesto;
 use App\User;
+use PDF;
+
 class UsuariosController extends Controller
 {
     //
@@ -191,5 +199,51 @@ class UsuariosController extends Controller
         $user->save();
         Auth::user()->fresh();
         return back();
+    }
+
+    public function preparePdf(Request $request) {
+        $areas=Areas::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $puestos=Puesto::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $roles=Rol::where('Clave', '!=', 1)->get();
+        $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
+
+        return view('Admin.Usuarios.prepare', compact('areas', 'puestos', 'roles', 'compania'));
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $areas = $request->input('areas');
+        $puestos = $request->input('puestos');
+        $roles = $request->input('roles');
+        $datetime = Carbon::now();
+        $datetime->setTimezone('GMT-7');
+        $date = $datetime->toDateString();
+        $time = $datetime->toTimeString();
+
+        $usuarios = DB::table('Usuarios')
+            ->join('Areas', 'Usuarios.Clave_Area', '=', 'Areas.Clave')
+            ->where(function($query) use ($areas, $request) {
+                if ($areas != null) {
+                    $query->whereIn('Usuarios.Clave_Area', $areas);
+                }
+            })
+            ->join('Puestos', 'Usuarios.Clave_Puesto', '=', 'Puestos.Clave')
+            ->where(function($query) use ($puestos, $request) {
+                if ($puestos != null) {
+                    $query->whereIn('Usuarios.Clave_Puesto', $puestos);
+                }
+            })
+            ->join('Roles', 'Usuarios.Clave_Rol', '=', 'Roles.Clave')
+            ->where(function($query) use ($roles, $request) {
+                if ($roles != null) {
+                    $query->whereIn('Usuarios.Clave_Rol', $roles);
+                }
+            })
+            ->select('Usuarios.*', 'Areas.Descripcion as Area', 'Roles.Rol as Rol', 'Puestos.Puesto as Puesto')
+            ->get();
+
+        $pdf = PDF::loadView('pdf.users', compact('usuarios', 'date', 'time'));
+
+        return $pdf->download('usuarios.pdf');
     }
 }
