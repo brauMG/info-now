@@ -52,7 +52,7 @@
                             </thead>
                             <tbody class="fonts" style="text-align: center">
                             <tr class="tr-card-complete">
-                                <td class="td filters-act-creation creation-mod">
+                                <td class="td filters-act-creation filters-mod">
                                     @if(count($fases) == 0)
                                         <a style="color: #c42623; font-size: 1.2em"><strong>No hay Fases</strong></a>
                                     @else
@@ -92,11 +92,34 @@
                             </tbody>
                         </table>
                         <div class="container" style="text-align: center; padding-top: 2%">
-                            <button type="submit" class="btn btn-primary">Generar Reporte</button>
+                            <button type="submit" class="btn btn-primary" onclick="myFunction()">Generar Reporte</button>
+                            <button type="reset" class="btn btn-warning" onclick="myFunction2()">Limpiar Campos</button>
+                            <div id="mySpan" style="text-align: center; padding-top: 1%; color: #16a817; text-transform: uppercase; display: none">
+                                <span><strong>El reporte se esta generando y se descargara automaticamente al finalizar</strong></span>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("mySpan");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+        function myFunction2() {
+            var x = document.getElementById("mySpan");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
 @endsection

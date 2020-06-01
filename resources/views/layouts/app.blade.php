@@ -114,11 +114,11 @@ use Illuminate\Support\Facades\URL;
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-cool" style="margin-top: 0% !important;">
                 <span><strong>Reportes </strong></span>
             </h6>
-            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades/Prepare')){ active } @else {} @endif" href="{{route('FiltersActivities')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Actividades </a>
-            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Etapas/Prepare')){ active } @else {} @endif" href="{{route('FiltersStages')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Etapas </a>
-            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Proyectos/Prepare')){ active } @else {} @endif" href="{{route('FiltersProjects')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Proyectos </a>
-            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Usuarios/Prepare')){ active } @else {} @endif" href="{{route('FiltersUsers')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Usuarios </a>
-            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/RolesProyectos/Prepare')){ active } @else {} @endif" href="{{route('FiltersUsersProjects')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-excel"></i> De Usuarios en Proyectos </a>
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades/Prepare')){ active } @else {} @endif" href="{{route('FiltersActivities')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-pdf"></i> De Actividades </a>
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Etapas/Prepare')){ active } @else {} @endif" href="{{route('FiltersStages')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-pdf"></i> De Etapas </a>
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Proyectos/Prepare')){ active } @else {} @endif" href="{{route('FiltersProjects')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-pdf"></i> De Proyectos </a>
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Usuarios/Prepare')){ active } @else {} @endif" href="{{route('FiltersUsers')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-pdf"></i> De Usuarios </a>
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/RolesProyectos/Prepare')){ active } @else {} @endif" href="{{route('FiltersUsersProjects')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-file-pdf"></i> De Usuarios en Proyectos </a>
             @endif
             @if(Auth::user()->Clave_Rol==2 || Auth::user()->Clave_Rol==4)
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-cool" style="margin-top: 0% !important;">
@@ -200,7 +200,7 @@ use Illuminate\Support\Facades\URL;
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Trabajos')){ active } @else {} @endif" href="{{ url('/Admin/Trabajos') }}"><i class="fas fa-network-wired"></i> Trabajos</a>
         @endif
 
-        @if(Auth::user()->Clave_Rol==2 || Auth::user()->Clave_Rol==4 || Auth::user()->Clave_Rol==3)
+        @if(Auth::user()->Clave_Rol==4 || Auth::user()->Clave_Rol==3)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades')){ active } @else {} @endif" href="{{ url('/Admin/Actividades') }}"><i class="fas fa-clipboard-list"></i> Actividades</a>
         @endif
     @endauth

@@ -41,7 +41,7 @@
                         </a>
                     </div>
                 @endif
-                @if(Auth::user()->Clave_Rol==1)
+                @if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2)
                     <div class="col text-center btn-hover">
                         <a @if(request()->path() == 'Admin/Status')){ } @else { href="{{ url('/Admin/Status') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Status')){ selected } @else {} @endif">
                             <div><i class="material-icons" style="vertical-align: bottom;">
@@ -61,7 +61,7 @@
                         </a>
                     </div>
                 @endif
-                @if(Auth::user()->Clave_Rol==4)
+                @if(Auth::user()->Clave_Rol==4||Auth::user()->Clave_Rol==3)
                     <div class="col text-center btn-hover">
                         <a @if(request()->path() == 'Admin/Proyectos')){ } @else { href="{{ url('/Admin/Proyectos') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Proyectos')){ selected } @else {} @endif">
                             <div><i class="material-icons" style="vertical-align: bottom;">
@@ -81,7 +81,17 @@
                         </a>
                     </div>
                 @endif
-                @if(Auth::user()->Clave_Rol==1)
+                    @if(Auth::user()->Clave_Rol==4)
+                        <div class="col text-center btn-hover">
+                            <a @if(request()->path() == 'Admin/Etapas')){ } @else { href="{{ url('/Admin/Etapas') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Etapas')){ selected } @else {} @endif">
+                                <div><i class="material-icons" style="vertical-align: bottom;">
+                                        layers
+                                    </i></div>
+                                <div>Etapas</div>
+                            </a>
+                        </div>
+                    @endif
+                @if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2)
                     <div class="col text-center btn-hover">
                         <a @if(request()->path() == 'Admin/RolesRASIC')){ } @else { href="{{ url('/Admin/RolesRASIC') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/RolesRASIC')){ selected } @else {} @endif">
                             <div><i class="material-icons" style="vertical-align: bottom;">
@@ -91,7 +101,7 @@
                         </a>
                     </div>
                 @endif
-                @if(Auth::user()->Clave_Rol==1)
+                @if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2)
                     <div class="col text-center btn-hover">
                         <a @if(request()->path() == 'Admin/Indicador')){ } @else { href="{{ url('/Admin/Indicador') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Indicador')){ selected } @else {} @endif">
                             <div><i class="material-icons" style="vertical-align: bottom;">
@@ -101,7 +111,7 @@
                         </a>
                     </div>
                 @endif
-                @if(Auth::user()->Clave_Rol==1)
+                @if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2)
                     <div class="col text-center btn-hover">
                         <a @if(request()->path() == 'Admin/Fases')){ } @else { href="{{ url('/Admin/Fases') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Fases')){ selected } @else {} @endif">
                             <div><i class="material-icons" style="vertical-align: bottom;">
@@ -111,7 +121,7 @@
                         </a>
                     </div>
                 @endif
-                @if(Auth::user()->Clave_Rol==1)
+                @if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2)
                     <div class="col text-center btn-hover">
                         <a @if(request()->path() == 'Admin/Enfoques')){ } @else { href="{{ url('/Admin/Enfoques') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Enfoques')){ selected } @else {} @endif">
                             <div><i class="material-icons" style="vertical-align: bottom;">
@@ -121,7 +131,7 @@
                         </a>
                     </div>
                 @endif
-                @if(Auth::user()->Clave_Rol==1)
+                @if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2)
                     <div class="col text-center btn-hover">
                         <a @if(request()->path() == 'Admin/Trabajos')){ } @else { href="{{ url('/Admin/Trabajos') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Trabajos')){ selected } @else {} @endif">
                             <div><i class="material-icons" style="vertical-align: bottom;">
@@ -131,7 +141,7 @@
                         </a>
                     </div>
                 @endif
-                @if(Auth::user()->Clave_Rol==1)
+                @if(Auth::user()->Clave_Rol==3||Auth::user()->Clave_Rol==4)
                     <div class="col text-center btn-hover">
                         <a @if(request()->path() == 'Admin/Actividades')){ } @else { href="{{ url('/Admin/Actividades') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Actividades')){ selected } @else {} @endif">
                             <div><i class="material-icons" style="vertical-align: bottom;">
@@ -141,42 +151,56 @@
                         </a>
                     </div>
                 @endif
-
-                    <div class="col text-center btn-hover">
-                        <a href="{{url('/Reportes/ActividadesEmpresaPorEnfoque')}}" class="btn btns-grid border-light btn-layout btn-grid">
-                            <div><i class="material-icons" style="vertical-align: bottom;">
-                                    attach_file
-                                </i></div>
-                            <div>Actividades de Enfoque</div>
-                        </a>
-                    </div>
-
-                    <div class="col text-center btn-hover">
-                        <a href="{{url('/Reportes/ActividadesEmpresaPorStatus')}}" class="btn btns-grid border-light btn-layout btn-grid">
-                            <div><i class="material-icons" style="vertical-align: bottom;">
-                                    attach_file
-                                </i></div>
-                            <div>Actividades de Estado</div>
-                        </a>
-                    </div>
-
-                    <div class="col text-center btn-hover">
-                        <a href="{{url('/Reportes/Proyectos')}}" class="btn btns-grid border-light btn-layout btn-grid">
-                            <div><i class="material-icons" style="vertical-align: bottom;">
-                                    attach_file
-                                </i></div>
-                            <div>Asignaciones de Enfoque</div>
-                        </a>
-                    </div>
-
-                    <div class="col text-center btn-hover">
-                        <a href="{{url('/Reportes/Recursos')}}" class="btn btns-grid border-light btn-layout btn-grid">
-                            <div><i class="material-icons" style="vertical-align: bottom;">
-                                    attach_file
-                                </i></div>
-                            <div>Reporte de Recursos</div>
-                        </a>
-                    </div>
+                    @if(Auth::user()->Clave_Rol==2||Auth::user()->Clave_Rol==4)
+                        <div class="col text-center btn-hover">
+                            <a @if(request()->path() == 'Admin/Actividades/Prepare')){ } @else { href="{{ url('/Admin/Actividades/Prepare') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Actividades/Prepare')){ selected } @else {} @endif">
+                                <div><i class="material-icons" style="vertical-align: bottom;">
+                                        picture_as_pdf
+                                    </i></div>
+                                <div>Reporte de Actividades</div>
+                            </a>
+                        </div>
+                    @endif
+                    @if(Auth::user()->Clave_Rol==2||Auth::user()->Clave_Rol==4)
+                        <div class="col text-center btn-hover">
+                            <a @if(request()->path() == 'Admin/Etapas/Prepare')){ } @else { href="{{ url('/Admin/Etapas/Prepare') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Etapas/Prepare')){ selected } @else {} @endif">
+                                <div><i class="material-icons" style="vertical-align: bottom;">
+                                        picture_as_pdf
+                                    </i></div>
+                                <div>Reporte de Etapas</div>
+                            </a>
+                        </div>
+                    @endif
+                    @if(Auth::user()->Clave_Rol==2||Auth::user()->Clave_Rol==4)
+                        <div class="col text-center btn-hover">
+                            <a @if(request()->path() == 'Admin/Proyectos/Prepare')){ } @else { href="{{ url('/Admin/Proyectos/Prepare') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Proyectos/Prepare')){ selected } @else {} @endif">
+                                <div><i class="material-icons" style="vertical-align: bottom;">
+                                        picture_as_pdf
+                                    </i></div>
+                                <div>Reporte de Proyectos</div>
+                            </a>
+                        </div>
+                    @endif
+                    @if(Auth::user()->Clave_Rol==2||Auth::user()->Clave_Rol==4)
+                        <div class="col text-center btn-hover">
+                            <a @if(request()->path() == 'Admin/Usuarios/Prepare')){ } @else { href="{{ url('/Admin/Usuarios/Prepare') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Usuarios/Prepare')){ selected } @else {} @endif">
+                                <div><i class="material-icons" style="vertical-align: bottom;">
+                                        picture_as_pdf
+                                    </i></div>
+                                <div>Reporte de Usuarios</div>
+                            </a>
+                        </div>
+                    @endif
+                    @if(Auth::user()->Clave_Rol==2||Auth::user()->Clave_Rol==4)
+                        <div class="col text-center btn-hover">
+                            <a @if(request()->path() == 'Admin/RolesProyectos/Prepare')){ } @else { href="{{ url('/Admin/RolesProyectos/Prepare') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/RolesProyectos/Prepare')){ selected } @else {} @endif">
+                                <div><i class="material-icons" style="vertical-align: bottom;">
+                                        picture_as_pdf
+                                    </i></div>
+                                <div>Reporte de Usuarios en Proyectos</div>
+                            </a>
+                        </div>
+                    @endif
         </div>
     </div>
 </div>
