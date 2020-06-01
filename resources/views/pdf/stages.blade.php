@@ -1,8 +1,6 @@
 @extends('layouts.pdf')
 @section('content')
-    <div class="container">
-        <div data-simplebar class="table-responsive table-height">
-            <div class="col text-center">
+            <div class="text-center">
                 <table class="table table-bordered">
                     <thead class="table-header" style="font-size: 0.5em !important; background-color: #c6e2f5 !important; color: black !important; vertical-align: middle !important;">
                     <tr>
@@ -41,7 +39,5 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
 @endsection
 
