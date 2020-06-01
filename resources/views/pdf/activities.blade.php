@@ -1,6 +1,6 @@
 @extends('layouts.pdf')
 @section('content')
-        <div class="text-center">
+        <div class="text-center" style="margin-left: -4% !important;">
             <table class="table table-bordered">
                 <thead class="table-header" style="font-size: 0.5em !important; background-color: #c6e2f5 !important; color: black !important; vertical-align: middle !important;">
                 <tr>
