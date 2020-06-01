@@ -12,7 +12,7 @@
                     </thead>
                     <tbody>
                     @foreach ($rolesUser as $item)
-                        <tr id="{{$item->Clave}}">
+                        <tr>
                             <td class="td td-center" style="font-size: 0.5em !important;">{{$item->Proyecto}}</td>
                             <td class="td td-center" style="font-size: 0.5em !important;">{{$item->Usuario}}</td>
                             <td class="td td-center" style="font-size: 0.5em !important;">{{$item->Fase}}</td>
