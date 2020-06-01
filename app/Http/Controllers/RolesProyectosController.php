@@ -15,6 +15,7 @@ use App\Fase;
 use App\Proyecto;
 use App\RolRASIC;
 use App\User;
+use PDF;
 
 class RolesProyectosController extends Controller
 {
