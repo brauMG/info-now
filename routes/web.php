@@ -42,7 +42,7 @@ Route::get('/Admin/Status/New', 'StatusController@new');
 Route::get('/Admin/Status/Edit/{id}', 'StatusController@edit');
 Route::get('/Admin/Status/Delete/{id}', 'StatusController@prepare');
 Route::post('/Admin/Status/Create', 'StatusController@store')->name('CreateStatus');
-Route::put('/Admin/Status/Update/{id}', 'StatusController@update')->name('UpdateStatus');
+Route::put('/Admin/Status/Update/{id}', 'StatusController@update')->name('UpdateStatusStatus');
 Route::post('/Admin/Status/Delete/{id}', 'StatusController@delete')->name('DeleteStatus');
 
 Route::get('/Admin/RolesRASIC', 'RolesRASICController@index');

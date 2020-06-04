@@ -6,7 +6,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form class="form" id="from" method="POST" action="{{ route('UpdateStatus',$statusId) }}">
+        <form class="form" id="from" method="POST" action="{{ route('UpdateStatusStatus',$statusId) }}">
             @method('PUT')
             @csrf
             <div class="modal-body">
@@ -35,6 +35,20 @@
                                 @if($count ==0)
                                     <option disabled selected>No Hay Compañias</option>
                                 @endif
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <div class="form-group">
+                            <label for="compania">¿Bloquea el proyecto?</label>
+                            <select class="form-control" id="activo" name="activo" required>
+                                @foreach($activos as $item)
+                                    @if($item == $statusActivo)
+                                        <option selected value="{{$item}}">@if($item == 1) No @elseif($item == 0) Si @endif</option>
+                                    @else
+                                        <option value="{{$item}}">@if($item == 1) No @elseif($item == 0) Si @endif</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                     </div>

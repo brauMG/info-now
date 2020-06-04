@@ -68,24 +68,45 @@
                     </thead>
                     <tbody>
                     @foreach ($proyecto as $item)
-                        <tr id="{{$item->Clave}}">
-                            <td class="td td-center">{{$item->Clave}}</td>
-                            <td class="td td-center">{{$item->Descripcion}}</td>
-                            <td class="td td-center">{{$item->Objectivo}}</td>
-                            <td class="td td-center">{{$item->Area}}</td>
-                            <td class="td td-center">
-                                <a class="btn btn btn-success no-href" @if($rol == 4) clave="{{$item->Clave}}" onclick="changeFase(this);" @endif><i class="fas fa-edit"></i> {{$item->Fase}}</a>
-                            </td>
-                            <td class="td td-center">{{$item->Enfoque}}</td>
-                            <td class="td td-center">{{$item->Trabajo}}</td>
-                            <td class="td td-center">{{$item->Indicador}}</td>
-                            <td class="td td-center">
-                                <a class="btn btn btn-warning no-href" @if($rol == 4)clave="{{$item->Clave}}" onclick="changeEstado(this);" @endif><i class="fas fa-edit"></i> {{$item->Status}}</a>
-                            </td>
-                            <td class="td td-center">
-                                <a class="btn btn btn-info no-href" href="{{route('TypeActivity', $item->Clave)}}"><i class="fas fa-edit"></i> Registrar Actividad</a>
-                            </td>
-                        </tr>
+                        @if($item->Activo == 1)
+                            <tr id="{{$item->Clave}}">
+                                <td class="td td-center">{{$item->Clave}}</td>
+                                <td class="td td-center">{{$item->Descripcion}}</td>
+                                <td class="td td-center">{{$item->Objectivo}}</td>
+                                <td class="td td-center">{{$item->Area}}</td>
+                                <td class="td td-center">
+                                    <a class="btn btn btn-success no-href" @if($rol == 4) clave="{{$item->Clave}}" onclick="changeFase(this);" @endif><i class="fas fa-edit"></i> {{$item->Fase}}</a>
+                                </td>
+                                <td class="td td-center">{{$item->Enfoque}}</td>
+                                <td class="td td-center">{{$item->Trabajo}}</td>
+                                <td class="td td-center">{{$item->Indicador}}</td>
+                                <td class="td td-center">
+                                    <a class="btn btn btn-warning no-href" @if($rol == 4)clave="{{$item->Clave}}" onclick="changeEstado(this);" @endif><i class="fas fa-edit"></i> {{$item->Status}}</a>
+                                </td>
+                                <td class="td td-center">
+                                    <a class="btn btn btn-info no-href" href="{{route('TypeActivity', $item->Clave)}}"><i class="fas fa-edit"></i> Registrar Actividad</a>
+                                </td>
+                            </tr>
+                        @elseif($item->Activo == 0)
+                            <tr id="{{$item->Clave}}">
+                                <td class="td td-center">{{$item->Clave}}</td>
+                                <td class="td td-center">{{$item->Descripcion}}</td>
+                                <td class="td td-center">{{$item->Objectivo}}</td>
+                                <td class="td td-center">{{$item->Area}}</td>
+                                <td class="td td-center">
+                                    <a class="btn btn btn-success no-href" style="background-color: gray; border-color: gray"><i class="fas fa-edit"></i> {{$item->Fase}}</a>
+                                </td>
+                                <td class="td td-center">{{$item->Enfoque}}</td>
+                                <td class="td td-center">{{$item->Trabajo}}</td>
+                                <td class="td td-center">{{$item->Indicador}}</td>
+                                <td class="td td-center">
+                                    <a class="btn btn btn-warning no-href" @if($rol == 4) clave="{{$item->Clave}}" onclick="changeEstado(this);" @endif style="background-color: #ab221f; border-color: #ab221f"><i class="fas fa-edit"></i> {{$item->Status}}</a>
+                                </td>
+                                <td class="td td-center">
+                                    <a class="btn btn btn-info no-href" style="background-color: gray !important; border-color: gray"><i class="fas fa-edit"></i> Registrar Actividad</a>
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                     </tbody>
                     <tfoot class="table-footer">

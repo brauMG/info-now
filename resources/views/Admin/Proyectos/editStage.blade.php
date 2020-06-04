@@ -9,6 +9,7 @@
         <form class="form" id="from" method="POST" action="{{ route('UpdateStage',[$proyectoFase['Clave']]) }}">
             @method('PUT')
             @csrf
+            <input type="hidden" value="{{$proyectoID}}" name="id">
             <div class="modal-body">
                 <tr>
                     <th for="inputGroupSelect01" class="th-card">

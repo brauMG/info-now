@@ -31,8 +31,13 @@ class StatusController extends Controller
         $statusId = $status[0]['Clave'];
         $status = $status[0];
         $company = Compania::all();
-        $statusCompany = $status['Clave_Compania'];
-        return view('Admin.Status.edit', compact('status', 'statusId', 'company', 'statusCompany', 'userRol'));
+        $statusActivo = $status['Clave_Compania'];
+        $statusCompany = $status['Activo'];
+        $activos = [
+            0,
+            1
+        ];
+        return view('Admin.Status.edit', compact('status', 'statusId', 'company', 'statusCompany','statusActivo', 'userRol', 'activos'));
     }
 
     public function new(){
@@ -41,11 +46,12 @@ class StatusController extends Controller
     public function store(Request $request){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $status = $request->validate([
-            'status' => ['required', 'string', 'max:150']
+            'status' => ['required', 'string', 'max:150'],
+            'activo' => ['required']
         ]);
         Status::create([
             'Status' => $status['status'],
-            'Activo' => 1,
+            'Activo' => $status['activo'],
             'FechaCreacion' => Carbon::today()->toDateString(),
             'Clave_Compania' => $compania['Clave']
         ]);
@@ -67,29 +73,87 @@ class StatusController extends Controller
     public function update(Request $request, $Clave){
         $status = Status::where('Clave', $Clave)->firstOrFail();
         $statusNew = $request->input('status');
+        $statusActive = $request->input('activo');
 
-        if ($statusNew == $status->status) {
-            $data = $request->validate([
-                'company' => ['required']
-            ]);
-            Status::where('Clave', $Clave)->update([
-                'Activo' => 1,
-                'FechaCreacion' => Carbon::today()->toDateString(),
-                'Clave_Compania' => $data['company']
-            ]);
+        if (Auth::user()->Clave_Rol == 2) {
+            if ($statusNew == $status->status) {
+                if ($statusActive == $status->activo) {
+
+                } else {
+                    $data = $request->validate([
+                        'activo' => ['required']
+                    ]);
+                    Status::where('Clave', $Clave)->update([
+                        'FechaCreacion' => Carbon::today()->toDateString(),
+                        'Activo' => $data['activo']
+                    ]);
+                }
+            } else if ($statusActive == $status->activo) {
+                $data = $request->validate([
+                    'status' => ['required', 'string', 'max:150']
+                ]);
+                Status::where('Clave', $Clave)->update([
+                    'Status' => $data['status'],
+                    'FechaCreacion' => Carbon::today()->toDateString()
+                ]);
+            } else {
+                $data = $request->validate([
+                    'status' => ['required', 'string', 'max:150'],
+                    'activo' => ['required'],
+                ]);
+                Status::where('Clave', $Clave)->update([
+                    'Status' => $data['status'],
+                    'FechaCreacion' => Carbon::today()->toDateString(),
+                    'Activo' => $data['activo']
+                ]);
+            }
+            return redirect('/Admin/Status')->with('mensaje', "El estado fue editado correctamente");
         }
-        else {
-            $data = $request->validate([
-                'status' => ['required', 'string', 'max:150'],
-                'company' => ['required']
-            ]);
-            Status::where('Clave', $Clave)->update([
-                'Status' => $data['status'],
-                'Activo' => 1,
-                'FechaCreacion' => Carbon::today()->toDateString(),
-                'Clave_Compania' => $data['company']
-            ]);
+        if (Auth::user()->Clave_Rol == 1) {
+            if ($statusNew == $status->status) {
+                if ($statusActive == $status->activo) {
+                    $data = $request->validate([
+                        'company' => ['required']
+                    ]);
+                    Status::where('Clave', $Clave)->update([
+                        'FechaCreacion' => Carbon::today()->toDateString(),
+                        'Clave_Compania' => $data['company']
+                    ]);
+                } else {
+                    $data = $request->validate([
+                        'company' => ['required'],
+                        'activo' => ['required']
+                    ]);
+                    Status::where('Clave', $Clave)->update([
+                        'FechaCreacion' => Carbon::today()->toDateString(),
+                        'Clave_Compania' => $data['company'],
+                        'Activo' => $data['activo']
+                    ]);
+                }
+            } else if ($statusActive == $status->activo) {
+                $data = $request->validate([
+                    'status' => ['required', 'string', 'max:150'],
+                    'company' => ['required']
+                ]);
+                Status::where('Clave', $Clave)->update([
+                    'Status' => $data['status'],
+                    'FechaCreacion' => Carbon::today()->toDateString(),
+                    'Clave_Compania' => $data['company']
+                ]);
+            } else {
+                $data = $request->validate([
+                    'status' => ['required', 'string', 'max:150'],
+                    'activo' => ['required'],
+                    'company' => ['required']
+                ]);
+                Status::where('Clave', $Clave)->update([
+                    'Status' => $data['status'],
+                    'FechaCreacion' => Carbon::today()->toDateString(),
+                    'Clave_Compania' => $data['company'],
+                    'Activo' => $data['activo']
+                ]);
+            }
+            return redirect('/Admin/Status')->with('mensaje', "El estado fue editado correctamente");
         }
-        return redirect('/Admin/Status')->with('mensaje', "El estado fue editado correctamente");
     }
 }

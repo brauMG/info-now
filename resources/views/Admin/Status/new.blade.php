@@ -10,13 +10,22 @@
             @csrf
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-12 col-md-4">
+                    <div class="col-6 col-md-4">
                         <div class="form-group">
                             <label>Estado</label>
                             <input class="form-control" type="text" id="status" name="status">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}" id="_token"/>
                             <div class="invalid-feedback" id="error_status" style="display: none;"></div>
                         </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="form-group">
+                        <label>¿Bloquea el proyecto?</label>
+                        <select class="form-control" name="activo" id="activo">
+                            <option value="1" selected>No</option>
+                            <option value="0">Si</option>
+                        </select>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actividad;
 use App\RolRASIC;
 use App\Status;
 use Carbon\Carbon;
@@ -40,7 +41,7 @@ class ProyectosController extends Controller
                 ->leftJoin('Enfoques', 'Enfoques.Clave', '=', 'Proyectos.Clave_Enfoque')
                 ->leftJoin('Trabajos', 'Trabajos.Clave', '=', 'Proyectos.Clave_Trabajo')
                 ->leftJoin('Indicador', 'Indicador.Clave', '=', 'Proyectos.Clave_Indicador')
-                ->select('Proyectos.Clave', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Descripcion', 'Status.status as Status', 'Areas.Descripcion as Area', 'Fases.Descripcion as Fase', 'Enfoques.Descripcion AS Enfoque', 'Trabajos.Descripcion As Trabajo', 'Indicador.Descripcion As Indicador', 'Objectivo')
+                ->select('Proyectos.Clave','Status.Activo as Activo', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Descripcion', 'Status.status as Status', 'Areas.Descripcion as Area', 'Fases.Descripcion as Fase', 'Enfoques.Descripcion AS Enfoque', 'Trabajos.Descripcion As Trabajo', 'Indicador.Descripcion As Indicador', 'Objectivo')
                 ->where('Proyectos.Clave_Compania', '=', Auth::user()->Clave_Compania)
                 ->get();
 
@@ -64,7 +65,7 @@ class ProyectosController extends Controller
                 ->leftJoin('Enfoques', 'Enfoques.Clave', '=', 'Proyectos.Clave_Enfoque')
                 ->leftJoin('Trabajos', 'Trabajos.Clave', '=', 'Proyectos.Clave_Trabajo')
                 ->leftJoin('Indicador', 'Indicador.Clave', '=', 'Proyectos.Clave_Indicador')
-                ->select('Proyectos.Clave', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Descripcion', 'Status.status as Status', 'Areas.Descripcion as Area', 'Fases.Descripcion as Fase', 'Enfoques.Descripcion AS Enfoque', 'Trabajos.Descripcion As Trabajo', 'Indicador.Descripcion As Indicador', 'Objectivo')
+                ->select('Proyectos.Clave','Status.Activo as Activo', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Descripcion', 'Status.status as Status', 'Areas.Descripcion as Area', 'Fases.Descripcion as Fase', 'Enfoques.Descripcion AS Enfoque', 'Trabajos.Descripcion As Trabajo', 'Indicador.Descripcion As Indicador', 'Objectivo')
                 ->where('RolesProyectos.Clave_Usuario', '=', Auth::user()->Clave)
                 ->get();
 
@@ -172,7 +173,9 @@ class ProyectosController extends Controller
         $OldFase = $OldFase[0]['Clave'];
         $fases=Fase::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
         $count = 0;
-        return view('Admin.Proyectos.editStage', compact('fases', 'count', 'OldFase', 'proyectoFase'));
+        $actividades = Actividad::where('Clave_Proyecto', $id)->where('Estado', 0)->get();
+        $proyectoID = $id;
+        return view('Admin.Proyectos.editStage', compact('fases', 'count', 'OldFase', 'proyectoFase', 'proyectoID'));
     }
 
     public function editStatus($id) {
@@ -186,13 +189,21 @@ class ProyectosController extends Controller
     }
 
     public function updateStage(Request $request, $Clave){
-        $fase = $request->validate([
+	    $id = $request->input('id');
+        $actividades = Actividad::where('Clave_Proyecto', $id)->where('Estado', 0)->get();
+
+        if (count($actividades) == 0) {
+            $fase = $request->validate([
             'fase' => ['required']
-        ]);
-        Proyecto::where('Clave', $Clave)->update([
-            'Clave_Fase' => $fase['fase']
-        ]);
-        return redirect('/Admin/Proyectos')->with('mensaje', "La fase del proyecto fue actualizada correctamente");
+            ]);
+            Proyecto::where('Clave', $Clave)->update([
+                'Clave_Fase' => $fase['fase']
+            ]);
+            return redirect('/Admin/Proyectos')->with('mensaje', "La fase del proyecto fue actualizada correctamente");
+        }
+        else {
+            return redirect('/Admin/Proyectos')->with('mensajeDanger', "Hay actividades pendientes por revisar. No se puede cambiar la fase del proyecto.");
+        }
     }
 
     public function updateStatus(Request $request, $Clave){

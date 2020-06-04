@@ -51,6 +51,7 @@
                     <tr>
                         <th scope="col" style="text-transform: uppercase">Clave</th>
                         <th scope="col" style="text-transform: uppercase">Descripción</th>
+                        <th scope="col" style="text-transform: uppercase">Activo</th>
                         <th scope="col" style="text-transform: uppercase">Acción</th>
                     </tr>
                     </thead>
@@ -59,6 +60,11 @@
                             <tr id="{{$item->Clave}}">
                                 <td class="td td-center">{{$item->Clave}}</td>
                                 <td class="td td-center">{{$item->status}}</td>
+                                @if($item->Activo == 1)
+                                    <td class="td td-center">Si</td>
+                                @else
+                                    <td class="td td-center">No, bloquea el proyecto</td>
+                                @endif
                                 <td  class="td td-center">
                                     <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="edit(this);"><i class="fas fa-edit"></i>Editar</a>
                                     <a class="btn-row btn btn-danger no-href" clave="{{$item->Clave}}" onclick="deleted(this);"><i class="fas fa-trash-alt"></i>Eliminar</a>
@@ -70,6 +76,7 @@
                     <tr>
                         <th style="text-transform: uppercase">Clave</th>
                         <th style="text-transform: uppercase">Descripción</th>
+                        <th style="text-transform: uppercase">Activo</th>
                         <th style="text-transform: uppercase">Acción</th>
                     </tr>
                     </tfoot>
