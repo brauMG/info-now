@@ -4,10 +4,13 @@
 namespace App\Http\Controllers;
 
 
+use App\Areas;
 use App\Charts\ProjectFocusChart;
 use App\Compania;
 use App\Fase;
+use App\Indicador;
 use App\Proyecto;
+use App\Status;
 use App\Trabajo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -92,18 +95,104 @@ class GraficasController extends Controller
 
         $fases = Fase::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $fases = $fases->unique('Descripcion');
-        $conteoFases = count($fases);
         $dataFases = [];
 
-        for ($i = 0; $i <= $conteoFases; $i++) {
-            $dataFases [] = [$i];
+        $i = 1;
+        foreach ($fases as $fase) {
+            foreach ($ProyectosFase as $proyecto) {
+                if ($proyecto->Clave_Fase == $fase->Clave) {
+                    $dataFases [$fase->Descripcion] = $i;
+                    $i++;
+                }
+            }
+            $i = 1;
         }
 
-        dd($dataFases);
+        $fases = array_keys($dataFases);
+        $conteoFases = array_values($dataFases);
+
+        //PROYECTOS POR INDICADOR
+        $ProyectosIndicador = DB::table('Proyectos')
+            ->leftJoin('Indicador', 'Proyectos.Clave_Indicador', 'Indicador.Clave')
+            ->select('Proyectos.Descripcion as Proyecto', 'Indicador.Descripcion as Indicador', 'Proyectos.Clave_Indicador')
+            ->get();
+
+        $indicadores = Indicador::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $indicadores = $indicadores->unique('Descripcion');
+        $dataIndicadores = [];
+
+        $i = 1;
+        foreach ($indicadores as $indicador) {
+            foreach ($ProyectosIndicador as $proyecto) {
+                if ($proyecto->Clave_Indicador == $indicador->Clave) {
+                    $dataIndicadores [$indicador->Descripcion] = $i;
+                    $i++;
+                }
+            }
+            $i = 1;
+        }
+
+        $indicadores = array_keys($dataIndicadores);
+        $conteoIndicadores = array_values($dataIndicadores);
+
+        //PROYECTOS POR AREA
+        $ProyectosArea = DB::table('Proyectos')
+            ->leftJoin('Areas', 'Proyectos.Clave_Area', 'Areas.Clave')
+            ->select('Proyectos.Descripcion as Proyecto', 'Areas.Descripcion as Area', 'Proyectos.Clave_Area')
+            ->get();
+
+        $areas = Areas::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $areas = $areas->unique('Descripcion');
+        $dataAreas = [];
+
+        $i = 1;
+        foreach ($areas as $area) {
+            foreach ($ProyectosArea as $proyecto) {
+                if ($proyecto->Clave_Area == $area->Clave) {
+                    $dataAreas [$area->Descripcion] = $i;
+                    $i++;
+                }
+            }
+            $i = 1;
+        }
+
+        $areas = array_keys($dataAreas);
+        $conteoAreas = array_values($dataAreas);
+
+        //PROYECTOS POR ESTADO
+        $ProyectosEstado = DB::table('Proyectos')
+            ->leftJoin('Status', 'Proyectos.Clave_Status', 'Status.Clave')
+            ->select('Proyectos.Descripcion as Proyecto', 'Status.status as Estado', 'Proyectos.Clave_Status')
+            ->get();
+
+        $estados = Status::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $estados = $estados->unique('status');
+        $dataEstados = [];
+
+        $i = 1;
+        foreach ($estados as $estado) {
+            foreach ($ProyectosEstado as $proyecto) {
+                if ($proyecto->Clave_Status == $estado->Clave) {
+                    $dataEstados [$estado->status] = $i;
+                    $i++;
+                }
+            }
+            $i = 1;
+        }
+
+        $estados = array_keys($dataEstados);
+        $conteoEstados = array_values($dataEstados);
 
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
 
-        return view('Admin.Graficas.proyectos', compact('ProyectosEnfoque','ProyectosTrabajo','ProyectosFase', 'compania', 'peCrecimiento', 'peCalidad', 'peGente', 'peServicio', 'peCosto', 'ptOperaciones', 'ptAdministrativo', 'ptProyectos', 'ptIniciativas', 'fases'));
+        return view('Admin.Graficas.proyectos', compact(
+            'ProyectosEnfoque', 'ProyectosTrabajo', 'ProyectosFase','ProyectosIndicador','ProyectosArea','ProyectosEstado', 'compania',
+                    'peCrecimiento', 'peCalidad', 'peGente', 'peServicio', 'peCosto',
+                    'ptOperaciones', 'ptAdministrativo', 'ptProyectos', 'ptIniciativas',
+                    'fases', 'conteoFases',
+                    'indicadores', 'conteoIndicadores',
+                    'areas', 'conteoAreas',
+                    'estados', 'conteoEstados'));
     }
 
     public function toActivities() {
