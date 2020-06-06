@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             RolesRASICTableSeeder::class,
             RolesTableSeeder::class,
             TrabajosTableSeeder::class,
-            UsuariosTableSeeder::class
+            UsuariosTableSeeder::class,
+            EnfoquesTableSeeder::class
         ]);
     }
 }

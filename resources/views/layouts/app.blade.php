@@ -59,11 +59,11 @@ use Illuminate\Support\Facades\URL;
     @if(Auth::user()->Clave_Rol=='1')
         <a class="navbar-brand ml-auto nav-name">
             <i class="fas fa-user-tie"></i>
-            <h6 class="h6-less"><strong>Super Administrador de <strong style="color: #0e84b5" onclick="ChangeCompany();">@yield('company','Sin Compañia')</strong>, {{ Auth::user()->Nombres }}</strong></h6>
+            <h6 class="h6-less"><strong>Super Administrador de <strong style="color: #0e84b5; cursor: pointer" onclick="ChangeCompany();">@yield('company','Sin Compañia')</strong>, {{ Auth::user()->Nombres }}</strong></h6>
         </a>
 
         <a class="navbar-brand ml-auto nav-name">
-            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
+            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right; cursor: pointer">
                 <i class="fas fa-sign-out-alt"></i>
                 <h6 class="h6-less"><strong>Salir</strong></h6>
             </div>
@@ -73,18 +73,18 @@ use Illuminate\Support\Facades\URL;
             <i class="fas fa-user-tie"></i>
             <h6 class="h6-less"><strong>Administrador de @yield('company','Sin Compañia'), {{ Auth::user()->Nombres }}</strong></h6>
         </a>
-        <a class="navbar-brand ml-auto nav-name">
-            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
+        <a class="navbar-brand ml-auto nav-name"style="cursor: pointer">
+            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right; cursor: pointer">
                 <i class="fas fa-sign-out-alt"></i>
                 <h6 class="h6-less"><strong>Salir</strong></h6>
             </div>
         </a>
     @elseif (Auth::user()->Clave_Rol=='3')
-        <a class="navbar-brand ml-auto nav-name">
+        <a class="navbar-brand ml-auto nav-name" style="cursor: pointer">
             <i class="fas fa-user-tie"></i>
             <h6 class="h6-less"><strong>Usuario de @yield('company','Sin Compañia'), {{ Auth::user()->Nombres }}</strong></h6>
         </a>
-        <a class="navbar-brand ml-auto nav-name">
+        <a class="navbar-brand ml-auto nav-name" style="cursor: pointer">
             <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
                 <i class="fas fa-sign-out-alt"></i>
                 <h6 class="h6-less"><strong>Salir</strong></h6>
@@ -95,7 +95,7 @@ use Illuminate\Support\Facades\URL;
             <i class="fas fa-user-tie"></i>
             <h6 class="h6-less"><strong>PMO de @yield('company','Sin Compañia'), {{ Auth::user()->Nombres }}</strong></h6>
         </a>
-        <a class="navbar-brand ml-auto nav-name">
+        <a class="navbar-brand ml-auto nav-name" style="cursor: pointer">
             <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
                 <i class="fas fa-sign-out-alt"></i>
                 <h6 class="h6-less"><strong>Salir</strong></h6>
@@ -124,6 +124,8 @@ use Illuminate\Support\Facades\URL;
                 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-cool" style="margin-top: 0% !important;">
                     <span><strong>Gráficas </strong></span>
                 </h6>
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Graficas/Proyectos')){ active } @else {} @endif" href="{{route('ChartsProjects')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-chart-pie"></i> De Proyectos </a>
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Graficas/Actividades')){ active } @else {} @endif" href="{{route('ChartsActivities')}}" style="padding-top: 2% !important; padding-bottom: 2% !important;"><i class="fas fa-chart-line"></i> De Actividades </a>
             @endif
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 text-cool">
         <span>

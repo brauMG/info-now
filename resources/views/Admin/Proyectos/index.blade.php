@@ -8,11 +8,13 @@
         <main role="main" class="ml-sm-auto">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2 h2-less">Proyectos en @yield('company','Sin Compañia')</h1>
+                @if($rol == 4)
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
-                        <a type="button" class="btn-less btn btn-info" id="new" @if($rol == 4) onclick="AddProject();" @endif><i class="fas fa-plus"></i> Agregar Proyecto</a>
+                        <a type="button" class="btn-less btn btn-info" id="new" onclick="AddProject();"><i class="fas fa-plus"></i> Agregar Proyecto</a>
                     </div>
                 </div>
+                @endif
             </div>
         </main>
         <div id="Alert"></div>

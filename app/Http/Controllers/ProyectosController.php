@@ -102,7 +102,7 @@ class ProyectosController extends Controller
         $company=Compania::where('Clave', Auth::user()->Clave_Compania)->get();
 	    $areas=Areas::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
 	    $fases=Fase::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
-	    $enfoques=Enfoque::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
+	    $enfoques=Enfoque::all();
 	    $trabajos=Trabajo::all();
 	    $indicadores=Indicador::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
         $estados=Status::where('Clave_Compania','=',Auth::user()->Clave_Compania)->get();
@@ -241,7 +241,7 @@ class ProyectosController extends Controller
     public function preparePdf(Request $request) {
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $areas=Areas::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
-        $enfoques=Enfoque::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
+        $enfoques=Enfoque::all();
         $trabajos=Trabajo::all();
         $indicadores=Indicador::where('Clave_Compania',Auth::user()->Clave_Compania)->get();
         $estados=Status::where('Clave_Compania',Auth::user()->Clave_Compania)->get();

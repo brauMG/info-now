@@ -20,30 +20,24 @@ class EnfoquesTableSeeder extends Seeder
         ]);
         DB::table('Enfoques')->insert([
             'Clave' => '2',
-            'Descripcion' => 'Calidad',
-            'FechaCreacion' => date('Y-m-d H:i:s'),
-            'Activo' => '1'
-        ]);
-        DB::table('Enfoques')->insert([
-            'Clave' => '3',
             'Descripcion' => 'Gente',
             'FechaCreacion' => date('Y-m-d H:i:s'),
             'Activo' => '1'
         ]);
         DB::table('Enfoques')->insert([
-            'Clave' => '4',
+            'Clave' => '3',
             'Descripcion' => 'Costo',
             'FechaCreacion' => date('Y-m-d H:i:s'),
             'Activo' => '1'
         ]);
         DB::table('Enfoques')->insert([
-            'Clave' => '5',
+            'Clave' => '4',
             'Descripcion' => 'Servicio',
             'FechaCreacion' => date('Y-m-d H:i:s'),
             'Activo' => '1'
         ]);
         DB::table('Enfoques')->insert([
-            'Clave' => '6',
+            'Clave' => '5',
             'Descripcion' => 'Crecimiento',
             'FechaCreacion' => date('Y-m-d H:i:s'),
             'Activo' => '1'

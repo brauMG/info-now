@@ -11,7 +11,6 @@
             </div>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <button type="button" class="btn-less btn btn-info" id="new" onclick="AddUser();"><i class="fas fa-plus"></i> Agregar Usuario</button>
-                <button type="button" class="btn-less btn btn-info" id="new" onclick="Import();" style="margin-left: 1%"><i class="fas fa-plus"></i> Importar Lista de Usuarios</button>
             </div>
         </main>
         <div id="Alert"></div>

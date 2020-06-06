@@ -148,6 +148,10 @@ Route::post('/Admin/Trabajos/Create', 'TrabajosController@create');
 Route::post('/Admin/Trabajos/Update', 'TrabajosController@update');
 Route::post('/Admin/Trabajos/Delete/{id}', 'TrabajosController@delete');
 
+Route::get('/Admin/Graficas/Proyectos', 'GraficasController@toProjects')->name('ChartsProjects');
+Route::get('/Admin/Graficas/Actividades', 'GraficasController@toActivities')->name('ChartsActivities');
+
+
 Route::get('/Admin/RolesFases', 'RolesFaseController@index');
 Route::get('/Admin/RolesFases/New', 'RolesFaseController@new');
 Route::get('/Admin/RolesFases/Edit/{id}', 'RolesFaseController@edit');

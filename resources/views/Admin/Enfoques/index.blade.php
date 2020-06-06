@@ -8,11 +8,6 @@
         <main role="main" class="ml-sm-auto">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2 h2-less">Enfoques</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <button type="button" class="btn-less btn btn-info" id="new" onclick="AddFocus();"><i class="fas fa-plus"></i> Agregar Enfoque</button>
-                    </div>
-                </div>
             </div>
         </main>
         <div id="Alert"></div>
@@ -51,7 +46,6 @@
                     <tr>
                         <th scope="col" style="text-transform: uppercase">Clave</th>
                         <th scope="col" style="text-transform: uppercase">Descripción</th>
-                        <th scope="col" style="text-transform: uppercase">Acción</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,10 +53,6 @@
                         <tr id="{{$item->Clave}}">
                             <td class="td td-center">{{$item->Clave}}</td>
                             <td class="td td-center">{{$item->Descripcion}}</td>
-                            <td class="td td-center">
-                                <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="edit(this);"><i class="fas fa-edit"></i>Editar</a>
-                                <a class="btn-row btn btn-danger no-href" clave="{{$item->Clave}}" onclick="deleted(this);"><i class="fas fa-trash-alt"></i>Eliminar</a>
-                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -70,7 +60,6 @@
                     <tr>
                         <th style="text-transform: uppercase">Clave</th>
                         <th style="text-transform: uppercase">Descripción</th>
-                        <th style="text-transform: uppercase">Acción</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -79,31 +68,5 @@
     </div>
     <script>
         $('.mydatatable').DataTable();
-
-        function AddFocus() {
-            $('#myModal').load( '{{ url('/Admin/Enfoques/New') }}',function(response, status, xhr)
-            {
-                if (status == "success")
-                    $('#myModal').modal('show');
-            });
-        }
-
-        function edit(button){
-            var clave = $(button).attr('clave');
-            $('#myModal').load( '{{ url('/Admin/Enfoques/Edit') }}/'+clave,function(response, status, xhr){
-                if ( status == "success" ) {
-                    $('#myModal').modal('show');
-                }
-            } );
-        }
-
-        function deleted(button){
-            var clave = $(button).attr('clave');
-            $('#myModal').load( '{{ url('/Admin/Enfoques/Delete') }}/'+clave,function(response, status, xhr){
-                if ( status == "success" ) {
-                    $('#myModal').modal('show');
-                }
-            } );
-        }
     </script>
 @endsection
