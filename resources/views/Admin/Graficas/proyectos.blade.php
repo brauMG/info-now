@@ -356,22 +356,30 @@
                     'Crecimiento'
                 ],
                 datasets: [
+                    @if($dataOperaciones > 0)
                     {
                         label: 'Operaciones',
                         data: Operaciones,
                     },
+                    @endif
+                        @if($dataAdministrativo > 0)
                     {
                         label: 'Administrativo',
                         data: Administrativo,
                     },
+                    @endif
+                        @if($dataProyectos > 0)
                     {
                         label: 'Proyectos',
                         data: Proyectos,
                     },
+                    @endif
+                        @if($dataIniciativas > 0)
                     {
                         label: 'Iniciativas',
                         data: Iniciativas,
                     }
+                    @endif
                 ]
             },
             options: {
