@@ -240,10 +240,10 @@ class GraficasController extends Controller
         $ptfCrecimientoIniciativas = Proyecto::where('Clave_Enfoque', 5)->where('Clave_Trabajo', 4)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $ptfCrecimientoIniciativas = count($ptfCrecimientoIniciativas);
 
-        $dataOperaciones = [0 => $ptfCalidadOperaciones, 1 => $ptfGenteOperaciones, 2 => $ptfCostoOperaciones, 3 => $ptfServicioOperaciones, 4 => $ptfCrecimientoOperaciones];
-        $dataAdministrativo = [0 => $ptfCalidadAdministrativo, 1 => $ptfGenteAdministrativo, 2 => $ptfCostoAdministrativo, 3 => $ptfServicioAdministrativo, 4 => $ptfCrecimientoAdministrativo];
-        $dataProyectos = [0 => $ptfCalidadProyectos, 1 => $ptfGenteProyectos, 2 => $ptfCostoProyectos, 3 => $ptfServicioProyectos, 4 => $ptfCrecimientoProyectos];
-        $dataIniciativas = [0 => $ptfCalidadIniciativas, 1 => $ptfGenteIniciativas, 2 => $ptfCostoIniciativas, 3 => $ptfServicioIniciativas, 4 => $ptfCrecimientoIniciativas];
+        $dataOperaciones = [0 => $ptfCalidadOperaciones, 1 => $ptfCostoOperaciones, 2 => $ptfServicioOperaciones, 3 => $ptfCrecimientoOperaciones, 4 => $ptfGenteOperaciones];
+        $dataAdministrativo = [0 => $ptfCalidadAdministrativo, 1 => $ptfCostoAdministrativo, 2 => $ptfServicioAdministrativo, 3 => $ptfCrecimientoAdministrativo, 4 => $ptfGenteAdministrativo];
+        $dataProyectos = [0 => $ptfCalidadProyectos, 1 => $ptfCostoProyectos, 2 => $ptfServicioProyectos, 3 => $ptfCrecimientoProyectos, 4 => $ptfGenteProyectos];
+        $dataIniciativas = [0 => $ptfCalidadIniciativas, 1 => $ptfCostoIniciativas, 2 => $ptfServicioIniciativas, 3 => $ptfCrecimientoIniciativas, 4 => $ptGenteIniciativas];
 
         $total = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $total = count($total);
