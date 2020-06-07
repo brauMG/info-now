@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Areas;
 use App\Charts\ProjectFocusChart;
 use App\Compania;
+use App\Enfoque;
 use App\Fase;
 use App\Indicador;
 use App\Proyecto;
@@ -92,6 +93,7 @@ class GraficasController extends Controller
             ->leftJoin('Fases', 'Proyectos.Clave_Fase', 'Fases.Clave')
             ->select('Proyectos.Descripcion as Proyecto', 'Fases.Descripcion as Fase', 'Proyectos.Clave_Fase')
             ->get();
+
 
         $fases = Fase::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $fases = $fases->unique('Descripcion');
@@ -180,6 +182,75 @@ class GraficasController extends Controller
             $i = 1;
         }
 
+        $estados = array_keys($dataEstados);
+        $conteoEstados = array_values($dataEstados);
+
+        //PROYECTOS POR TRABAJOS POR ENFOQUE
+        $ProyectosTrabajoEnfoque = DB::table('Proyectos')
+            ->leftJoin('Trabajos', 'Proyectos.Clave_Trabajo', 'Trabajos.Clave')
+            ->leftJoin('Enfoques', 'Proyectos.Clave_Enfoque', 'Enfoques.Clave')
+            ->select('Proyectos.Descripcion as Proyecto', 'Trabajos.Descripcion as Trabajo','Enfoques.Descripcion as Enfoque', 'Proyectos.Clave_Enfoque', 'Proyectos.Clave_Trabajo')
+            ->get();
+
+        // Operaciones
+        $ptfCalidadOperaciones = Proyecto::where('Clave_Enfoque', 1)->where('Clave_Trabajo', 1)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCalidadOperaciones = count($ptfCalidadOperaciones);
+        $ptfGenteOperaciones = Proyecto::where('Clave_Enfoque', 2)->where('Clave_Trabajo', 1)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfGenteOperaciones = count($ptfGenteOperaciones);
+        $ptfCostoOperaciones = Proyecto::where('Clave_Enfoque', 3)->where('Clave_Trabajo', 1)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCostoOperaciones = count($ptfCostoOperaciones);
+        $ptfServicioOperaciones = Proyecto::where('Clave_Enfoque', 4)->where('Clave_Trabajo', 1)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfServicioOperaciones = count($ptfServicioOperaciones);
+        $ptfCrecimientoOperaciones = Proyecto::where('Clave_Enfoque', 5)->where('Clave_Trabajo', 1)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCrecimientoOperaciones = count($ptfCrecimientoOperaciones);
+
+        // Administrativo
+        $ptfCalidadAdministrativo = Proyecto::where('Clave_Enfoque', 1)->where('Clave_Trabajo', 2)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCalidadAdministrativo = count($ptfCalidadAdministrativo);
+        $ptfGenteAdministrativo = Proyecto::where('Clave_Enfoque', 2)->where('Clave_Trabajo', 2)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfGenteAdministrativo = count($ptfGenteAdministrativo);
+        $ptfCostoAdministrativo = Proyecto::where('Clave_Enfoque', 3)->where('Clave_Trabajo', 2)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCostoAdministrativo = count($ptfCostoAdministrativo);
+        $ptfServicioAdministrativo = Proyecto::where('Clave_Enfoque', 4)->where('Clave_Trabajo', 2)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfServicioAdministrativo = count($ptfServicioAdministrativo);
+        $ptfCrecimientoAdministrativo = Proyecto::where('Clave_Enfoque', 5)->where('Clave_Trabajo', 2)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCrecimientoAdministrativo = count($ptfCrecimientoAdministrativo);
+
+        // Proyectos
+        $ptfCalidadProyectos = Proyecto::where('Clave_Enfoque', 1)->where('Clave_Trabajo', 3)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCalidadProyectos = count($ptfCalidadProyectos);
+        $ptfGenteProyectos = Proyecto::where('Clave_Enfoque', 2)->where('Clave_Trabajo', 3)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfGenteProyectos = count($ptfGenteProyectos);
+        $ptfCostoProyectos = Proyecto::where('Clave_Enfoque', 3)->where('Clave_Trabajo', 3)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCostoProyectos = count($ptfCostoProyectos);
+        $ptfServicioProyectos = Proyecto::where('Clave_Enfoque', 4)->where('Clave_Trabajo', 3)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfServicioProyectos = count($ptfServicioProyectos);
+        $ptfCrecimientoProyectos = Proyecto::where('Clave_Enfoque', 5)->where('Clave_Trabajo', 3)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCrecimientoProyectos = count($ptfCrecimientoProyectos);
+
+        // Iniciativas
+        $ptfCalidadIniciativas = Proyecto::where('Clave_Enfoque', 1)->where('Clave_Trabajo', 4)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCalidadIniciativas = count($ptfCalidadIniciativas);
+        $ptfGenteIniciativas = Proyecto::where('Clave_Enfoque', 2)->where('Clave_Trabajo', 4)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfGenteIniciativas = count($ptfGenteIniciativas);
+        $ptfCostoIniciativas = Proyecto::where('Clave_Enfoque', 3)->where('Clave_Trabajo', 4)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCostoIniciativas = count($ptfCostoIniciativas);
+        $ptfServicioIniciativas = Proyecto::where('Clave_Enfoque', 4)->where('Clave_Trabajo', 4)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfServicioIniciativas = count($ptfServicioIniciativas);
+        $ptfCrecimientoIniciativas = Proyecto::where('Clave_Enfoque', 5)->where('Clave_Trabajo', 4)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $ptfCrecimientoIniciativas = count($ptfCrecimientoIniciativas);
+
+        $dataOperaciones = [1 => $ptfCalidadOperaciones, 2 => $ptfGenteOperaciones, 3 => $ptfCostoOperaciones, 4 => $ptfServicioOperaciones, 5 => $ptfCrecimientoOperaciones];
+        $dataAdministrativo = [1 => $ptfCalidadAdministrativo, 2 => $ptfGenteAdministrativo, 3 => $ptfCostoAdministrativo, 4 => $ptfServicioAdministrativo, 5 => $ptfCrecimientoAdministrativo];
+        $dataProyectos = [1 => $ptfCalidadProyectos, 2 => $ptfGenteProyectos, 3 => $ptfCostoProyectos, 4 => $ptfServicioProyectos, 5 => $ptfCrecimientoProyectos];
+        $dataIniciativas = [1 => $ptfCalidadIniciativas, 2 => $ptfGenteIniciativas, 3 => $ptfCostoIniciativas, 4 => $ptfServicioIniciativas, 5 => $ptfCrecimientoIniciativas];
+
+        $dataOperaciones = array_values($dataOperaciones);
+        $dataAdministrativo = array_values($dataAdministrativo);
+        $dataProyectos = array_values($dataProyectos);
+        $dataIniciativas = array_values($dataIniciativas);
+
+
         $total = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $total = count($total);
 
@@ -189,13 +260,14 @@ class GraficasController extends Controller
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
 
         return view('Admin.Graficas.proyectos', compact(
-            'ProyectosEnfoque', 'ProyectosTrabajo', 'ProyectosFase','ProyectosIndicador','ProyectosArea','ProyectosEstado', 'compania','total',
+            'ProyectosEnfoque', 'ProyectosTrabajo', 'ProyectosFase','ProyectosIndicador','ProyectosArea','ProyectosTrabajoEnfoque','ProyectosEstado', 'compania','total',
                     'peCrecimiento', 'peCalidad', 'peGente', 'peServicio', 'peCosto',
                     'ptOperaciones', 'ptAdministrativo', 'ptProyectos', 'ptIniciativas',
                     'fases', 'conteoFases',
                     'indicadores', 'conteoIndicadores',
                     'areas', 'conteoAreas',
-                    'estados', 'conteoEstados'));
+                    'estados', 'conteoEstados',
+                    'dataOperaciones', 'dataAdministrativo', 'dataProyectos', 'dataIniciativas'));
     }
 
     public function toActivities() {
