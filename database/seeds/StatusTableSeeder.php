@@ -18,17 +18,5 @@ class StatusTableSeeder extends Seeder
             'FechaCreacion' => date('Y-m-d H:i:s'),
             'Activo' => '1'
         ]);
-        DB::table('Status')->insert([
-            'Clave' => '2',
-            'Status' => 'En Proceso',
-            'FechaCreacion' => date('Y-m-d H:i:s'),
-            'Activo' => '1'
-        ]);
-        DB::table('Status')->insert([
-            'Clave' => '3',
-            'Status' => 'Realizado',
-            'FechaCreacion' => date('Y-m-d H:i:s'),
-            'Activo' => '1'
-        ]);
     }
 }

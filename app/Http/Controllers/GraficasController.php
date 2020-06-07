@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Actividad;
 use App\Areas;
 use App\Charts\ProjectFocusChart;
 use App\Compania;
@@ -272,8 +273,61 @@ class GraficasController extends Controller
                     'dataOperaciones', 'dataAdministrativo', 'dataProyectos', 'dataIniciativas'));
     }
 
-    public function toActivities() {
+    public function toActivities()
+    {
+        //ACTIVIDADES POR PROYECTO
+        $ActividadesProyecto = DB::table('Actividades')
+            ->leftJoin('Proyectos', 'Actividades.Clave_Proyecto', 'Proyectos.Clave')
+            ->select('Actividades.Descripcion as Actividad', 'Proyectos.Descripcion as Proyecto', 'Actividades.Clave_Proyecto')
+            ->get();
+
+        $proyectos = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $proyectos = $proyectos->unique('Descripcion');
+        $dataProyectos = [];
+
+        $i = 1;
+        foreach ($proyectos as $proyecto) {
+            foreach ($ActividadesProyecto as $actividad) {
+                if ($actividad->Clave_Proyecto == $proyecto->Clave) {
+                    $dataProyectos [$proyecto->Descripcion] = $i;
+                    $i++;
+                }
+            }
+            $i = 1;
+        }
+
+        $proyectos = array_keys($dataProyectos);
+        $conteoProyectos = array_values($dataProyectos);
+
+        $total = Actividad::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $total = count($total);
+
+        //ACTIVIDADES POR ESTADO
+        $ActividadesEstado = DB::table('Actividades')
+            ->select('Actividades.Descripcion as Actividad','Actividades.Estado as Activo')
+            ->get();
+
+        $aePendiente = DB::table('Actividades')
+            ->select('Actividades.Descripcion as Actividad')
+            ->where('Actividades.Estado', 0)
+            ->get();
+        $aeAprobada = DB::table('Actividades')
+            ->select('Actividades.Descripcion as Actividad')
+            ->where('Actividades.Estado', 1)
+            ->get();
+        $aeDesaprobada = DB::table('Actividades')
+            ->select('Actividades.Descripcion as Actividad')
+            ->where('Actividades.Estado', 2)
+            ->get();
+
+        $aePendiente = count($aePendiente);
+        $aeAprobada = count($aeAprobada);
+        $aeDesaprobada = count($aeDesaprobada);
+
+
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
-        return view('Admin.Graficas.actividades', ['compania' => $compania]);
+
+        return view('Admin.Graficas.actividades', compact(
+            'total','compania','ActividadesProyecto','proyectos', 'conteoProyectos','ActividadesEstado','aePendiente','aeAprobada', 'aeDesaprobada'));
     }
 }
