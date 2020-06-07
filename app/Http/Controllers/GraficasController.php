@@ -243,7 +243,7 @@ class GraficasController extends Controller
         $dataOperaciones = [0 => $ptfCalidadOperaciones, 1 => $ptfCostoOperaciones, 2 => $ptfServicioOperaciones, 3 => $ptfCrecimientoOperaciones, 4 => $ptfGenteOperaciones];
         $dataAdministrativo = [0 => $ptfCalidadAdministrativo, 1 => $ptfCostoAdministrativo, 2 => $ptfServicioAdministrativo, 3 => $ptfCrecimientoAdministrativo, 4 => $ptfGenteAdministrativo];
         $dataProyectos = [0 => $ptfCalidadProyectos, 1 => $ptfCostoProyectos, 2 => $ptfServicioProyectos, 3 => $ptfCrecimientoProyectos, 4 => $ptfGenteProyectos];
-        $dataIniciativas = [0 => $ptfCalidadIniciativas, 1 => $ptfCostoIniciativas, 2 => $ptfServicioIniciativas, 3 => $ptfCrecimientoIniciativas, 4 => $ptGenteIniciativas];
+        $dataIniciativas = [0 => $ptfCalidadIniciativas, 1 => $ptfCostoIniciativas, 2 => $ptfServicioIniciativas, 3 => $ptfCrecimientoIniciativas, 4 => $ptfGenteIniciativas];
 
         $total = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $total = count($total);
