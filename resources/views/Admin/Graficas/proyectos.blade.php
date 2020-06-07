@@ -349,44 +349,41 @@
             type: 'horizontalBar',
             data: {
                 labels: [
-                    @if($dataOperaciones[0] == 0 & $dataAdministrativo[0] == 0 & $dataProyectos[0] == 0 & $dataIniciativas[0] == 0)
-                        @else
-                        'Calidad',
-                    @endif
-                        @if($dataOperaciones[1] == 0 & $dataAdministrativo[1] == 0 & $dataProyectos[1] == 0 & $dataIniciativas[1] == 0)
-                        @else
-                        'Gente',
-                    @endif
-                        @if($dataOperaciones[2] == 0 & $dataAdministrativo[2] == 0 & $dataProyectos[2] == 0 & $dataIniciativas[2] == 0)
-                        @else
-                        'Costo',
-                    @endif
-                        @if($dataOperaciones[3] == 0 & $dataAdministrativo[3] == 0 & $dataProyectos[3] == 0 & $dataIniciativas[3] == 0)
-                        @else
-                        'Servicio',
-                    @endif
-                        @if($dataOperaciones[4] == 0 & $dataAdministrativo[4] == 0 & $dataProyectos[4] == 0 & $dataIniciativas[4] == 0)
-                        @else
-                        'Crecimiento'
-                    @endif
+                    'Calidad',
+                    'Gente',
+                    'Costo',
+                    'Servicio',
+                    'Crecimiento'
                 ],
                 datasets: [
+                        @if($dataOperaciones[0] == 0 || $dataOperaciones[1] == 0 || $dataOperaciones[2] == 0 || $dataOperaciones[3] == 0 || $dataOperaciones[4] == 0)
+                        @else
                     {
                         label: 'Operaciones',
                         data: Operaciones,
                     },
+                        @endif
+                        @if($dataAdministrativo[0] == 0 || $dataAdministrativo[1] == 0 || $dataAdministrativo[2] == 0 || $dataAdministrativo[3] == 0 || $dataAdministrativo[4] == 0)
+                        @else
                     {
                         label: 'Administrativo',
                         data: Administrativo,
                     },
+                        @endif
+                        @if($dataProyectos[0] == 0 || $dataProyectos[1] == 0 || $dataProyectos[2] == 0 || $dataProyectos[3] == 0 || $dataProyectos[4] == 0)
+                        @else
                     {
                         label: 'Proyectos',
                         data: Proyectos,
                     },
+                        @endif
+                        @if($dataIniciativas[0] == 0 || $dataIniciativas[1] == 0 || $dataIniciativas[2] == 0 || $dataIniciativas[3] == 0 || $dataIniciativas[4] == 0)
+                        @else
                     {
                         label: 'Iniciativas',
                         data: Iniciativas,
                     }
+                        @endif
                 ]
             },
             options: {
