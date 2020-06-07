@@ -18,7 +18,7 @@
                                     <i class="fas fa-project-diagram"></i> <strong>Total de Proyectos:</strong> {{count($ProyectosEnfoque)}}
                                 </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                    <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 3%">
+                                    <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
                                         <div class="row row2 ">
                                             <table class="table-responsive table-card-inline">
                                                 <thead class="thead"  style="text-align: left">
@@ -350,40 +350,28 @@
             data: {
                 labels: [
                     'Calidad',
-                    'Costo',
+                    'Costos',
                     'Crecimiento',
                     'Gente',
                     'Servicio'
                 ],
                 datasets: [
-                        @if($dataOperaciones[0] == 0 & $dataOperaciones[1] == 0 & $dataOperaciones[2] == 0 & $dataOperaciones[3] == 0 & $dataOperaciones[4] == 0)
-                        @else
                     {
                         label: 'Operaciones',
                         data: Operaciones,
                     },
-                        @endif
-                        @if($dataAdministrativo[0] == 0 & $dataAdministrativo[1] == 0 & $dataAdministrativo[2] == 0 & $dataAdministrativo[3] == 0 & $dataAdministrativo[4] == 0)
-                        @else
                     {
                         label: 'Administrativo',
                         data: Administrativo,
                     },
-                        @endif
-                        @if($dataProyectos[0] == 0 & $dataProyectos[1] == 0 & $dataProyectos[2] == 0 & $dataProyectos[3] == 0 & $dataProyectos[4] == 0)
-                        @else
                     {
                         label: 'Proyectos',
                         data: Proyectos,
                     },
-                        @endif
-                        @if($dataIniciativas[0] == 0 & $dataIniciativas[1] == 0 & $dataIniciativas[2] == 0 & $dataIniciativas[3] == 0 & $dataIniciativas[4] == 0)
-                        @else
                     {
                         label: 'Iniciativas',
                         data: Iniciativas,
                     }
-                    @endif
                 ]
             },
             options: {
