@@ -350,9 +350,9 @@
             data: {
                 labels: [
                     'Calidad',
+                    'Servicios',
                     'Gente',
-                    'Costo',
-                    'Servicio',
+                    'Costos',
                     'Crecimiento'
                 ],
                 datasets: [
