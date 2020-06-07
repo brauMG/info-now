@@ -201,6 +201,26 @@
                             </a>
                         </div>
                     @endif
+                    @if(Auth::user()->Clave_Rol==2||Auth::user()->Clave_Rol==4)
+                        <div class="col text-center btn-hover">
+                            <a @if(request()->path() == 'Admin/Graficas/Proyectos')){ } @else { href="{{ url('/Admin/Graficas/Proyectos') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Graficas/Proyectos')){ selected } @else {} @endif">
+                                <div><i class="material-icons" style="vertical-align: bottom;">
+                                        analytics
+                                    </i></div>
+                                <div>Gráficas de Proyectos</div>
+                            </a>
+                        </div>
+                    @endif
+                    @if(Auth::user()->Clave_Rol==2||Auth::user()->Clave_Rol==4)
+                        <div class="col text-center btn-hover">
+                            <a @if(request()->path() == 'Admin/Graficas/Actividades')){ } @else { href="{{ url('/Admin/Graficas/Actividades') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Graficas/Actividades')){ selected } @else {} @endif">
+                                <div><i class="material-icons" style="vertical-align: bottom;">
+                                        analytics
+                                    </i></div>
+                                <div>Gráficas de Actividades</div>
+                            </a>
+                        </div>
+                    @endif
         </div>
     </div>
 </div>
