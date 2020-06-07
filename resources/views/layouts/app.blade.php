@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\URL;
 
     {{--Required for Charts--}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
 
     <!-- Styles -->
     <link href="{{ asset('bts4/css/bootstrap.css') }}" rel="stylesheet">
@@ -47,6 +48,7 @@ use Illuminate\Support\Facades\URL;
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/chartjs-plugin-colorschemes.js') }}"></script>
 
     {{--Required for tables--}}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

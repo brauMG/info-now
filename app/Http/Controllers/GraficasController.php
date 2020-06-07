@@ -180,13 +180,16 @@ class GraficasController extends Controller
             $i = 1;
         }
 
+        $total = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $total = count($total);
+
         $estados = array_keys($dataEstados);
         $conteoEstados = array_values($dataEstados);
 
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
 
         return view('Admin.Graficas.proyectos', compact(
-            'ProyectosEnfoque', 'ProyectosTrabajo', 'ProyectosFase','ProyectosIndicador','ProyectosArea','ProyectosEstado', 'compania',
+            'ProyectosEnfoque', 'ProyectosTrabajo', 'ProyectosFase','ProyectosIndicador','ProyectosArea','ProyectosEstado', 'compania','total',
                     'peCrecimiento', 'peCalidad', 'peGente', 'peServicio', 'peCosto',
                     'ptOperaciones', 'ptAdministrativo', 'ptProyectos', 'ptIniciativas',
                     'fases', 'conteoFases',

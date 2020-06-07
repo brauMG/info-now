@@ -14,6 +14,12 @@
                                 <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Enfoque</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
+                                <div class="container" style="text-align: right">
+                                    <i class="fas fa-project-diagram"></i> <strong>Total de Proyectos:</strong> {{count($ProyectosEnfoque)}}
+                                    <br>
+                                    <i class="fas fa-tasks"></i> <strong>Total de Enfoques:</strong> 5
+                                    <br>
+                                </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
                                     <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
                                         <div class="row row2 ">
@@ -53,6 +59,12 @@
                                 <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Trabajo</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
+                                <div class="container" style="text-align: right">
+                                    <i class="fas fa-project-diagram"></i> <strong>Total de Proyectos:</strong> {{count($ProyectosEnfoque)}}
+                                    <br>
+                                    <i class="fas fa-tasks"></i> <strong>Total de Trabajos:</strong> 4
+                                    <br>
+                                </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
                                     <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
                                         <div class="row row2 ">
@@ -92,6 +104,12 @@
                                 <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Fase</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
+                                <div class="container" style="text-align: right">
+                                    <i class="fas fa-project-diagram"></i> <strong>Total de Proyectos:</strong> {{count($ProyectosEnfoque)}}
+                                    <br>
+                                    <i class="fas fa-tasks"></i> <strong>Total de Fases:</strong> {{count($fases)}}
+                                    <br>
+                                </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
                                     <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
                                         <div class="row row2 ">
@@ -131,6 +149,12 @@
                                 <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Indicador</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
+                                <div class="container" style="text-align: right">
+                                    <i class="fas fa-project-diagram"></i> <strong>Total de Proyectos:</strong> {{count($ProyectosEnfoque)}}
+                                    <br>
+                                    <i class="fas fa-tasks"></i> <strong>Total de Indicadores:</strong> {{count($indicadores)}}
+                                    <br>
+                                </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
                                     <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
                                         <div class="row row2 ">
@@ -170,6 +194,12 @@
                                 <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Área</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
+                                <div class="container" style="text-align: right">
+                                    <i class="fas fa-project-diagram"></i> <strong>Total de Proyectos:</strong> {{count($ProyectosEnfoque)}}
+                                    <br>
+                                    <i class="fas fa-tasks"></i> <strong>Total de Áreas:</strong> {{count($areas)}}
+                                    <br>
+                                </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
                                     <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
                                         <div class="row row2 ">
@@ -206,9 +236,15 @@
 
                         <div class="card card-see-results" style="border: solid; margin-bottom: 3% !important;">
                             <div class="card-header card-header-cute" style="background-color: #055e76 !important">
-                                <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Área</h4>
+                                <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Estado</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
+                                <div class="container" style="text-align: right">
+                                    <i class="fas fa-project-diagram"></i> <strong>Total de Proyectos:</strong> {{count($ProyectosEnfoque)}}
+                                    <br>
+                                    <i class="fas fa-tasks"></i> <strong>Total de Estados:</strong> {{count($estados)}}
+                                    <br>
+                                </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
                                     <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
                                         <div class="row row2 ">
@@ -216,7 +252,7 @@
                                                 <thead class="thead"  style="text-align: left">
                                                 <tr class="tr-card-complete">
                                                     <th scope="col" class="th-card"><i class="far fa-check-square"></i> Proyecto</th>
-                                                    <th scope="col" class="th-card"><i class="far fa-check-circle"></i> Área</th>
+                                                    <th scope="col" class="th-card"><i class="far fa-check-circle"></i> Estado</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody class="fonts" style="text-align: left">
@@ -255,8 +291,9 @@
         var ctx4 = document.getElementById("ChartIndicator");
         var ctx5 = document.getElementById("ChartArea");
         var ctx6 = document.getElementById("ChartStatus");
+        var total = {!! json_encode($total) !!};
         var lineChart1 = new Chart(ctx1, {
-            type: 'horizontalBar',
+            type: 'pie',
             data: {
                 labels: [
                     'Calidad',
@@ -274,49 +311,36 @@
                             {{$peGente}},
                             {{$peServicio}}
                         ],
-                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
-                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"],
-                    borderWidth: 5,
-                    scaleSteps: 5,
-                    scaleStepWidth: 50,
-                    scaleStartValue: 0,
                 }]
             },
             options: {
-                // plugins: {}
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        },
-                        gridLines: {
-                            drawOnChartArea: false
-                        },
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        },
-                        gridLines: {
-                            drawOnChartArea: false
-                        },
-                    }]
-                },
+                responsive: true,
                 legend: {
-                    display: false
+                    position: 'right'
                 },
-                tooltips: {
-                    enabled: true
+                plugins: {
+                    colorschemes: {
+                        scheme: 'office.BlueGreen6'
+                    },
+                    datalabels: {
+                        formatter: (value, ctx1) => {
+                            let sum = 0;
+                            let dataArr = ctx1.chart.data.datasets[0].data;
+                            let percentage = (value*100 / total).toFixed(2)+"%";
+                            return percentage;
+                        },
+                        color: '#3e3e3e',
+                        font: {
+                            weight: 'bold',
+                            size: '14',
+                        },
+                    }
                 }
             }
         });
 
         var lineChart2 = new Chart(ctx2, {
-            type: 'horizontalBar',
+            type: 'pie',
             data: {
                 labels: [
                     'Operaciones',
@@ -332,42 +356,36 @@
                             {{$ptProyectos}},
                             {{$ptIniciativas}}
                         ],
-                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
-                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"],
-                    borderWidth: 5,
-                    scaleSteps: 5,
-                    scaleStepWidth: 50,
-                    scaleStartValue: 0,
                 }]
             },
             options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        }
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        }
-                    }]
-                },
+                responsive: true,
                 legend: {
-                    display: false
+                    position: 'right'
                 },
-                tooltips: {
-                    enabled: true
+                plugins: {
+                    colorschemes: {
+                        scheme: 'office.BlueGreen6'
+                    },
+                    datalabels: {
+                        formatter: (value, ctx2) => {
+                            let sum = 0;
+                            let dataArr = ctx2.chart.data.datasets[0].data;
+                            let percentage = (value*100 / total).toFixed(2)+"%";
+                            return percentage;
+                        },
+                        color: '#3e3e3e',
+                        font: {
+                            weight: 'bold',
+                            size: '14',
+                        },
+                    }
                 }
             }
         });
 
         var lineChart3 = new Chart(ctx3, {
-            type: 'horizontalBar',
+            type: 'pie',
             data: {
                 labels: [
                     @foreach($fases as $fase)
@@ -381,42 +399,36 @@
                                 "{{$conteo}}",
                             @endforeach
                         ],
-                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
-                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"],
-                    borderWidth: 5,
-                    scaleSteps: 5,
-                    scaleStepWidth: 50,
-                    scaleStartValue: 0,
                 }]
             },
             options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        }
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        }
-                    }]
-                },
+                responsive: true,
                 legend: {
-                    display: false
+                    position: 'right'
                 },
-                tooltips: {
-                    enabled: true
+                plugins: {
+                    colorschemes: {
+                        scheme: 'office.BlueGreen6'
+                    },
+                    datalabels: {
+                        formatter: (value, ctx3) => {
+                            let sum = 0;
+                            let dataArr = ctx3.chart.data.datasets[0].data;
+                            let percentage = (value*100 / total).toFixed(2)+"%";
+                            return percentage;
+                        },
+                        color: '#3e3e3e',
+                        font: {
+                            weight: 'bold',
+                            size: '14',
+                        },
+                    }
                 }
             }
         });
 
         var lineChart4 = new Chart(ctx4, {
-            type: 'horizontalBar',
+            type: 'pie',
             data: {
                 labels: [
                     @foreach($indicadores as $indicador)
@@ -430,42 +442,36 @@
                                 "{{$conteo}}",
                             @endforeach
                         ],
-                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
-                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"],
-                    borderWidth: 5,
-                    scaleSteps: 5,
-                    scaleStepWidth: 50,
-                    scaleStartValue: 0,
                 }]
             },
             options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        }
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        }
-                    }]
-                },
+                responsive: true,
                 legend: {
-                    display: false
+                    position: 'right'
                 },
-                tooltips: {
-                    enabled: true
+                plugins: {
+                    colorschemes: {
+                        scheme: 'office.BlueGreen6'
+                    },
+                    datalabels: {
+                        formatter: (value, ctx4) => {
+                            let sum = 0;
+                            let dataArr = ctx4.chart.data.datasets[0].data;
+                            let percentage = (value*100 / total).toFixed(2)+"%";
+                            return percentage;
+                        },
+                        color: '#3e3e3e',
+                        font: {
+                            weight: 'bold',
+                            size: '14',
+                        },
+                    }
                 }
             }
         });
 
         var lineChart5 = new Chart(ctx5, {
-            type: 'horizontalBar',
+            type: 'pie',
             data: {
                 labels: [
                     @foreach($areas as $area)
@@ -479,42 +485,36 @@
                                 "{{$conteo}}",
                             @endforeach
                         ],
-                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
-                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"],
-                    borderWidth: 5,
-                    scaleSteps: 5,
-                    scaleStepWidth: 50,
-                    scaleStartValue: 0,
                 }]
             },
             options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        }
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        }
-                    }]
-                },
+                responsive: true,
                 legend: {
-                    display: false
+                    position: 'right'
                 },
-                tooltips: {
-                    enabled: true
+                plugins: {
+                    colorschemes: {
+                        scheme: 'office.BlueGreen6'
+                    },
+                    datalabels: {
+                        formatter: (value, ctx5) => {
+                            let sum = 0;
+                            let dataArr = ctx5.chart.data.datasets[0].data;
+                            let percentage = (value*100 / total).toFixed(2)+"%";
+                            return percentage;
+                        },
+                        color: '#3e3e3e',
+                        font: {
+                            weight: 'bold',
+                            size: '14',
+                        },
+                    }
                 }
             }
         });
 
         var lineChart6 = new Chart(ctx6, {
-            type: 'horizontalBar',
+            type: 'pie',
             data: {
                 labels: [
                     @foreach($estados as $estado)
@@ -528,36 +528,30 @@
                                 "{{$conteo}}",
                             @endforeach
                         ],
-                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
-                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"],
-                    borderWidth: 5,
-                    scaleSteps: 5,
-                    scaleStepWidth: 50,
-                    scaleStartValue: 0,
                 }]
             },
             options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        }
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            suggestedMin: 0,
-                            min: 0,
-                        }
-                    }]
-                },
+                responsive: true,
                 legend: {
-                    display: false
+                    position: 'right'
                 },
-                tooltips: {
-                    enabled: true
+                plugins: {
+                    colorschemes: {
+                        scheme: 'office.BlueGreen6'
+                    },
+                    datalabels: {
+                        formatter: (value, ctx6) => {
+                            let sum = 0;
+                            let dataArr = ctx6.chart.data.datasets[0].data;
+                            let percentage = (value*100 / total).toFixed(2)+"%";
+                            return percentage;
+                        },
+                        color: '#3e3e3e',
+                        font: {
+                            weight: 'bold',
+                            size: '14',
+                        },
+                    }
                 }
             }
         });
