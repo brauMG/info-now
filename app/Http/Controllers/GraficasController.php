@@ -241,15 +241,15 @@ class GraficasController extends Controller
         $ptfCrecimientoIniciativas = count($ptfCrecimientoIniciativas);
 
 //        0 calidad
-//        1 gente
-//        2 servicios
-//        3 crecimiento
-//        4 costos
+//        1 costos
+//        2 crecimiento
+//        3 gente
+//        4 servicios
 
-        $dataOperaciones = [0 => $ptfCalidadOperaciones, 1 => $ptfGenteOperaciones, 2 => $ptfServicioOperaciones, 3 => $ptfCrecimientoOperaciones, 4 => $ptfCostoOperaciones];
-        $dataAdministrativo = [0 => $ptfCalidadAdministrativo, 1 => $ptfGenteAdministrativo, 2 => $ptfServicioAdministrativo, 3 => $ptfCrecimientoAdministrativo, 4 => $ptfCostoAdministrativo];
-        $dataProyectos = [0 => $ptfCalidadProyectos, 1 => $ptfGenteProyectos, 2 => $ptfServicioProyectos, 3 => $ptfCrecimientoProyectos, 4 => $ptfCostoProyectos];
-        $dataIniciativas = [0 => $ptfCalidadIniciativas, 1 => $ptfGenteIniciativas, 2 => $ptfServicioIniciativas, 3 => $ptfCrecimientoIniciativas, 4 => $ptfCostoIniciativas];
+        $dataOperaciones = [0 => $ptfCalidadOperaciones, 1 => $ptfCostoOperaciones, 2 => $ptfCrecimientoOperaciones, 3 => $ptfGenteOperaciones, 4 => $ptfServicioOperaciones];
+        $dataAdministrativo = [0 => $ptfCalidadAdministrativo, 1 => $ptfCostoAdministrativo, 2 => $ptfCrecimientoAdministrativo, 3 => $ptfGenteAdministrativo, 4 => $ptfServicioAdministrativo];
+        $dataProyectos = [0 => $ptfCalidadProyectos, 1 => $ptfCostoProyectos, 2 => $ptfCrecimientoProyectos, 3 => $ptfGenteProyectos, 4 => $ptfServicioProyectos];
+        $dataIniciativas = [0 => $ptfCalidadIniciativas, 1 => $ptfCostoIniciativas, 2 => $ptfCrecimientoIniciativas, 3 => $ptfGenteIniciativas, 4 => $ptfServicioIniciativas];
 
         $total = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $total = count($total);
