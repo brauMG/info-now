@@ -248,7 +248,7 @@ class GraficasController extends Controller
         $total = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $total = count($total);
 
-//        dd($dataOperaciones, $dataAdministrativo, $dataProyectos, $dataIniciativas);
+        dd($dataOperaciones, $dataAdministrativo, $dataProyectos, $dataIniciativas);
 
         $estados = array_keys($dataEstados);
         $conteoEstados = array_values($dataEstados);
