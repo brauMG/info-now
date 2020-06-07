@@ -327,10 +327,8 @@
                             let sum = 0;
                             let dataArr = ctx1.chart.data.datasets[0].data;
                             let percentage = (value*100 / total).toFixed(2)+"%";
-                            if (percentage > 0) {
-                                return percentage;
-                            }
-                            },
+                            return percentage;
+                        },
                         color: '#3e3e3e',
                         font: {
                             weight: 'bold',
@@ -374,10 +372,8 @@
                             let sum = 0;
                             let dataArr = ctx2.chart.data.datasets[0].data;
                             let percentage = (value*100 / total).toFixed(2)+"%";
-                            if (percentage > 0) {
-                                return percentage;
-                            }
-                            },
+                            return percentage;
+                        },
                         color: '#3e3e3e',
                         font: {
                             weight: 'bold',
@@ -419,10 +415,8 @@
                             let sum = 0;
                             let dataArr = ctx3.chart.data.datasets[0].data;
                             let percentage = (value*100 / total).toFixed(2)+"%";
-                            if (percentage > 0) {
-                                return percentage;
-                            }
-                            },
+                            return percentage;
+                        },
                         color: '#3e3e3e',
                         font: {
                             weight: 'bold',
@@ -464,10 +458,8 @@
                             let sum = 0;
                             let dataArr = ctx4.chart.data.datasets[0].data;
                             let percentage = (value*100 / total).toFixed(2)+"%";
-                            if (percentage > 0) {
-                                return percentage;
-                            }
-                            },
+                            return percentage;
+                        },
                         color: '#3e3e3e',
                         font: {
                             weight: 'bold',
@@ -509,10 +501,8 @@
                             let sum = 0;
                             let dataArr = ctx5.chart.data.datasets[0].data;
                             let percentage = (value*100 / total).toFixed(2)+"%";
-                            if (percentage > 0) {
-                                return percentage;
-                            }
-                            },
+                            return percentage;
+                        },
                         color: '#3e3e3e',
                         font: {
                             weight: 'bold',
@@ -554,10 +544,8 @@
                             let sum = 0;
                             let dataArr = ctx6.chart.data.datasets[0].data;
                             let percentage = (value*100 / total).toFixed(2)+"%";
-                            if (percentage > 0) {
-                                return percentage;
-                            }
-                            },
+                            return percentage;
+                        },
                         color: '#3e3e3e',
                         font: {
                             weight: 'bold',
