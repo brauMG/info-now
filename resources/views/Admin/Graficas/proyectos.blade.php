@@ -305,11 +305,21 @@
                 datasets: [{
                     data:
                         [
+                            @if ($peCalidad > 0)
                             {{$peCalidad}},
+                            @endif
+                            @if ($peCrecimiento > 0)
                             {{$peCrecimiento}},
+                            @endif
+                            @if ($peCosto > 0)
                             {{$peCosto}},
+                            @endif
+                            @if ($peGente > 0)
                             {{$peGente}},
+                            @endif
+                            @if ($peServicio > 0)
                             {{$peServicio}}
+                            @endif
                         ],
                 }]
             },
@@ -351,10 +361,18 @@
                 datasets: [{
                     data:
                         [
+                            @if ($ptOperaciones > 0)
                             {{$ptOperaciones}},
+                            @endif
+                            @if ($ptAdministrativo > 0)
                             {{$ptAdministrativo}},
+                            @endif
+                            @if ($ptProyectos > 0)
                             {{$ptProyectos}},
+                            @endif
+                            @if ($ptIniciativas > 0)
                             {{$ptIniciativas}}
+                            @endif
                         ],
                 }]
             },
