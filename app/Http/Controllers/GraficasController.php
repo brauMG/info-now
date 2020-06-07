@@ -250,7 +250,6 @@ class GraficasController extends Controller
         $dataProyectos = array_values($dataProyectos);
         $dataIniciativas = array_values($dataIniciativas);
 
-
         $total = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $total = count($total);
 
