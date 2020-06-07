@@ -350,10 +350,10 @@
             data: {
                 labels: [
                     'Calidad',
-                    'Servicios',
+                    'Costo',
+                    'Crecimiento',
                     'Gente',
-                    'Costos',
-                    'Crecimiento'
+                    'Servicio'
                 ],
                 datasets: [
                         @if($dataOperaciones[0] == 0 & $dataOperaciones[1] == 0 & $dataOperaciones[2] == 0 & $dataOperaciones[3] == 0 & $dataOperaciones[4] == 0)
