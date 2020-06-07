@@ -383,7 +383,7 @@
                         label: 'Iniciativas',
                         data: Iniciativas,
                     }
-                        @endif
+                    @endif
                 ]
             },
             options: {

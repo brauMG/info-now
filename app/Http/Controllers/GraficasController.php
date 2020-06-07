@@ -240,15 +240,10 @@ class GraficasController extends Controller
         $ptfCrecimientoIniciativas = Proyecto::where('Clave_Enfoque', 5)->where('Clave_Trabajo', 4)->where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $ptfCrecimientoIniciativas = count($ptfCrecimientoIniciativas);
 
-        $dataOperaciones = [1 => $ptfCalidadOperaciones, 2 => $ptfGenteOperaciones, 3 => $ptfCostoOperaciones, 4 => $ptfServicioOperaciones, 5 => $ptfCrecimientoOperaciones];
-        $dataAdministrativo = [1 => $ptfCalidadAdministrativo, 2 => $ptfGenteAdministrativo, 3 => $ptfCostoAdministrativo, 4 => $ptfServicioAdministrativo, 5 => $ptfCrecimientoAdministrativo];
-        $dataProyectos = [1 => $ptfCalidadProyectos, 2 => $ptfGenteProyectos, 3 => $ptfCostoProyectos, 4 => $ptfServicioProyectos, 5 => $ptfCrecimientoProyectos];
-        $dataIniciativas = [1 => $ptfCalidadIniciativas, 2 => $ptfGenteIniciativas, 3 => $ptfCostoIniciativas, 4 => $ptfServicioIniciativas, 5 => $ptfCrecimientoIniciativas];
-
-        $dataOperaciones = array_values($dataOperaciones);
-        $dataAdministrativo = array_values($dataAdministrativo);
-        $dataProyectos = array_values($dataProyectos);
-        $dataIniciativas = array_values($dataIniciativas);
+        $dataOperaciones = [0 => $ptfCalidadOperaciones, 1 => $ptfGenteOperaciones, 2 => $ptfCostoOperaciones, 3 => $ptfServicioOperaciones, 4 => $ptfCrecimientoOperaciones];
+        $dataAdministrativo = [0 => $ptfCalidadAdministrativo, 1 => $ptfGenteAdministrativo, 2 => $ptfCostoAdministrativo, 3 => $ptfServicioAdministrativo, 4 => $ptfCrecimientoAdministrativo];
+        $dataProyectos = [0 => $ptfCalidadProyectos, 1 => $ptfGenteProyectos, 2 => $ptfCostoProyectos, 3 => $ptfServicioProyectos, 4 => $ptfCrecimientoProyectos];
+        $dataIniciativas = [0 => $ptfCalidadIniciativas, 1 => $ptfGenteIniciativas, 2 => $ptfCostoIniciativas, 3 => $ptfServicioIniciativas, 4 => $ptfCrecimientoIniciativas];
 
         $total = Proyecto::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
         $total = count($total);
