@@ -164,7 +164,7 @@
                                             </tr>
                                             </thead>
                                             <tbody class="fonts" style="text-align: left">
-                                            @foreach($ActividadesUEtapas as $AE)
+                                            @foreach($ActividadesEtapas as $AE)
                                                 <tr class="tr-card-complete">
                                                     <td class="td" style="padding-top: 1%"><i class="fas fa-check-square"></i> {{$AE->Actividad}}</td>
                                                     <td class="td" style="padding-top: 1%"><i class="fas fa-question-circle"></i> {{$AE->Etapa}}</td>
