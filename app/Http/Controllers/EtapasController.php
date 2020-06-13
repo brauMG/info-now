@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use PDF;
 
 
-class EtapasController
+class EtapasController extends Controller
 {
     public function __construct(){
         $this->middleware(['auth', 'verified']);

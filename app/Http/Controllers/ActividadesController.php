@@ -152,6 +152,11 @@ class ActividadesController extends Controller
             'Hora_Vencimiento' => $etapaData->Hora_Vencimiento,
         ]);
 
+        $user = Auth::user();
+        $actity = DB::table('Actividades')->insertGetId(['Descripcion' => 'Descripcion']);
+
+        dd($actity);
+
         return redirect('/Admin/Actividades')->with('mensaje', "Nueva actividad agregada correctamente");
     }
     public function delete($id){
