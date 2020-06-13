@@ -13,7 +13,7 @@ class CompaniaController extends Controller
 {
     //
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
     public function index(){
         if(Auth::user()->Clave_Rol==1 ){

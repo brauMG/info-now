@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -19,11 +19,11 @@ class User extends Authenticatable
         'Clave_Compania',
         'Iniciales',
         'Nombres',
-        'Correo',
+        'email',
         'Clave_Area',
         'Clave_Puesto',
         'Clave_Rol',
-        'Contrasena',
+        'password',
         'UltimoLogin',
         'FechaCreacion',
         'Activo'
@@ -35,14 +35,19 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'Contrasena'
+        'password', 'remember_token'
     ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
     protected $guarded = ['Clave'];
     protected $table = 'Usuarios';
     protected $primaryKey = 'Clave';
     public $timestamps = false;
     public function getAuthPassword()
     {
-        return $this->Contrasena;
+        return $this->password;
     }
 }

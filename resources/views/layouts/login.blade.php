@@ -1,9 +1,5 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<?php
-use App\User;
-use App\MaturityLevel;
-?>
 <head>
     @yield('head')
     <link rel="icon" href="{{ URL::asset('/css/favicon.ico') }}" type="image/x-icon"/>

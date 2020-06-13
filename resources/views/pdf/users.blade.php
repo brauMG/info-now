@@ -18,7 +18,7 @@
                         <tr id="{{$item->Clave}}">
                             <td class="td td-center" style="font-size: 0.5em !important;">{{$item->Iniciales}}</td>
                             <td class="td td-center" style="font-size: 0.5em !important;">{{$item->Nombres}}</td>
-                            <td class="td td-center" style="font-size: 0.5em !important;">{{$item->Correo}}</td>
+                            <td class="td td-center" style="font-size: 0.5em !important;">{{$item->email}}</td>
                             <td class="td td-center" style="font-size: 0.5em !important;">{{$item->Area}}</td>
                             <td class="td td-center" style="font-size: 0.5em !important;">{{$item->Puesto}}</td>
                             <td class="td td-center" style="font-size: 0.5em !important;">{{$item->Rol}}</td>

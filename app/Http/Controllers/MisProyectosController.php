@@ -17,11 +17,10 @@ use App\Enfoque;
 use App\Trabajo;
 use App\Indicador;
 
-class MisProyectosController
+class MisProyectosController extends Controller
 {
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
+    public function __construct(){
+        $this->middleware(['auth', 'verified']);
     }
 
     public function index(){

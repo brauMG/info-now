@@ -11,7 +11,8 @@
 |
 */
 
-
+//pass in verify email option
+Auth::routes(['verify' => true]);
 
 Route::get('/Admin/Compania', 'CompaniaController@index');
 Route::get('/Admin/Compania/New', 'CompaniaController@new');

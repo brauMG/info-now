@@ -10,7 +10,7 @@ use App\User;
 use App\Proyecto;
 class EmailController extends Controller
 {
-	 
+
         public function index(){
         	return view('Email.Usuarios');
         }
@@ -19,15 +19,15 @@ class EmailController extends Controller
         		'Nombre'        =>'Cristian Santiago',
                         'Reporte'       =>[]
         	);
- 
+
         	Mail::to("cristian.santiago.rosas@gmail.com")->send(new Email($obj));
         	return 'Se enviaron el correo';
         }
 
         public function SendReporteAsignacionesEnfoque(Request $request){
-        	$usuariosID=explode(',',$request->Usuarios);  
+        	$usuariosID=explode(',',$request->Usuarios);
         	$Proyecto=Proyecto::where('Clave',$request->Proyecto)->first();
-        	$result=DB::select('CALL Get_ReportAsignacionesEnfoquesForEmail (?,?,?,?,?)',array($Proyecto->Clave,$Proyecto->Clave_Enfoque,$Proyecto->Clave_Trabajo,$request->Fase,$request->Actividad));                
+        	$result=DB::select('CALL Get_ReportAsignacionesEnfoquesForEmail (?,?,?,?,?)',array($Proyecto->Clave,$Proyecto->Clave_Enfoque,$Proyecto->Clave_Trabajo,$request->Fase,$request->Actividad));
         	foreach($usuariosID as $id)
         	{
                         if($id!==''){
@@ -36,7 +36,7 @@ class EmailController extends Controller
         			'Nombre' =>$usuario->Nombres,
         			'Reporte'=>$result
         		      );
-        		      Mail::to($usuario->Correo)->send(new Email($obj));	
+        		      Mail::to($usuario->email)->send(new Email($obj));
                         }
         	}
         	return response()->json(['error'=>false]);

@@ -18,7 +18,19 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            $user = Auth::user();
+            if ($user->Clave_Rol == 1) {
+                return redirect('/Admin/Compania');
+            } elseif ($user->Clave_Rol == 2) {
+                return redirect('/Admin/Areas');
+            } elseif ($user->Clave_Rol == 3) {
+                return redirect('/Admin/Proyectos');
+            } elseif ($user->Clave_Rol == 4) {
+                return redirect('/Admin/Proyectos');
+            } else {
+                Auth::logout();
+                return redirect('/login');
+            }
         }
 
         return $next($request);

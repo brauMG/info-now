@@ -9,7 +9,7 @@ use App\Trabajo;
 class TrabajosController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
     public function index(){
         $trabajo=Trabajo::all();

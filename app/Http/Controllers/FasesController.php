@@ -10,8 +10,9 @@ use App\Compania;
 class FasesController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
+
 
     public function index(){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();

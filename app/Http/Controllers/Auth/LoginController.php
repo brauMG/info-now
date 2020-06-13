@@ -44,16 +44,9 @@ class LoginController extends Controller
 
     public function username()
     {
-        return 'correo';
+        return 'email';
     }
 
-    protected function validateLogin(Request $request)
-    {
-        $request->validate([
-            $this->username() => 'required|string',
-            'password' => 'required|string',
-        ]);
-    }
     protected function authenticated(Request $request, $user)
     {
         $now = new DateTime();

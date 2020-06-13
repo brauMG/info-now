@@ -33,11 +33,11 @@
                             <i class="fas fa-envelope-square"></i> Correo Electrónico
                         </th>
                         <td class="td-card">
-                            <input name="correo" type="email"
+                            <input name="email" type="email"
                                    class="form-control  @error('correo') is-invalid @enderror"
-                                   placeholder="Ingresa tu correo electrónico" aria-label="correo"
-                                   aria-describedby="basic-addon1" required autocomplete="correo" autofocus
-                                   value={{$usuario['Correo']}}>
+                                   placeholder="Ingresa tu correo electrónico" aria-label="email"
+                                   aria-describedby="basic-addon1" required autocomplete="email" autofocus
+                                   value={{$usuario['email']}}>
                         </td>
                     </tr>
 

@@ -63,7 +63,7 @@
                                 <td class="td td-center">{{$item->Clave}}</td>
                                 <td class="td td-center">{{$item->Compania}}</td>
                                 <td class="td td-center">{{$item->Nombres}}</td>
-                                <td class="td td-center">{{$item->Correo}}</td>
+                                <td class="td td-center">{{$item->email}}</td>
                                 <td class="td td-center">{{$item->Area}}</td>
                                 <td class="td td-center">{{$item->Puesto}}</td>
                                 <td class="td td-center">{{$item->Rol}}</td>

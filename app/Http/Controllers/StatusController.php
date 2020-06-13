@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\DB;
 
 class StatusController extends Controller
 {
-    //
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
+
     public function index(){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $status=DB::table('Status')

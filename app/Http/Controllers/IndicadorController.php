@@ -9,10 +9,10 @@ use App\Compania;
 use App\Indicador;
 class IndicadorController extends Controller
 {
-    //
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
+
     public function index(){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         $indicador=DB::table('Indicador')

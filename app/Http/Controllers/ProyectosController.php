@@ -25,7 +25,7 @@ class ProyectosController extends Controller
 {
 	//
 	public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
     public function index(){
         $rol = Auth::user()->Clave_Rol;

@@ -11,8 +11,8 @@
                             <div class="form-group">
                                 <label for="username" class="align text-md-right label"><i class="fas fa-user"></i> {{ __('USUARIO') }}</label>
                                 <div class="cols">
-                                    <input id="correo" type="email" class="form-control @error('correo') is-invalid @enderror" name="correo" value="{{ old('correo') }}" required autocomplete="off" autofocus>
-                                    @error('correo')
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
+                                    @error('email')
                                     <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

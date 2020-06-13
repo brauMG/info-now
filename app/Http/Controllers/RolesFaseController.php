@@ -11,9 +11,9 @@ use App\Fase;
 use App\RolRASIC;
 use App\User;
 class RolesFaseController extends Controller
-{    
+{
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
     public function index(){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
@@ -45,8 +45,8 @@ class RolesFaseController extends Controller
         $usuario=User::where('Clave_Compania',Auth::user()->Clave_Compania);
         return view('Admin.RolesFases.new',['proyectos'=>$proyecto,'fases'=>$fase,'rolesRASIC'=>$rolRASIC,'usuarios'=>$usuario]);
     }
-    public function create(Request $request){        
-        $rolFASE = new RolFase;        
+    public function create(Request $request){
+        $rolFASE = new RolFase;
         $rolFASE->Clave_Proyecto=$request->proyecto;
         $rolFASE->Clave_RolRASIC = $request->rolRASIC;
         $rolFASE->Clave_Fase = $request->fase;

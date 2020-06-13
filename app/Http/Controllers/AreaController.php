@@ -9,10 +9,10 @@ use App\Areas;
 use App\Compania;
 class AreaController extends Controller
 {
-    //
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
+
     public function index(){
         if( Auth::user()->Clave_Rol==1 ||Auth::user()->Clave_Rol==2 ){
             $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();

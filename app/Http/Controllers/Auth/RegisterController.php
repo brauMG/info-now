@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -55,7 +55,7 @@ class RegisterController extends Controller
             'area' => ['required', 'int'],
             'puesto' => ['required', 'int'],
             'rol' => ['required', 'int'],
-            'contrasena' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -69,15 +69,15 @@ class RegisterController extends Controller
     {
         $name = explode(" ", $data['Nombres']);
         return User::create([
-            //'Clave_Compania','Iniciales','Correo','Clave_Area',	'Clave_Puesto',	'Clave_Rol','UltimoLogin','FechaCreacion','Activo',Contrasena
+            //'Clave_Compania','Iniciales','email','Clave_Area',	'Clave_Puesto',	'Clave_Rol','UltimoLogin','FechaCreacion','Activo',password
             'Clave_Compania'=>$data['compania'],
             'Iniciales'=>$data['nombres'][0],
-            'Nombres' => $data['nombres'],            
-            'Correo' => $data['correo'],
+            'Nombres' => $data['nombres'],
+            'email' => $data['correo'],
             'Clave_Area'=>$data['area'],
             'Clave_Puesto'=>$data['puesto'],
             'Clave_Rol'=>$data['rol'],
-            'Contrasena' => Hash::make($data['contrasena']),
+            'password' => Hash::make($data['contrasena']),
         ]);
     }
 }

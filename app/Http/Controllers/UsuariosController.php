@@ -23,10 +23,10 @@ use PDF;
 
 class UsuariosController extends Controller
 {
-    //
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
+
     public function index(){
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         if(Auth::user()->Clave_Rol==1||Auth::user()->Clave_Rol==2){
@@ -35,7 +35,7 @@ class UsuariosController extends Controller
             ->leftJoin('Areas','Usuarios.Clave_Area','=','Areas.Clave')
             ->leftJoin('Puestos','Usuarios.Clave_Puesto','=','Puestos.Clave')
             ->leftJoin('Roles','Usuarios.Clave_Rol','=','Roles.Clave')
-            ->select('Usuarios.Clave','Companias.Descripcion as Compania','Usuarios.Iniciales','Usuarios.Nombres','Usuarios.Correo','Areas.Descripcion as Area','Puestos.Puesto as Puesto','Roles.Rol AS Rol','Usuarios.Nombres','Usuarios.UltimoLogin as UltimoLogin','Areas.FechaCreacion','Areas.Activo')
+            ->select('Usuarios.Clave','Companias.Descripcion as Compania','Usuarios.Iniciales','Usuarios.Nombres','Usuarios.email','Areas.Descripcion as Area','Puestos.Puesto as Puesto','Roles.Rol AS Rol','Usuarios.Nombres','Usuarios.UltimoLogin as UltimoLogin','Areas.FechaCreacion','Areas.Activo')
             ->where('Usuarios.Clave_Compania','=',Auth::user()->Clave_Compania)
             ->where('Usuarios.Clave','<>',Auth::user()->Clave)
             ->get();
@@ -74,7 +74,7 @@ class UsuariosController extends Controller
 
         $user = $request->validate([
             'nombres' => ['required', 'string', 'max:150'],
-            'correo' => ['required', 'email', 'max:50', 'unique:Usuarios'],
+            'email' => ['required', 'email', 'max:50', 'unique:Usuarios'],
             'area' => ['required'],
             'puesto' => ['required'],
             'rol' => ['required'],
@@ -90,11 +90,11 @@ class UsuariosController extends Controller
             'Clave_Compania' => $company,
             'Iniciales' => $iniciales,
             'Nombres' => $user['nombres'],
-            'Correo' => $user['correo'],
+            'email' => $user['email'],
             'Clave_Area' => $user['area'],
             'Clave_Puesto' => $user['puesto'],
             'Clave_Rol' => $user['rol'],
-            'Contrasena' => Hash::make($user['password']),
+            'password' => Hash::make($user['password']),
             'UltimoLogin' => Carbon::today()->toDateString(),
             'Activo' => 1,
             'FechaCreacion' => Carbon::today()->toDateString()
@@ -118,10 +118,10 @@ class UsuariosController extends Controller
         $user = new User;
         $company=$user->Clave_Compania=Auth::user()->Clave_Compania;
         $user = User::where('Clave', $Clave)->firstOrFail();
-        $email = $request->input('correo');
+        $email = $request->input('email');
         $name = $request->input('nombres');
 
-        if ($email == $user->Correo) {
+        if ($email == $user->email) {
             if ($name == $user->Nombres) {
                 $user = $request->validate([
                     'area' => ['required'],
@@ -160,14 +160,14 @@ class UsuariosController extends Controller
         }
         else if ($name = $user->Nombres){
             $user = $request->validate([
-                'correo' => ['required', 'max:150', 'email', 'unique:Usuarios'],
+                'email' => ['required', 'max:150', 'email', 'unique:Usuarios'],
                 'area' => ['required'],
                 'puesto' => ['required'],
                 'rol' => ['required']
             ]);
 
             User::where('Clave', $Clave)->update([
-                'Correo' => $user['correo'],
+                'email' => $user['email'],
                 'Clave_Area' => $user['area'],
                 'Clave_Puesto' => $user['puesto'],
                 'Clave_Rol' => $user['rol'],
@@ -183,7 +183,7 @@ class UsuariosController extends Controller
             User::where('Clave', $Clave)->update([
                 'Iniciales' => $iniciales,
                 'Nombres' => $user['nombres'],
-                'Correo' => $user['correo'],
+                'email' => $user['email'],
                 'Clave_Area' => $user['area'],
                 'Clave_Puesto' => $user['puesto'],
                 'Clave_Rol' => $user['rol'],

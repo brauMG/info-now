@@ -9,7 +9,10 @@ use App\Puesto;
 use App\Compania;
 class PuestosController extends Controller
 {
-    //
+    public function __construct(){
+        $this->middleware(['auth', 'verified']);
+    }
+
     public function index(){
 
         if(Auth::user()->Clave_Rol==1 ||Auth::user()->Clave_Rol==2 ){

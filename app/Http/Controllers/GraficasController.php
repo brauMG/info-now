@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\DB;
 
 class GraficasController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['auth', 'verified']);
+    }
+
     public function toProjects() {
 
         //PROYECTOS POR ENFOQUE
