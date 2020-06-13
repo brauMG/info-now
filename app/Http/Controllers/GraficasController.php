@@ -9,11 +9,13 @@ use App\Areas;
 use App\Charts\ProjectFocusChart;
 use App\Compania;
 use App\Enfoque;
+use App\Etapas;
 use App\Fase;
 use App\Indicador;
 use App\Proyecto;
 use App\Status;
 use App\Trabajo;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -324,10 +326,58 @@ class GraficasController extends Controller
         $aeAprobada = count($aeAprobada);
         $aeDesaprobada = count($aeDesaprobada);
 
+        //ACTIVIDADES POR USUARIO
+        $ActividadesUsuarios = DB::table('Actividades')
+            ->leftJoin('Usuarios', 'Actividades.Clave_Usuario', 'Usuarios.Clave')
+            ->select('Actividades.Descripcion as Actividad', 'Usuarios.Nombres as Usuario', 'Actividades.Clave_Usuario')
+            ->get();
+
+        $usuarios = User::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $usuarios = $usuarios->unique('Nombres');
+        $dataUsuarios = [];
+
+        $i = 1;
+        foreach ($usuarios as $usuario) {
+            foreach ($ActividadesUsuarios as $actividad) {
+                if ($actividad->Clave_Usuario == $usuario->Clave) {
+                    $dataUsuarios [$usuario->Nombres] = $i;
+                    $i++;
+                }
+            }
+            $i = 1;
+        }
+
+        $usuarios = array_keys($dataUsuarios);
+        $conteoUsuarios = array_values($dataUsuarios);
+
+        //ACTIVIDADES POR ETAPA
+        $ActividadesEtapas = DB::table('Actividades')
+            ->leftJoin('Etapas', 'Actividades.Clave_Etapa', 'Etapas.Clave')
+            ->select('Actividades.Descripcion as Actividad', 'Etapas.Descripcion as Etapa', 'Actividades.Clave_Etapa')
+            ->get();
+
+        $etapas = Etapas::where('Clave_Compania', Auth::user()->Clave_Compania)->get();
+        $etapas = $etapas->unique('Descripcion');
+        $dataEtapas = [];
+
+        $i = 1;
+        foreach ($etapas as $etapa) {
+            foreach ($ActividadesEtapas as $actividad) {
+                if ($actividad->Clave_Etapa == $etapa->Clave) {
+                    $dataEtapas [$etapa->Descripcion] = $i;
+                    $i++;
+                }
+            }
+            $i = 1;
+        }
+
+        $etapas = array_keys($dataEtapas);
+        $conteoEtapas = array_values($dataEtapas);
+
 
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
 
-        return view('Admin.Graficas.actividades', compact(
+        return view('Admin.Graficas.actividades', compact('usuarios', 'conteoUsuarios','ActividadesUsuarios','ActividadesEtapas','etapas','conteoEtapas',
             'total','compania','ActividadesProyecto','proyectos', 'conteoProyectos','ActividadesEstado','aePendiente','aeAprobada', 'aeDesaprobada'));
     }
 }
