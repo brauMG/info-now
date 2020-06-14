@@ -26,7 +26,7 @@
     <link href="{{ asset('bts4/css/login.less') }}" rel="stylesheet">
     <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
 
-    <title>RAPIDOSS</title>
+    <title>Sistema de Enfoque Rapido</title>
 
 </head>
 <nav class="navbar navbar-expand-md navbar-light bg-black shadow-sm">

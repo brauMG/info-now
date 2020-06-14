@@ -8,7 +8,7 @@
 
 
 
-        <title itemprop="name">RAPIDOSS</title>
+        <title itemprop="name">Sistema de Enfoque Rapido</title>
 
 
         <!-- Bootstrap Core CSS -->
@@ -20,7 +20,7 @@
         <!-- Custom Fonts -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-    
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -37,7 +37,7 @@
             body,
             html {
                 width: 100%;
-                height: 100%;                
+                height: 100%;
             }
 
             body,
@@ -214,9 +214,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="intro-message">                        
-                            <h1 id="hdrDescription">RAPIDOSS APP</h1>                        
-                            <hr class="intro-divider">                            
+                        <div class="intro-message">
+                            <h1 id="hdrDescription">Sistema de Enfoque Rapido</h1>
+                            <hr class="intro-divider">
                         </div>
                     </div>
                 </div>
@@ -225,31 +225,31 @@
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="form-group row">
-                                <label for="nombres" class="col-md-4 col-form-label text-md-right">Nombre(s)</label>                            
+                                <label for="nombres" class="col-md-4 col-form-label text-md-right">Nombre(s)</label>
                                 <div class="col-md-6">
-                                    <input id="nombres" type="text" class="form-control @error('name') is-invalid @enderror" name="nombres" value="{{ old('name') }}" required autocomplete="name" autofocus>                            
+                                    <input id="nombres" type="text" class="form-control @error('name') is-invalid @enderror" name="nombres" value="{{ old('name') }}" required autocomplete="name" autofocus>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-                            </div>                        
+                            </div>
                             <div class="form-group row">
-                                <label for="correo" class="col-md-4 col-form-label text-md-right">Correo</label>                            
+                                <label for="correo" class="col-md-4 col-form-label text-md-right">Correo</label>
                                 <div class="col-md-6">
-                                    <input id="correo" type="email" class="form-control @error('email') is-invalid @enderror" name="correo" value="{{ old('email') }}" required autocomplete="email">                            
+                                    <input id="correo" type="email" class="form-control @error('email') is-invalid @enderror" name="correo" value="{{ old('email') }}" required autocomplete="email">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
-                            </div>                        
+                            </div>
                             <div class="form-group row">
-                                <label for="contrasena" class="col-md-4 col-form-label text-md-right">Contraseña</label>                            
+                                <label for="contrasena" class="col-md-4 col-form-label text-md-right">Contraseña</label>
                                 <div class="col-md-6">
-                                    <input id="contrasena" type="password" class="form-control @error('password') is-invalid @enderror" name="contrasena" required autocomplete="new-password">                            
+                                    <input id="contrasena" type="password" class="form-control @error('password') is-invalid @enderror" name="contrasena" required autocomplete="new-password">
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -257,9 +257,9 @@
                                     @enderror
                                 </div>
                             </div>
-                        
+
                             <div class="form-group row">
-                                <label for="contrasena-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>                            
+                                <label for="contrasena-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
                                 <div class="col-md-6">
                                     <input id="contrasena-confirm" type="password" class="form-control" name="contrasena_confirmation" required autocomplete="new-password">
                                 </div>
@@ -272,7 +272,7 @@
                                 </div>
                             </div>
                         </form>
-                    </div>                    
+                    </div>
                 </div>
             </div>
             <!-- /.container -->
