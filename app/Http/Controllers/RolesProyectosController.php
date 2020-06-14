@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Areas;
+use App\Etapas;
+use App\Mail\AdviceActivity;
+use App\Mail\AdviceUserProject;
 use App\Puesto;
 use App\Rol;
 use Carbon\Carbon;
@@ -15,6 +18,7 @@ use App\Fase;
 use App\Proyecto;
 use App\RolRASIC;
 use App\User;
+use Illuminate\Support\Facades\Mail;
 use PDF;
 
 class RolesProyectosController extends Controller
@@ -22,6 +26,7 @@ class RolesProyectosController extends Controller
     public function __construct(){
         $this->middleware(['auth', 'verified']);
     }
+
      public function index(){
             $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
             $rolPROYECTO=DB::table('RolesProyectos')
@@ -70,7 +75,7 @@ class RolesProyectosController extends Controller
         $proyecto = Proyecto::where('Clave', $proyectoId)->first();
         $faseId = $proyecto->Clave_Fase;
         $companyId =Auth::user()->Clave_Compania;
-        $usuarios = User::where('Clave_Compania', $companyId)->where('Clave_Rol', 3)->orWhere('Clave_Rol', 4)->get();
+        $usuarios = User::where('Clave_Compania', $companyId)->where('Clave_Rol', 3)->get();
         $roles = RolRASIC::all();
 
         return view('Admin.RolesProyectos.new',compact('proyectoId','usuarios', 'roles', 'faseId', 'compania'));
@@ -97,6 +102,16 @@ class RolesProyectosController extends Controller
             }
         }
 
+        // DATOS DEL CORREO
+        $pmo = Auth::user()->Nombres;
+        $project = Proyecto::where('Clave', $proyectoId)->get();
+        $projectId = $project[0]->Clave;
+        $project = $project[0]->Descripcion;
+        $user = User::where('Clave', $data['usuario'])->get();
+        $user = $user[0]->Nombres;
+        $rol = RolRASIC::where('Clave', $data['rol'])->get();
+        $rol = $rol[0]->RolRASIC;
+
         if ($i == 0) {
             RolProyecto::create([
                 'Clave_Proyecto' => $proyectoId,
@@ -106,6 +121,29 @@ class RolesProyectosController extends Controller
                 'Activo' => 1,
                 'Clave_Usuario' => $data['usuario']
             ]);
+
+            //A QUIEN DIRIGIR EL CORREO
+            $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->get();
+            $emailsAdmins = $emailsAdmins->pluck('email');
+            $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->get();
+            $emailsPMOs = $emailsPMOs->pluck('email');
+            $emailsUsers = DB::table('Usuarios')
+                ->leftJoin('RolesProyectos', 'Usuarios.Clave', 'RolesProyectos.Clave_Usuario')
+                ->select('Usuarios.email')
+                ->where('RolesProyectos.Clave_Proyecto', $projectId)
+                ->get();
+            $emailsUsers = $emailsUsers->pluck('email');
+
+            //ENVIO DE CORREOS
+            foreach ($emailsAdmins as $email){
+                Mail::to($email)->queue(new AdviceUserProject($pmo, $user, $project, $rol));
+            }
+            foreach ($emailsPMOs as $email){
+                Mail::to($email)->queue(new AdviceUserProject($pmo, $user, $project, $rol));
+            }
+            foreach ($emailsUsers as $email){
+                Mail::to($email)->queue(new AdviceUserProject($pmo, $user, $project, $rol));
+            }
 
             return redirect('/Admin/RolesProyectos')->with('mensaje', "Usuario agregado correctamente al proyecto");
         }

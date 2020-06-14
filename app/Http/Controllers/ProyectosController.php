@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Actividad;
+use App\Etapas;
+use App\Mail\AdviceActivity;
+use App\Mail\ChangePhase;
+use App\Mail\ChangeStatus;
 use App\RolRASIC;
 use App\Status;
 use Carbon\Carbon;
@@ -18,6 +22,7 @@ use App\Fase;
 use App\Enfoque;
 use App\Trabajo;
 use App\Indicador;
+use Illuminate\Support\Facades\Mail;
 use PDF;
 
 
@@ -199,6 +204,38 @@ class ProyectosController extends Controller
             Proyecto::where('Clave', $Clave)->update([
                 'Clave_Fase' => $fase['fase']
             ]);
+
+            // DATOS DEL CORREO
+            $user = Auth::user()->Nombres;
+            $project = Proyecto::where('Clave', $Clave)->get();
+            $projectId = $project[0]->Clave;
+            $project = $project[0]->Descripcion;
+            $phase = Fase::where('Clave', $fase['fase'])->get();
+            $phase = $phase[0]->Descripcion;
+
+            //A QUIEN DIRIGIR EL CORREO
+            $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->get();
+            $emailsAdmins = $emailsAdmins->pluck('email');
+            $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->get();
+            $emailsPMOs = $emailsPMOs->pluck('email');
+            $emailsUsers = DB::table('Usuarios')
+                ->leftJoin('RolesProyectos', 'Usuarios.Clave', 'RolesProyectos.Clave_Usuario')
+                ->select('Usuarios.email')
+                ->where('RolesProyectos.Clave_Proyecto', $projectId)
+                ->get();
+            $emailsUsers = $emailsUsers->pluck('email');
+
+            //ENVIO DE CORREOS
+            foreach ($emailsAdmins as $email){
+                Mail::to($email)->queue(new ChangePhase($user, $project, $phase));
+            }
+            foreach ($emailsPMOs as $email){
+                Mail::to($email)->queue(new ChangePhase($user, $project, $phase));
+            }
+            foreach ($emailsUsers as $email){
+                Mail::to($email)->queue(new ChangePhase($user, $project, $phase));
+            }
+
             return redirect('/Admin/Proyectos')->with('mensaje', "La fase del proyecto fue actualizada correctamente");
         }
         else {
@@ -213,6 +250,39 @@ class ProyectosController extends Controller
         Proyecto::where('Clave', $Clave)->update([
             'Clave_Status' => $status['status']
         ]);
+
+        // DATOS DEL CORREO
+        $user = Auth::user()->Nombres;
+        $project = Proyecto::where('Clave', $Clave)->get();
+        $projectId = $project[0]->Clave;
+        $project = $project[0]->Descripcion;
+        $status = Status::where('Clave', $status['status'])->get();
+        $lock = $status[0]->Activo;
+        $status = $status[0]->status;
+
+        //A QUIEN DIRIGIR EL CORREO
+        $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->get();
+        $emailsAdmins = $emailsAdmins->pluck('email');
+        $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->get();
+        $emailsPMOs = $emailsPMOs->pluck('email');
+        $emailsUsers = DB::table('Usuarios')
+            ->leftJoin('RolesProyectos', 'Usuarios.Clave', 'RolesProyectos.Clave_Usuario')
+            ->select('Usuarios.email')
+            ->where('RolesProyectos.Clave_Proyecto', $projectId)
+            ->get();
+        $emailsUsers = $emailsUsers->pluck('email');
+
+        //ENVIO DE CORREOS
+        foreach ($emailsAdmins as $email){
+            Mail::to($email)->queue(new ChangeStatus($user, $lock, $project, $status));
+        }
+        foreach ($emailsPMOs as $email){
+            Mail::to($email)->queue(new ChangeStatus($user, $lock, $project, $status));
+        }
+        foreach ($emailsUsers as $email){
+            Mail::to($email)->queue(new ChangeStatus($user, $lock, $project, $status));
+        }
+
         return redirect('/Admin/Proyectos')->with('mensaje', "El estado del proyecto fue actualizado correctamente");
     }
 

@@ -79,17 +79,12 @@
                                                         <tbody>
                                                         <tr>
                                                             <td class="esd-block-text" align="left">
-                                                                <h3 style="color: #666666;">El usuario {{$usuario}} del área {{$area}} registro una nueva actividad con descripcion "{{$actividad}}" en el proyecto {{$proyecto}}, el cual se encuentra en la fase de {{$fase}}.<br></h3>
+                                                                <h3 style="color: #666666;">El PMO {{$pmo}} agrego al usuario "{{$usuario}}" a el proyecto {{$proyecto}}.<br></h3>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text es-p15t" align="left">
-                                                                <p style="color: #999999;">Dicha actividad fue registrada dentro de la etapa {{$etapa}}, correspondiente al proyecto.</p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p15t" align="left">
-                                                                <p style="color: #999999;">La fecha limite para la revisión de las actividades pertenecientes a esta etapa es: {{$fecha}} a las {{$hora}} horas.</p>
+                                                                <p style="color: #999999;">A dicho usuario se le asigno el rol de {{$rol}} dentro del proyecto.</p>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -188,4 +183,3 @@
 </body>
 
 </html>
-

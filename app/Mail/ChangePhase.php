@@ -7,17 +7,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AdviceActivity extends Mailable
+class ChangePhase extends Mailable
 {
     public $usuario;
-    public $area;
-    public $actividad;
-    public $fecha;
-    public $hora;
     public $proyecto;
     public $fase;
-    public $etapa;
-    public $subject = "Nueva Actividad Registrada En SER";
+    public $subject = "Un Proyecto Cambio De Fase En SER";
 
     use Queueable, SerializesModels;
 
@@ -26,16 +21,11 @@ class AdviceActivity extends Mailable
      *
      * @return void
      */
-    public function __construct($user, $InArea, $activityName, $date, $time, $project, $phase, $stage)
+    public function __construct($user, $project, $phase)
     {
         $this->usuario = $user;
-        $this->area = $InArea;
-        $this->actividad = $activityName;
-        $this->fecha = $date;
-        $this->hora = $time;
         $this->proyecto = $project;
         $this->fase = $phase;
-        $this->etapa = $stage;
     }
 
     /**
@@ -45,6 +35,6 @@ class AdviceActivity extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.advice-activity');
+        return $this->view('emails.change-phase');
     }
 }

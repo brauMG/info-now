@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Areas;
 use App\Etapas;
+use App\Mail\AdviceActivity;
 use App\RolProyecto;
 use App\User;
 use Carbon\Carbon;
@@ -15,6 +16,7 @@ use App\Actividad;
 use App\Fase;
 use App\Proyecto;
 use App\Status;
+use Illuminate\Support\Facades\Mail;
 use PDF;
 
 class ActividadesController extends Controller
@@ -138,7 +140,7 @@ class ActividadesController extends Controller
             'decision' => ['required', 'string', 'max:150']
         ]);
 
-        Actividad::create([
+        $actity = Actividad::create([
             'Clave_Compania' => $companiaId,
             'Clave_Proyecto' => $proyectoId,
             'Descripcion' => $actividad['descripcion'],
@@ -152,10 +154,44 @@ class ActividadesController extends Controller
             'Hora_Vencimiento' => $etapaData->Hora_Vencimiento,
         ]);
 
-        $user = Auth::user();
-        $actity = DB::table('Actividades')->insertGetId(['Descripcion' => 'Descripcion']);
+        // DATOS DEL CORREO
+        $user = Auth::user()->Nombres;
+        $area = Auth::user()->Clave_Area;
+        $area = Areas::where('Clave', $area)->get();
+        $InArea = $area[0]->Descripcion;
+        $activityName = $actity->Descripcion;
+        $date = $actity->Fecha_Vencimiento;
+        $time = $actity->Hora_Vencimiento;
+        $project = Proyecto::where('Clave', $actity->Clave_Proyecto)->get();
+        $projectId = $project[0]->Clave;
+        $project = $project[0]->Descripcion;
+        $phase = Fase::where('Clave', $actity->Clave_Fase)->get();
+        $phase = $phase[0]->Descripcion;
+        $stage = Etapas::where('Clave', $actity->Clave_Etapa)->get();
+        $stage = $stage[0]->Descripcion;
 
-        dd($actity);
+        //A QUIEN DIRIGIR EL CORREO
+        $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->get();
+        $emailsAdmins = $emailsAdmins->pluck('email');
+        $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->get();
+        $emailsPMOs = $emailsPMOs->pluck('email');
+        $emailsUsers = DB::table('Usuarios')
+            ->leftJoin('RolesProyectos', 'Usuarios.Clave', 'RolesProyectos.Clave_Usuario')
+            ->select('Usuarios.email')
+            ->where('RolesProyectos.Clave_Proyecto', $projectId)
+            ->get();
+        $emailsUsers = $emailsUsers->pluck('email');
+
+        //ENVIO DE CORREOS
+        foreach ($emailsAdmins as $email){
+            Mail::to($email)->queue(new AdviceActivity($user, $InArea, $activityName, $date, $time, $project, $phase, $stage));
+        }
+        foreach ($emailsPMOs as $email){
+            Mail::to($email)->queue(new AdviceActivity($user, $InArea, $activityName, $date, $time, $project, $phase, $stage));
+        }
+        foreach ($emailsUsers as $email){
+            Mail::to($email)->queue(new AdviceActivity($user, $InArea, $activityName, $date, $time, $project, $phase, $stage));
+        }
 
         return redirect('/Admin/Actividades')->with('mensaje', "Nueva actividad agregada correctamente");
     }

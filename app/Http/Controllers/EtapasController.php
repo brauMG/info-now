@@ -4,14 +4,19 @@
 namespace App\Http\Controllers;
 
 
+use App\Areas;
 use App\Compania;
 use App\Etapas;
 use App\Fase;
+use App\Mail\AdviceActivity;
+use App\Mail\AdviceStage;
 use App\Proyecto;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use PDF;
 
 
@@ -68,7 +73,7 @@ class EtapasController extends Controller
         $faseId = $fase->Clave;
         $companyId = $fase->Clave_Compania;
 
-        Etapas::create([
+        $stage = Etapas::create([
             'Descripcion' => $etapa['descripcion'],
             'Fecha_Vencimiento' => $etapa['fechaV'],
             'Hora_Vencimiento' => $etapa['horaV'],
@@ -76,6 +81,38 @@ class EtapasController extends Controller
             'Clave_Compania' => $companyId,
             'Clave_Fase' => $faseId
         ]);
+
+        // DATOS DEL CORREO
+        $user = Auth::user()->Nombres;
+        $stageName = $stage->Descripcion;
+        $date = $stage->Fecha_Vencimiento;
+        $time = $stage->Hora_Vencimiento;
+        $project = Proyecto::where('Clave', $stage->Clave_Proyecto)->get();
+        $projectId = $project[0]->Clave;
+        $project = $project[0]->Descripcion;
+
+        //A QUIEN DIRIGIR EL CORREO
+        $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->get();
+        $emailsAdmins = $emailsAdmins->pluck('email');
+        $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->get();
+        $emailsPMOs = $emailsPMOs->pluck('email');
+        $emailsUsers = DB::table('Usuarios')
+            ->leftJoin('RolesProyectos', 'Usuarios.Clave', 'RolesProyectos.Clave_Usuario')
+            ->select('Usuarios.email')
+            ->where('RolesProyectos.Clave_Proyecto', $projectId)
+            ->get();
+        $emailsUsers = $emailsUsers->pluck('email');
+
+        //ENVIO DE CORREOS
+        foreach ($emailsAdmins as $email){
+            Mail::to($email)->queue(new AdviceStage($user, $date, $time, $project, $stageName));
+        }
+        foreach ($emailsPMOs as $email){
+            Mail::to($email)->queue(new AdviceStage($user, $date, $time, $project, $stageName));
+        }
+        foreach ($emailsUsers as $email){
+            Mail::to($email)->queue(new AdviceStage($user, $date, $time, $project, $stageName));
+        }
         return redirect('/Admin/Etapas')->with('mensaje', "Nueva etapa agregada correctamente");
     }
 
