@@ -172,8 +172,8 @@ Route::get('/Email/Send','EmailController@send');
 /**/
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
-Route::get('/home','HomeController@index');
+//Route::get('/', 'HomeController@index');
+//Route::get('/home','HomeController@index');
 
 Route::get('/home/selectCompany','HomeController@selectCompany');
 Route::get('/home/Add/Proyecto','HomeController@AddUser');
