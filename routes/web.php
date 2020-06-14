@@ -172,7 +172,7 @@ Route::get('/Email/Send','EmailController@send');
 /**/
 Auth::routes();
 
-//Route::get('/', 'HomeController@index');
+Route::get('/', 'ReturnController');
 //Route::get('/home','HomeController@index');
 
 Route::get('/home/selectCompany','HomeController@selectCompany');
@@ -190,4 +190,4 @@ Route::get('/clear-cache', function() {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
