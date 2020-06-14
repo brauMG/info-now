@@ -101,9 +101,15 @@
                                 <td class="td td-center">{{$item->Enfoque}}</td>
                                 <td class="td td-center">{{$item->Trabajo}}</td>
                                 <td class="td td-center">{{$item->Indicador}}</td>
+                                @if($item->Status == 'Completado' || $item->Status == 'Terminado' || $item->Status == 'Finalizado' || $item->Status == 'Acabado' || $item->Status == 'Hecho')
+                                    <td class="td td-center">
+                                        <a class="btn btn btn-success no-href" @if($rol == 4) clave="{{$item->Clave}}" onclick="changeEstado(this);" @endif style="background-color: #1fab26; border-color: #1fab26"><i class="fas fa-edit"></i> {{$item->Status}}</a>
+                                    </td>
+                                @else
                                 <td class="td td-center">
                                     <a class="btn btn btn-warning no-href" @if($rol == 4) clave="{{$item->Clave}}" onclick="changeEstado(this);" @endif style="background-color: #ab221f; border-color: #ab221f"><i class="fas fa-edit"></i> {{$item->Status}}</a>
                                 </td>
+                                @endif
                                 <td class="td td-center">
                                     <a class="btn btn btn-info no-href" style="background-color: gray !important; border-color: gray"><i class="fas fa-edit"></i> Registrar Actividad</a>
                                 </td>
