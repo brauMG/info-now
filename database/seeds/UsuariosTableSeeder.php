@@ -20,7 +20,7 @@ class UsuariosTableSeeder extends Seeder
             'Clave_Compania' => '1',
             'Iniciales' => 'EG',
             'Nombres' => 'Enrique Gamez',
-            'email' => 'veyrikoica3@gmail.com',
+            'email' => 'veyriko@gmail.com',
             'Clave_Area' => null,
             'Clave_Puesto' => null,
             'Clave_Rol' => '1',
