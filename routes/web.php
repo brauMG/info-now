@@ -78,6 +78,9 @@ Route::get('/Admin/Usuarios/ChangeCompany/{id}', 'UsuariosController@changeCompa
 //Route::get('/Admin/Usuarios/ImportExcelIndex', 'UsuariosController@ImportExcelIndex');
 Route::get('/Admin/Usuarios/Prepare','UsuariosController@preparePdf')->name('FiltersUsers');
 Route::post('/Admin/Usuarios/PDF','UsuariosController@exportPdf')->name('UsersPDF');
+Route::get('/Admin/Usuarios/ChangeSend/{id}','UsuariosController@editSend');
+Route::put('/Admin/Usuarios/UpdateSend/{id}','UsuariosController@updateSend')->name('UpdateSend');
+
 
 
 Route::get('/Admin/Fases', 'FasesController@index');
@@ -173,7 +176,7 @@ Route::get('/Email/Send','EmailController@send');
 Auth::routes();
 
 Route::get('/', 'ReturnController');
-//Route::get('/home','HomeController@index');
+Route::get('/home','HomeController@index');
 
 Route::get('/home/selectCompany','HomeController@selectCompany');
 Route::get('/home/Add/Proyecto','HomeController@AddUser');
@@ -190,4 +193,4 @@ Route::get('/clear-cache', function() {
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');

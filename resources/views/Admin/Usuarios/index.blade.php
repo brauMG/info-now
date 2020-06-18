@@ -54,6 +54,7 @@
                         <th scope="col" style="text-transform: uppercase">Área</th>
                         <th scope="col" style="text-transform: uppercase">Puesto</th>
                         <th scope="col" style="text-transform: uppercase">Rol</th>
+                        <th scope="col" style="text-transform: uppercase">Recibe Correo</th>
                         <th scope="col" style="text-transform: uppercase">Acciones</th>
                     </tr>
                     </thead>
@@ -67,11 +68,19 @@
                                 <td class="td td-center">{{$item->Area}}</td>
                                 <td class="td td-center">{{$item->Puesto}}</td>
                                 <td class="td td-center">{{$item->Rol}}</td>
-                                <td  class="td td-center">
+                                @if($item->Send == true)
+                                    <td class="td td-center">
+                                        <a class="btn btn btn-success no-href" clave="{{$item->Clave}}" onclick="changeSend(this);" style="background-color: #1fab26; border-color: #1fab26"><i class="fas fa-edit"></i> Si</a>
+                                    </td>
+                                @else
+                                    <td class="td td-center">
+                                        <a class="btn btn btn-success no-href" clave="{{$item->Clave}}" onclick="changeSend(this);" style="background-color: #ab221f; border-color: #ab221f"><i class="fas fa-edit"></i> No</a>
+                                    </td>
+                                @endif
+                                    <td  class="td td-center">
                                     <a class="btn-row btn btn-warning no-href" clave="{{$item->Clave}}" onclick="edit(this);"><i class="fas fa-edit"></i>Editar</a>
                                     <a class="btn-row btn btn-danger no-href" clave="{{$item->Clave}}" onclick="deleted(this);"><i class="fas fa-trash-alt"></i>Eliminar</a>
                                 </td>
-                            </tr>
                         @endforeach
                     </tbody>
                     <tfoot class="table-footer">
@@ -83,6 +92,7 @@
                         <th style="text-transform: uppercase">Área</th>
                         <th style="text-transform: uppercase">Puesto</th>
                         <th style="text-transform: uppercase">Rol</th>
+                        <th style="text-transform: uppercase">Recibe Correo</th>
                         <th style="text-transform: uppercase">Acciones</th>
                     </tr>
                     </tfoot>
@@ -92,6 +102,15 @@
     </div>
     <script>
         $('.mydatatable').DataTable();
+
+        function changeSend(button){
+            var clave = $(button).attr('clave');
+            $('#myModal').load( '{{ url('/Admin/Usuarios/ChangeSend') }}/'+clave,function(response, status, xhr){
+                if ( status == "success" ) {
+                    $('#myModal').modal('show');
+                }
+            } );
+        }
 
         function AddUser() {
             $('#myModal').load( '{{ url('/Admin/Usuarios/New') }}',function(response, status, xhr)

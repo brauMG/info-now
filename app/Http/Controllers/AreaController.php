@@ -55,18 +55,33 @@ class AreaController extends Controller
         return view('Admin.Areas.new', compact('company'));
     }
 
-    public function store(Request $request){
-        $area = $request->validate([
-            'descripcion' => ['required', 'string', 'max:150'],
-            'compania' => ['required']
-        ]);
-        Areas::create([
-            'Descripcion' => $area['descripcion'],
-            'Clave_Compania' => $area['compania'],
-            'Activo' => 1,
-            'FechaCreacion' => Carbon::today()->toDateString()
-        ]);
-        return redirect('/Admin/Areas')->with('mensaje', "Nueva área agregada correctamente");
+    public function store(Request $request)
+    {
+        if (Auth::user()->Clave_Rol == 1) {
+            $area = $request->validate([
+                'descripcion' => ['required', 'string', 'max:150'],
+                'compania' => ['required']
+            ]);
+            Areas::create([
+                'Descripcion' => $area['descripcion'],
+                'Clave_Compania' => $area['compania'],
+                'Activo' => 1,
+                'FechaCreacion' => Carbon::today()->toDateString()
+            ]);
+            return redirect('/Admin/Areas')->with('mensaje', "Nueva área agregada correctamente");
+        }
+        else {
+            $area = $request->validate([
+                'descripcion' => ['required', 'string', 'max:150']
+            ]);
+            Areas::create([
+                'Descripcion' => $area['descripcion'],
+                'Clave_Compania' => Auth::user()->Clave_Compania,
+                'Activo' => 1,
+                'FechaCreacion' => Carbon::today()->toDateString()
+            ]);
+            return redirect('/Admin/Areas')->with('mensaje', "Nueva área agregada correctamente");
+        }
     }
 
     public function prepare($id){

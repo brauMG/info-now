@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Areas;
 use App\Etapas;
 use App\Mail\AdviceActivity;
+use App\Mail\AdviceActivityStatus;
 use App\RolProyecto;
 use App\User;
 use Carbon\Carbon;
@@ -102,6 +103,49 @@ class ActividadesController extends Controller
             'Fecha_Revision' => $date,
             'Hora_Revision' => $time
         ]);
+
+        $actity = Actividad::where('Clave', $Clave)->get()->toArray();
+        $actity = $actity[0];
+
+        // DATOS DEL CORREO
+        $user = Auth::user()->Nombres;
+        $activityName = $actity['Descripcion'];
+        $date = $actity['Fecha_Vencimiento'];
+        $time = $actity['Hora_Vencimiento'];
+        $status = $actity['Estado'];
+        $project = Proyecto::where('Clave', $actity['Clave_Proyecto'])->get();
+        $projectId = $project[0]->Clave;
+        $project = $project[0]->Descripcion;
+        $phase = Fase::where('Clave', $actity['Clave_Fase'])->get();
+        $phase = $phase[0]->Descripcion;
+        $stage = Etapas::where('Clave', $actity['Clave_Etapa'])->get();
+        $stage = $stage[0]->Descripcion;
+
+        //A QUIEN DIRIGIR EL CORREO
+        $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->where('envio_de_correo', true)->get();
+        $emailsAdmins = $emailsAdmins->pluck('email');
+        $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->where('envio_de_correo', true)->get();
+        $emailsPMOs = $emailsPMOs->pluck('email');
+        $emailsUsers = DB::table('Usuarios')
+            ->leftJoin('RolesProyectos', 'Usuarios.Clave', 'RolesProyectos.Clave_Usuario')
+            ->select('Usuarios.email')
+            ->where('RolesProyectos.Clave_Proyecto', $projectId)
+            ->where('Usuarios.envio_de_correo', 1)
+            ->where('Usuarios.Clave_Rol', 3)
+            ->get();
+        $emailsUsers = $emailsUsers->pluck('email');
+
+        //ENVIO DE CORREOS
+        foreach ($emailsAdmins as $email){
+            Mail::to($email)->queue(new AdviceActivityStatus($user, $activityName, $date, $time, $status, $project, $phase, $stage));
+        }
+        foreach ($emailsPMOs as $email){
+            Mail::to($email)->queue(new AdviceActivityStatus($user, $activityName, $date, $time, $status, $project, $phase, $stage));
+        }
+        foreach ($emailsUsers as $email){
+            Mail::to($email)->queue(new AdviceActivityStatus($user, $activityName, $date, $time, $status, $project, $phase, $stage));
+        }
+
         return redirect('/Admin/Actividades')->with('mensaje', "El estado de la revisión fue actualizado correctamente");
     }
 
@@ -171,14 +215,16 @@ class ActividadesController extends Controller
         $stage = $stage[0]->Descripcion;
 
         //A QUIEN DIRIGIR EL CORREO
-        $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->get();
+        $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->where('envio_de_correo', true)->get();
         $emailsAdmins = $emailsAdmins->pluck('email');
-        $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->get();
+        $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->where('envio_de_correo', true)->get();
         $emailsPMOs = $emailsPMOs->pluck('email');
         $emailsUsers = DB::table('Usuarios')
             ->leftJoin('RolesProyectos', 'Usuarios.Clave', 'RolesProyectos.Clave_Usuario')
             ->select('Usuarios.email')
             ->where('RolesProyectos.Clave_Proyecto', $projectId)
+            ->where('Usuarios.envio_de_correo', 1)
+            ->where('Usuarios.Clave_Rol', 3)
             ->get();
         $emailsUsers = $emailsUsers->pluck('email');
 

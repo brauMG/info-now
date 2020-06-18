@@ -214,14 +214,16 @@ class ProyectosController extends Controller
             $phase = $phase[0]->Descripcion;
 
             //A QUIEN DIRIGIR EL CORREO
-            $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->get();
+            $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->where('envio_de_correo', true)->get();
             $emailsAdmins = $emailsAdmins->pluck('email');
-            $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->get();
+            $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->where('envio_de_correo', true)->get();
             $emailsPMOs = $emailsPMOs->pluck('email');
             $emailsUsers = DB::table('Usuarios')
                 ->leftJoin('RolesProyectos', 'Usuarios.Clave', 'RolesProyectos.Clave_Usuario')
                 ->select('Usuarios.email')
                 ->where('RolesProyectos.Clave_Proyecto', $projectId)
+                ->where('Usuarios.envio_de_correo', 1)
+                ->where('Usuarios.Clave_Rol', 3)
                 ->get();
             $emailsUsers = $emailsUsers->pluck('email');
 
@@ -261,14 +263,16 @@ class ProyectosController extends Controller
         $status = $status[0]->status;
 
         //A QUIEN DIRIGIR EL CORREO
-        $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->get();
+        $emailsAdmins = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 2)->where('envio_de_correo', true)->get();
         $emailsAdmins = $emailsAdmins->pluck('email');
-        $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->get();
+        $emailsPMOs = User::where('Clave_Compania', Auth::user()->Clave_Compania)->where('Clave_Rol', 4)->where('envio_de_correo', true)->get();
         $emailsPMOs = $emailsPMOs->pluck('email');
         $emailsUsers = DB::table('Usuarios')
             ->leftJoin('RolesProyectos', 'Usuarios.Clave', 'RolesProyectos.Clave_Usuario')
             ->select('Usuarios.email')
             ->where('RolesProyectos.Clave_Proyecto', $projectId)
+            ->where('Usuarios.envio_de_correo', 1)
+            ->where('Usuarios.Clave_Rol', 3)
             ->get();
         $emailsUsers = $emailsUsers->pluck('email');
 

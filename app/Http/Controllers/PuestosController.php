@@ -43,17 +43,31 @@ class PuestosController extends Controller
     }
 
     public function store(Request $request){
-        $puesto = $request->validate([
-            'puesto' => ['required', 'string', 'max:150', 'unique:Puestos'],
-            'compania' => ['required']
-        ]);
-        Puesto::create([
-            'Puesto' => $puesto['puesto'],
-            'Clave_Compania' => $puesto['compania'],
-            'Activo' => 1,
-            'FechaCreacion' => Carbon::today()->toDateString()
-        ]);
-        return redirect('/Admin/Puestos')->with('mensaje', "Nuevo puesto agregado correctamente");
+        if (Auth::user()->Clave_Rol == 1) {
+            $puesto = $request->validate([
+                'puesto' => ['required', 'string', 'max:150'],
+                'compania' => ['required']
+            ]);
+            Puesto::create([
+                'Puesto' => $puesto['puesto'],
+                'Clave_Compania' => $puesto['compania'],
+                'Activo' => 1,
+                'FechaCreacion' => Carbon::today()->toDateString()
+            ]);
+            return redirect('/Admin/Puestos')->with('mensaje', "Nuevo puesto agregado correctamente");
+        }
+        else {
+            $puesto = $request->validate([
+                'puesto' => ['required', 'string', 'max:150']
+            ]);
+            Puesto::create([
+                'Puesto' => $puesto['puesto'],
+                'Clave_Compania' =>Auth::user()->Clave_Puesto,
+                'Activo' => 1,
+                'FechaCreacion' => Carbon::today()->toDateString()
+            ]);
+            return redirect('/Admin/Puestos')->with('mensaje', "Nuevo puesto agregado correctamente");
+        }
     }
 
     public function prepare($id){
@@ -70,7 +84,7 @@ class PuestosController extends Controller
 
     public function update(Request $request, $Clave){
         $puesto = $request->validate([
-            'puesto' => ['required', 'string', 'max:150', 'unique:Puestos'],
+            'puesto' => ['required', 'string', 'max:150'],
             'compania' => ['required']
         ]);
         Puesto::where('Clave', $Clave)->update([

@@ -18,6 +18,7 @@
                             <div class="invalid-feedback" id="error_puesto" style="display: none;"></div>
                         </div>
                     </div>
+                    @if(\Illuminate\Support\Facades\Auth::user()->Clave_Rol == 1)
                     <div class="col-6 col-md-4">
                         <div class="form-group">
                             <label>Compañía</label>
@@ -28,6 +29,7 @@
                             </select>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
             <div class="modal-footer">
