@@ -1,6 +1,7 @@
 @extends('layouts.login')
 
 @section('content')
+    @inject('sponsors', 'App\Services\Sponsors')
     <div class="wrapper-less">
         <div class="container-less">
             <div class="col">
@@ -54,6 +55,19 @@
             </div>
         </div>
     </div>
+
+    @if(count($sponsors->get()->toArray()) == 0)
+    @else
+        <div class="sponsors-navbar-login">
+            <ul class="sponsors-ul-login" id="c">
+                @foreach($sponsors->get() as $sponsor)
+                    <li class="sponsors-li-login">
+                        <img data-toggle="modal" data-target="#info{{$sponsor->sponsorId}}" src="{{ URL::to('/') }}/sponsors/{{ $sponsor->image }}" class="sponsors-img-login"/>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <script>
         if ($(window).width() > 799) {

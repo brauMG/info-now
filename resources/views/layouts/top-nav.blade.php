@@ -11,6 +11,16 @@
                         </a>
                     </div>
                 @endif
+                    @if(Auth::user()->Clave_Rol==1)
+                        <div class="col text-center btn-hover">
+                            <a @if(request()->path() == 'Admin/viewSponsors/listSponsors')){ } @else { href="{{ url('/Admin/viewSponsors/listSponsors') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/viewSponsors/listSponsors')){ selected } @else {} @endif">
+                                <div><i class="material-icons" style="vertical-align: bottom;">
+                                        format_list_numbered
+                                    </i></div>
+                                <div>Patrocinadores</div>
+                            </a>
+                        </div>
+                    @endif
                 @if(Auth::user()->Clave_Rol==1)
                     <div class="col text-center btn-hover">
                         <a @if(request()->path() == 'Admin/Roles')){ } @else { href="{{ url('/Admin/Roles') }}" } @endif class="btn btns-grid border-light btn-layout btn-grid @if(request()->path() == 'Admin/Roles')){ selected } @else {} @endif">

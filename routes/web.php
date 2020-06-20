@@ -81,7 +81,14 @@ Route::post('/Admin/Usuarios/PDF','UsuariosController@exportPdf')->name('UsersPD
 Route::get('/Admin/Usuarios/ChangeSend/{id}','UsuariosController@editSend');
 Route::put('/Admin/Usuarios/UpdateSend/{id}','UsuariosController@updateSend')->name('UpdateSend');
 
-
+Route::get('/Admin/viewSponsors/listSponsors', 'SponsorsController@showList');
+Route::get('/Admin/addSponsors/create', 'SponsorsController@createSponsor');
+Route::get('/Admin/viewSponsors/showSponsors/{id}', 'SponsorsController@show')->name('ShowSponsor');
+Route::get('/Admin/viewSponsors/editSponsor/{id}', 'SponsorsController@edit')->name('EditSponsor');
+Route::get('/Admin/viewSponsors/cancelSponsor', 'SponsorsController@cancel')->name('CancelSponsor');
+Route::post('/Admin/viewSponsors/editSponsor/update/{id}', 'SponsorsController@update')->name('UpdateSponsor');
+Route::post('/Admin/viewSponsors/editSponsor/delete/{id}', 'SponsorsController@delete')->name('DeleteSponsor');
+Route::post('/Admin/addSponsors/create', 'SponsorsController@storeSponsor');
 
 Route::get('/Admin/Fases', 'FasesController@index');
 Route::get('/Admin/Fases/New', 'FasesController@new');

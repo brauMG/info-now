@@ -153,6 +153,10 @@ use Illuminate\Support\Facades\URL;
         @endif
 
         @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/viewSponsors/listSponsors')){ active } @else {} @endif" href="{{ url('/Admin/viewSponsors/listSponsors') }}"><i class="fas fa-list"></i> Patrocinadores</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==1)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Roles')){ active } @else {} @endif" href="{{ url('/Admin/Roles') }}"><i class="fas fa-user-tag"></i> Roles</a>
         @endif
 
@@ -218,6 +222,7 @@ use Illuminate\Support\Facades\URL;
 <div class="fixContainer mb-4">
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true"></div>
     @yield('content')
+    @extends('layouts.sponsors')
 </div>
 @yield('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>

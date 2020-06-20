@@ -1699,11 +1699,11 @@ fieldset:disabled a.btn {
   pointer-events: none; }
 
 .btn-primary {
-  color: #fff;
+  color: #fff !important;
   background-color: #2C3E50;
   border-color: #2C3E50; }
   .btn-primary:hover {
-    color: #fff;
+    color: #47bdd7 !important;
     background-color: #1e2b37;
     border-color: #1a252f; }
   .btn-primary:focus, .btn-primary.focus {

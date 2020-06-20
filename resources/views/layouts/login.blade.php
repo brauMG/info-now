@@ -23,8 +23,9 @@
     <!-- Styles Login-->
     <script src="bts4/js/login.js"></script>
     <link href="{{ asset('bts4/css/login.css') }}" rel="stylesheet">
+    <link href="{{ asset('bts4/css/sponsors.css') }}" rel="stylesheet">
     <link href="{{ asset('bts4/css/login.less') }}" rel="stylesheet">
-    <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <title>Sistema de Enfoque Rapido</title>
 
