@@ -65,6 +65,7 @@ Route::put('/Admin/Enfoques/Update/{id}', 'EnfoquesController@update')->name('Up
 Route::post('/Admin/Enfoques/Delete/{id}', 'EnfoquesController@delete')->name('DeleteFocus');
 
 Route::get('/Admin/Usuarios', 'UsuariosController@index');
+Route::get('/auth/logout', 'UsuariosController@logout');
 Route::get('/Admin/Usuarios/New', 'UsuariosController@new');
 Route::get('/Admin/Usuarios/Edit/{id}', 'UsuariosController@edit');
 Route::get('/Admin/Usuarios/Delete/{id}', 'UsuariosController@prepare');

@@ -325,7 +325,7 @@
 }
 
 .sponsors-li-login {
-    width: 25%;
+    width: 20%;
     height: 100%;
     list-style-type: none;
     position: fixed;
@@ -691,4 +691,5 @@
     opacity: 0;
     text-align: center;
     transition: 1s opacity;
+    margin-left: 10%;
 }

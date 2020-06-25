@@ -52,7 +52,7 @@
                         <th scope="col" style="text-transform: uppercase">Descripción</th>
                         <th scope="col" style="text-transform: uppercase">Decisión</th>
                         <th scope="col" style="text-transform: uppercase">Fecha de Creación</th>
-                        <th scope="col" style="text-transform: uppercase">Estado de Revisión</th>
+                        <th scope="col" style="text-transform: uppercase" >Estado de Revisión</th>
                         <th scope="col" style="text-transform: uppercase">Fecha de Revisión</th>
                         <th scope="col" style="text-transform: uppercase">Hora de Revisión</th>
                         <th scope="col" style="text-transform: uppercase">Fecha de Vencimiento</th>
@@ -78,11 +78,11 @@
                                     </td>
                                 @elseif($item->Estado == 1)
                                     <td class="td td-center">
-                                        <a class="btn btn btn-success no-href"><i class="fas fa-check-circle"></i> Aprobada</a>
+                                        <a class="btn btn btn-success no-href" data-toggle="tooltip" data-placement="top" title="Esta actividad ya fue revisada"><i class="fas fa-check-circle"></i> Aprobada</a>
                                     </td>
                                 @elseif($item->Estado == 2)
                                     <td class="td td-center">
-                                        <a class="btn btn btn-danger no-href"><i class="fas fa-times-circle"></i> Desaprobada</a>
+                                        <a class="btn btn btn-danger no-href" data-toggle="tooltip" data-placement="top" title="Esta actividad ya fue revisada"><i class="fas fa-times-circle"></i> Desaprobada</a>
                                     </td>
                                 @endif
                                 @if($item->Fecha_Revision == null)
@@ -163,6 +163,9 @@
         </div>
     </div>
     <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
         $('.mydatatable').DataTable();
 
         function changeEstado(button){

@@ -69,6 +69,31 @@
         </div>
     @endif
 
+    @foreach($sponsors->get() as $sponsor)
+        <div class="modal show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="info{{$sponsor->sponsorId}}">
+            <div class="modal-dialog padding-modal" role="document">
+                <form target="_blank" action="https://{{$sponsor->link}}">
+                    <div class="modal-content"style="background-color: #ffffff;color: white;">
+                        <div class="modal-header ">
+                            <h5 class="modal-title"  id="exampleModalLongTitle"><img src="{{ URL::to('/') }}/sponsors/{{ $sponsor->image }}" width="75"/></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="width: 20% !important;">
+                                <span aria-hidden="true">X</span>
+                            </button>
+                        </div>
+                        <div style="background-color: white;color: black;">
+                            <div class="modal-body">
+                                {{$sponsor->description}}
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="background-color: white;color: black;">
+                            <input type="submit" class="btn btn-primary" value="Ir a su sitio web">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endforeach
+
     <script>
         if ($(window).width() > 799) {
             var timer = 4000;

@@ -61,12 +61,12 @@ use Illuminate\Support\Facades\URL;
     @if(Auth::user()->Clave_Rol=='1')
         <a class="navbar-brand ml-auto nav-name">
             <i class="fas fa-user-tie"></i>
-            <h6 class="h6-less"><strong>Super Administrador de <strong style="color: #0e84b5; cursor: pointer" onclick="ChangeCompany();">@yield('company','Sin Compañia')</strong>, {{ Auth::user()->Nombres }}</strong></h6>
+            <h6 class="h6-less"><strong>Super Administrador de <strong style="color: #0e84b5; cursor: pointer" onclick="ChangeCompany();" data-toggle="tooltip" data-placement="bottom" title="Cambia entre las empresas disponibles">@yield('company','Sin Compañia')</strong>, {{ Auth::user()->Nombres }}</strong></h6>
         </a>
 
         <a class="navbar-brand ml-auto nav-name">
-            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right; cursor: pointer">
-                <i class="fas fa-sign-out-alt"></i>
+            <div class="logout-button" onclick="logout();" style="text-align: right; cursor: pointer; color: black" data-toggle="tooltip" data-placement="bottom" title="Salir del sitio">
+                <i class="fas fa-sign-out-alt" style="color: black"></i>
                 <h6 class="h6-less"><strong>Salir</strong></h6>
             </div>
         </a>
@@ -75,9 +75,9 @@ use Illuminate\Support\Facades\URL;
             <i class="fas fa-user-tie"></i>
             <h6 class="h6-less"><strong>Administrador de @yield('company','Sin Compañia'), {{ Auth::user()->Nombres }}</strong></h6>
         </a>
-        <a class="navbar-brand ml-auto nav-name"style="cursor: pointer">
-            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right; cursor: pointer">
-                <i class="fas fa-sign-out-alt"></i>
+        <a class="navbar-brand ml-auto nav-name">
+            <div class="logout-button" onclick="logout();" style="text-align: right; cursor: pointer; color: black">
+                <i class="fas fa-sign-out-alt" style="color: black"></i>
                 <h6 class="h6-less"><strong>Salir</strong></h6>
             </div>
         </a>
@@ -86,9 +86,9 @@ use Illuminate\Support\Facades\URL;
             <i class="fas fa-user-tie"></i>
             <h6 class="h6-less"><strong>Usuario de @yield('company','Sin Compañia'), {{ Auth::user()->Nombres }}</strong></h6>
         </a>
-        <a class="navbar-brand ml-auto nav-name" style="cursor: pointer">
-            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
-                <i class="fas fa-sign-out-alt"></i>
+        <a class="navbar-brand ml-auto nav-name">
+            <div class="logout-button" onclick="logout();" style="text-align: right; cursor: pointer; color: black">
+                <i class="fas fa-sign-out-alt" style="color: black"></i>
                 <h6 class="h6-less"><strong>Salir</strong></h6>
             </div>
         </a>
@@ -97,9 +97,9 @@ use Illuminate\Support\Facades\URL;
             <i class="fas fa-user-tie"></i>
             <h6 class="h6-less"><strong>PMO de @yield('company','Sin Compañia'), {{ Auth::user()->Nombres }}</strong></h6>
         </a>
-        <a class="navbar-brand ml-auto nav-name" style="cursor: pointer">
-            <div class="logout-button" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="text-align: right">
-                <i class="fas fa-sign-out-alt"></i>
+        <a class="navbar-brand ml-auto nav-name">
+            <div class="logout-button" onclick="logout();" style="text-align: right; cursor: pointer; color: black">
+                <i class="fas fa-sign-out-alt" style="color: black"></i>
                 <h6 class="h6-less"><strong>Salir</strong></h6>
             </div>
         </a>
@@ -213,8 +213,12 @@ use Illuminate\Support\Facades\URL;
         @endif
     @endauth
 
-        <a class="logout_sidebar_button" href="{{ route('logout') }}" onclick="event.preventDefault();
-        document.getElementById('logout-form').submit();" style="background-color: #0000007d !important;"><i class="material-icons" style="vertical-align: bottom;">
+{{--        <a class="logout_sidebar_button" href="{{ route('logout') }}" onclick="event.preventDefault();--}}
+{{--        document.getElementById('logout-form').submit();" style="background-color: #0000007d !important;"><i class="material-icons" style="vertical-align: bottom;">--}}
+{{--                power_settings_new--}}
+{{--            </i> {{ __('Salir') }}--}}
+{{--        </a>--}}
+        <a class="logout_sidebar_button" onclick="logout();" style="background-color: #0000007d !important; color: black; cursor: pointer" data-toggle="tooltip" data-placement="right" title="Salir del sitio"><i class="material-icons" style="vertical-align: bottom; color: black">
                 power_settings_new
             </i> {{ __('Salir') }}
         </a>
@@ -240,5 +244,17 @@ use Illuminate\Support\Facades\URL;
             }
         });
     }
+
+    function logout() {
+        $('#myModal').load( '{{ url('/auth/logout') }}',function(response, status, xhr)
+        {
+            if (status == "success")
+                $('#myModal').modal('show');
+        });
+    }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
 </html>

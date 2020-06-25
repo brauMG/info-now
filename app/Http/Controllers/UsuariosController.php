@@ -45,6 +45,10 @@ class UsuariosController extends Controller
         }
     }
 
+    public function logout(){
+        return view('auth.logout');
+    }
+
     public function edit($id){
         $userRol = Auth::user()->Clave_Rol;
         $usuario=User::where('Clave', $id)->get()->toArray();
@@ -173,6 +177,7 @@ class UsuariosController extends Controller
                 'Clave_Area' => $user['area'],
                 'Clave_Puesto' => $user['puesto'],
                 'Clave_Rol' => $user['rol'],
+                'email_verified_at' => null
             ]);
         }
         else {
@@ -189,6 +194,7 @@ class UsuariosController extends Controller
                 'Clave_Area' => $user['area'],
                 'Clave_Puesto' => $user['puesto'],
                 'Clave_Rol' => $user['rol'],
+                'email_verified_at' => null
             ]);
         }
 

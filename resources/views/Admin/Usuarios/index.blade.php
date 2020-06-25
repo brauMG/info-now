@@ -70,11 +70,11 @@
                                 <td class="td td-center">{{$item->Rol}}</td>
                                 @if($item->Send == true)
                                     <td class="td td-center">
-                                        <a class="btn btn btn-success no-href" clave="{{$item->Clave}}" onclick="changeSend(this);" style="background-color: #1fab26; border-color: #1fab26"><i class="fas fa-edit"></i> Si</a>
+                                        <a class="btn btn btn-success no-href" clave="{{$item->Clave}}" onclick="changeSend(this);" style="background-color: #1fab26; border-color: #1fab26" data-toggle="tooltip" data-placement="top" title="Recibe correos sobre novedades en los proyectos"><i class="fas fa-edit"></i> Si</a>
                                     </td>
                                 @else
                                     <td class="td td-center">
-                                        <a class="btn btn btn-success no-href" clave="{{$item->Clave}}" onclick="changeSend(this);" style="background-color: #ab221f; border-color: #ab221f"><i class="fas fa-edit"></i> No</a>
+                                        <a class="btn btn btn-success no-href" clave="{{$item->Clave}}" onclick="changeSend(this);" style="background-color: #ab221f; border-color: #ab221f" data-toggle="tooltip" data-placement="bottom" title="No recibe correos sobre novedades en los proyectos"><i class="fas fa-edit"></i> No</a>
                                     </td>
                                 @endif
                                     <td  class="td td-center">
@@ -102,6 +102,10 @@
     </div>
     <script>
         $('.mydatatable').DataTable();
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
         function changeSend(button){
             var clave = $(button).attr('clave');

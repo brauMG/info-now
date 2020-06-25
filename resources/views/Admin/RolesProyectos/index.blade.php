@@ -55,7 +55,7 @@
                         <th scope="col" style="text-transform: uppercase">Fase actual del proyecto</th>
                         <th scope="col" style="text-transform: uppercase">Rol RASIC</th>
                         <th scope="col" style="text-transform: uppercase">Fecha de Asignación</th>
-                        <th scope="col" style="text-transform: uppercase">Estado</th>
+                        <th scope="col" style="text-transform: uppercase" data-toggle="tooltip" data-placement="top" title="Presiona el botón para cambiar el estado">Estado</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -75,7 +75,7 @@
                                 </td>
                             @else
                                 <td class="td td-center">
-                                    <a class="btn btn btn-danger no-href" clave="{{$item->Clave}}" onclick="changeEstado(this);"><i class="fas fa-times-circle"></i> Inactivo</a>
+                                    <a class="btn btn btn-danger no-href" clave="{{$item->Clave}}" onclick="changeEstado(this);" data-toggle="tooltip" data-placement="top" title="Este usuario no puede registrar actividades"><i class="fas fa-times-circle"></i> Inactivo</a>
                                 </td>
                             @endif
                         </tr>
@@ -98,6 +98,10 @@
     </div>
     <script>
         $('.mydatatable').DataTable();
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
         function changeEstado(button){
             var clave = $(button).attr('clave');

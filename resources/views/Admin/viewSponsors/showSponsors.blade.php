@@ -107,11 +107,14 @@
                                 </table>
                             </form>
                             <div id="buttContainer">
+                                <div class='container' style="margin-bottom: -12px !important;">
+                                    <a href="{{ url('/Admin/viewSponsors/listSponsors') }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Regresa a la lista de patrocinadores"><i class="fas fa-hand-point-left"></i> Regresar</a>
+                                </div>
                                 <div class='container'>
-                                    <a href="{{ route('EditSponsor', $sponsor->sponsorId) }}" class="btn btn-warning"><i class="fas fa-edit"></i> Editar</a>
+                                <a href="{{ route('EditSponsor', $sponsor->sponsorId) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="left" title="Dirigete a la página de edición"><i class="fas fa-edit"></i> Editar</a>
                                     <button class="btn btn-danger" id="eliminar" data-toggle="modal" data-target="#DeleteModal"><i class="fas fa-trash"></i> Eliminar Patrocinador</button>
                                 </div>
-                            </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -149,4 +152,9 @@
                 </div>
             </div>
         </div>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 @endsection

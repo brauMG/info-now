@@ -90,6 +90,13 @@ class RolesProyectosController extends Controller
             'rol' => ['required']
         ]);
 
+        $UsersInProjects = RolProyecto::where('Clave_Usuario', $data['usuario'])->where('Clave_Proyecto', $proyectoId)->get();
+        if (count($UsersInProjects) > 0) {
+            return redirect('/Admin/RolesProyectos')->with('mensajeDanger', "Este usuario ya fue agregado al proyecto con anterioridad");
+        }
+
+
+
         $i = 0;
 
         $actualData = RolProyecto::all()->toArray();

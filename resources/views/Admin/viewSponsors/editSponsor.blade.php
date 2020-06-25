@@ -132,8 +132,11 @@
                                         </tr>
                                     </table>
                                 </div>
+                                <div class='container' style="margin-bottom: -12px !important;">
+                                    <a href="{{ url('/Admin/viewSponsors/listSponsors') }}" class="btn btn-primary"><i class="fas fa-hand-point-left"></i> Regresar</a>
+                                </div>
                                 <div class='container'>
-                                    <input type="submit" class="button-size-08 btn btn-add btn-warning" value="Guardar Cambios">
+                                    <input type="submit" class="button-size-08 btn btn-add btn-warning" value="Guardar Cambios" style="color: white">
                                     <a href="{{route('CancelSponsor')}}" class="btn btn-primary"><i class="fas fa-sync-alt"></i> Cancelar</a>
                                 </div>
                             </form>
