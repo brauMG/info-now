@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('command:SendActivitiesTimeline')->everyMinute();
+         $schedule->command('command:SendActivitiesTimeline')->dailyAt('8:00');
     }
 
     /**
