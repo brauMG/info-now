@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Areas;
 use App\Etapas;
+use App\Mail\ActivitiesTimeline;
 use App\Mail\AdviceActivity;
 use App\Mail\AdviceActivityStatus;
 use App\RolProyecto;

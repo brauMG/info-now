@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Actividad;
 use App\Areas;
 use App\Compania;
 use App\Etapas;
@@ -149,6 +150,9 @@ class EtapasController extends Controller
                     Etapas::where('Clave', $Clave)->update([
                         'Hora_Vencimiento' => $etapa['horaV']
                     ]);
+                    Actividad::where('Clave_Etapa', $Clave)->update([
+                        'Hora_Vencimiento' => $etapa['horaV']
+                    ]);
                 }
             }
             else if ($convertedtime == $etapa->Hora_Vencimiento){
@@ -158,6 +162,9 @@ class EtapasController extends Controller
                 Etapas::where('Clave', $Clave)->update([
                     'Fecha_Vencimiento' => $etapa['fechaV']
                 ]);
+                Actividad::where('Clave_Etapa', $Clave)->update([
+                    'Fecha_Vencimiento' => $etapa['fechaV']
+                ]);
             }
             else {
                 $etapa = $request->validate([
@@ -165,6 +172,10 @@ class EtapasController extends Controller
                     'fechaV' => ['required', 'date']
                 ]);
                 Etapas::where('Clave', $Clave)->update([
+                    'Hora_Vencimiento' => $etapa['horaV'],
+                    'Fecha_Vencimiento' => $etapa['fechaV']
+                ]);
+                Actividad::where('Clave_Etapa', $Clave)->update([
                     'Hora_Vencimiento' => $etapa['horaV'],
                     'Fecha_Vencimiento' => $etapa['fechaV']
                 ]);
@@ -188,6 +199,9 @@ class EtapasController extends Controller
                     'Hora_Vencimiento' => $etapa['horaV'],
                     'Descripcion' => $etapa['descripcion']
                 ]);
+                Actividad::where('Clave_Etapa', $Clave)->update([
+                    'Hora_Vencimiento' => $etapa['horaV']
+                ]);
             }
         }
         else if ($convertedtime == $etapa->Hora_Vencimiento) {
@@ -195,6 +209,9 @@ class EtapasController extends Controller
                 'horaV' => ['required']
             ]);
             Etapas::where('Clave', $Clave)->update([
+                'Hora_Vencimiento' => $etapa['horaV']
+            ]);
+            Actividad::where('Clave_Etapa', $Clave)->update([
                 'Hora_Vencimiento' => $etapa['horaV']
             ]);
         }
@@ -208,6 +225,10 @@ class EtapasController extends Controller
                 'Hora_Vencimiento' => $etapa['horaV'],
                 'Fecha_Vencimiento' => $etapa['fechaV'],
                 'Descripcion' => $etapa['descripcion']
+            ]);
+            Actividad::where('Clave_Etapa', $Clave)->update([
+                'Hora_Vencimiento' => $etapa['horaV'],
+                'Fecha_Vencimiento' => $etapa['fechaV']
             ]);
         }
         return redirect('/Admin/Etapas')->with('mensaje', "La etapa fue editada correctamente");
