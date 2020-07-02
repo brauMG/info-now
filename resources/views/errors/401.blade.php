@@ -40,7 +40,7 @@
             <div></div>
         </div>
         <div class="notfound-social">
-            <img src="https://i.imgur.com/jkf6qSJ.png" style="max-height: 100% !important; max-width: 100% !important;">
+            <img src="https://i.imgur.com/fSh7ATr.png" style="max-height: 100% !important; max-width: 100% !important;">
         </div>
         <h1>¡Alto!</h1>
         <h2><strong style="color: #761b18">Error 401</strong>: Acceso no autorizado</h2>
