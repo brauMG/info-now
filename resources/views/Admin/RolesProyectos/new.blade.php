@@ -19,7 +19,7 @@
                     <div class="card card-add-company">
 
                         <div class="card-header card-header-cute" style="background-color: #055e76 !important;">
-                            <h4 class="no-bottom" style="text-transform: uppercase">Registrar Nueva Actividad</h4>
+                            <h4 class="no-bottom" style="text-transform: uppercase">Agregar Usuario a Proyecto</h4>
                         </div>
 
                         <div class="card-body">
