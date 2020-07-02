@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('DeleteFocus', [$enfoque['Clave']])}}" method="POST">
+            <form action="{{route('DeleteFase', [$fase['Clave']])}}" method="POST">
                 @csrf
                 <div style="background-color: white;color: black;">
                     <center>

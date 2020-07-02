@@ -94,7 +94,7 @@ Route::post('/Admin/addSponsors/create', 'SponsorsController@storeSponsor');
 Route::get('/Admin/Fases', 'FasesController@index');
 Route::get('/Admin/Fases/New', 'FasesController@new');
 Route::get('/Admin/Fases/Edit/{id}', 'FasesController@edit');
-Route::get('/Admin/Fases/Delete/{id}', 'EnfoquesController@prepare');
+Route::get('/Admin/Fases/Delete/{id}', 'FasesController@prepare');
 Route::post('/Admin/Fases/Create', 'FasesController@store')->name('CreateFase');
 Route::put('/Admin/Fases/Update/{id}', 'FasesController@update')->name('UpdateFase');
 Route::post('/Admin/Fases/Delete/{id}', 'FasesController@delete')->name('DeleteFase');
