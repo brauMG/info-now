@@ -211,6 +211,31 @@ use Illuminate\Support\Facades\URL;
         @if(Auth::user()->Clave_Rol==4 || Auth::user()->Clave_Rol==3)
             <a class="side-font sidebar-margin-elements @if(request()->path() == 'Admin/Actividades')){ active } @else {} @endif" href="{{ url('/Admin/Actividades') }}"><i class="fas fa-clipboard-list"></i> Actividades</a>
         @endif
+
+        @if(Auth::user()->Clave_Rol==1)
+            <a class="side-font sidebar-margin-elements" target="_blank" href="{{ URL::to('/') }}/files/tecManual.pdf"><i class="material-icons" style="vertical-align: bottom;">
+                get_app
+            </i> Manual de Usuario</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==2)
+            <a class="side-font sidebar-margin-elements" target="_blank" href="{{ URL::to('/') }}/files/adminManual.pdf"><i class="material-icons" style="vertical-align: bottom;">
+                    get_app
+                </i> Manual de Usuario</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==3)
+            <a class="side-font sidebar-margin-elements" target="_blank" href="{{ URL::to('/') }}/files/userManual.pdf"><i class="material-icons" style="vertical-align: bottom;">
+                    get_app
+                </i> Manual de Usuario</a>
+        @endif
+
+        @if(Auth::user()->Clave_Rol==4)
+            <a class="side-font sidebar-margin-elements" target="_blank" href="{{ URL::to('/') }}/files/pmoManual.pdf"><i class="material-icons" style="vertical-align: bottom;">
+                    get_app
+                </i> Manual de Usuario</a>
+        @endif
+
     @endauth
 
 {{--        <a class="logout_sidebar_button" href="{{ route('logout') }}" onclick="event.preventDefault();--}}
