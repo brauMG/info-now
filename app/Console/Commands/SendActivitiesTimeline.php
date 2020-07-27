@@ -67,18 +67,20 @@ class SendActivitiesTimeline extends Command
                 ->select('Actividades.Descripcion', 'Actividades.Decision', 'Actividades.Fecha_Vencimiento', 'Actividades.Hora_Vencimiento', 'Proyectos.Descripcion as Proyecto')
                 ->get();
 
-            //A QUIEN DIRIGIR EL CORREO
-            $emailsAdmins = User::where('Clave_Compania', $id)->where('Clave_Rol', 2)->where('envio_de_correo', true)->get();
-            $emailsAdmins = $emailsAdmins->pluck('email');
-            $emailsPMOs = User::where('Clave_Compania', $id)->where('Clave_Rol', 4)->where('envio_de_correo', true)->get();
-            $emailsPMOs = $emailsPMOs->pluck('email');
+            if (count($activities) > 0) {
+                //A QUIEN DIRIGIR EL CORREO
+                $emailsAdmins = User::where('Clave_Compania', $id)->where('Clave_Rol', 2)->where('envio_de_correo', true)->get();
+                $emailsAdmins = $emailsAdmins->pluck('email');
+                $emailsPMOs = User::where('Clave_Compania', $id)->where('Clave_Rol', 4)->where('envio_de_correo', true)->get();
+                $emailsPMOs = $emailsPMOs->pluck('email');
 
-            //ENVIO DE CORREOS
-            foreach ($emailsAdmins as $email) {
-                Mail::to($email)->queue(new ActivitiesTimeline($activities));
-            }
-            foreach ($emailsPMOs as $email) {
-                Mail::to($email)->queue(new ActivitiesTimeline($activities));
+                //ENVIO DE CORREOS
+                foreach ($emailsAdmins as $email) {
+                    Mail::to($email)->queue(new ActivitiesTimeline($activities));
+                }
+                foreach ($emailsPMOs as $email) {
+                    Mail::to($email)->queue(new ActivitiesTimeline($activities));
+                }
             }
         }
     }
