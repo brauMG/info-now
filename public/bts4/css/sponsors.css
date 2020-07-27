@@ -83,8 +83,8 @@
     width: 100% !important;
     padding-top: 3%;
     padding-bottom: 0%;
-    max-width: 65px !important;
-    max-height: 40px !important;
+    max-width: 250px !important;
+    max-height: 160px !important;
 }
 
 .sponsors-img-login:hover {
@@ -387,7 +387,7 @@
     bottom: 0;
     margin-left: 10% !important;
     width: 90% !important;
-    height: 4.3% !important;
+    height: 15% !important;
 }
 
 @media screen and (max-width: 1920px){
@@ -399,7 +399,7 @@
         bottom: 0;
         margin-left: 10% !important;
         width: 90% !important;
-        height: 5.2% !important;
+        height: 10% !important;
     }
 }
 
@@ -412,7 +412,7 @@
         bottom: 0;
         margin-left: 10% !important;
         width: 90% !important;
-        height: 4.7% !important;
+        height: 8% !important;
     }
 }
 
@@ -425,7 +425,7 @@
         bottom: 0;
         margin-left: 0% !important;
         width: 100% !important;
-        height: 4.7% !important;
+        height: 8% !important;
     }
 }
 
@@ -442,8 +442,8 @@
     width: 100% !important;
     padding-top: 3%;
     padding-bottom: 0%;
-    max-width: 65px !important;
-    max-height: 40px !important;
+    max-width: 250px !important;
+    max-height: 160px !important;
 }
 
 .sponsors-img-inside:hover {
@@ -458,8 +458,8 @@
         width: 100% !important;
         padding-top: 3% !important;
         padding-bottom: 0% !important;
-        max-width: 75px !important;
-        max-height: 40px !important;
+        max-width: 190px !important;
+        max-height: 100px !important;
     }
 }
 
@@ -471,8 +471,8 @@
         width: 100% !important;
         padding-top: 3% !important;
         padding-bottom: 0% !important;
-        max-width: 75px !important;
-        max-height: 40px !important;
+        max-width: 160px !important;
+        max-height: 100px !important;
     }
 }
 
@@ -489,32 +489,6 @@
     }
 }
 
-@media screen and (max-width: 1680px){
-    .sponsors-img-inside {
-        background-color: rgba(0,0,0,0) !important;
-        border-color: rgba(0,0,0,0) !important;
-        height: 100% !important;
-        width: 100% !important;
-        padding-top: 3% !important;
-        padding-bottom: 0% !important;
-        max-width: 75px !important;
-        max-height: 45px !important;
-    }
-}
-
-@media screen and (max-width: 1360px){
-    .sponsors-img-inside {
-        background-color: rgba(0,0,0,0) !important;
-        border-color: rgba(0,0,0,0) !important;
-        height: 100% !important;
-        width: 100% !important;
-        padding-top: 5% !important;
-        padding-bottom: 0% !important;
-        max-width: 75px !important;
-        max-height: 40px !important;
-    }
-}
-
 @media screen and (max-height: 765px){
     .sponsors-img-inside {
         background-color: rgba(0,0,0,0) !important;
@@ -523,21 +497,8 @@
         width: 100% !important;
         padding-top: 5% !important;
         padding-bottom: 0% !important;
-        max-width: 75px !important;
-        max-height: 40px !important;
-    }
-}
-
-@media screen and (max-width: 1024px){
-    .sponsors-img-inside {
-        background-color: rgba(0,0,0,0) !important;
-        border-color: rgba(0,0,0,0) !important;
-        height: 100% !important;
-        width: 100% !important;
-        padding-top: 5% !important;
-        padding-bottom: 0% !important;
-        max-width: 75px !important;
-        max-height: 40px !important;
+        max-width: 100px !important;
+        max-height: 70px !important;
     }
 }
 
@@ -601,8 +562,8 @@
         width: 100% !important;
         padding-top: -1% !important;
         padding-bottom: 12% !important;
-        max-width: 55px !important;
-        max-height: 40px !important;
+        max-width: 60px !important;
+        max-height: 50px !important;
     }
 }
 
