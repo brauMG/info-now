@@ -19,7 +19,6 @@ class CreateSponsorsCompaniesTable extends Migration
             $table->foreign('sponsorId')->references('sponsorId')->on('sponsors');
             $table->unsignedBigInteger('companyId');
             $table->foreign('companyId')->references('Clave')->on('Companias');
-
         });
     }
 

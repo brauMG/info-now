@@ -229,18 +229,12 @@ use Illuminate\Support\Facades\URL;
         @endif
 
     @endauth
-
-{{--        <a class="logout_sidebar_button" href="{{ route('logout') }}" onclick="event.preventDefault();--}}
-{{--        document.getElementById('logout-form').submit();" style="background-color: #0000007d !important;"><i class="material-icons" style="vertical-align: bottom;">--}}
-{{--                power_settings_new--}}
-{{--            </i> {{ __('Salir') }}--}}
-{{--        </a>--}}
-        <a class="logout_sidebar_button" onclick="logout();" style="background-color: #0000007d !important; color: black; cursor: pointer" data-toggle="tooltip" data-placement="right" title="Salir del sitio"><i class="material-icons" style="vertical-align: bottom; color: black">
+        <a class="side-font sidebar-margin-elements" onclick="logout();" style="background-color: #0000007d !important; color: black; cursor: pointer" data-toggle="tooltip" data-placement="right" title="Salir del sitio"><i class="material-icons" style="vertical-align: bottom; color: black">
                 power_settings_new
             </i> {{ __('Salir') }}
         </a>
 </div>
-<div class="fixContainer mb-4">
+<div class="fixContainer mb-4" style="overflow: auto">
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true"></div>
     @yield('content')
     @extends('layouts.sponsors')

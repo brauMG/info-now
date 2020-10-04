@@ -37,6 +37,5 @@ class CreateActividadesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('Actividades');
-
     }
 }
