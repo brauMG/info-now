@@ -157,7 +157,7 @@ class ActividadesController extends Controller
         $datetime->setTimezone('GMT-7');
         $date = $datetime->toDateString();
         $etapas = Etapas::where('Clave_Proyecto', $proyectoID)->where('Fecha_Vencimiento', '>', $date)->get();
-        return view('Admin.Actividades.type',compact('proyectoID', 'tipos', 'compania', 'etapas'));
+        return view('Admin.Actividades.type',compact('proyectoID', 'compania', 'etapas'));
     }
 
     public function new(Request $request, $proyectoID){
