@@ -1160,5 +1160,6 @@ div.content {
 
 .custom-table {
     table-layout: auto !important;
-    width: 600px !important;
+    width: -webkit-fill-available !important;
+    max-width: 600px !important;
 }
