@@ -376,6 +376,7 @@
             },
             options: {
                 responsive: true,
+                aspectRatio: false,
                 legend: {
                     position: 'right'
                 },
@@ -457,6 +458,7 @@
             },
             options: {
                 responsive: true,
+                aspectRatio: false,
                 legend: {
                     position: 'right'
                 },
@@ -518,6 +520,7 @@
             },
             options: {
                 responsive: true,
+                aspectRatio: false,
                 legend: {
                     position: 'right'
                 },
@@ -561,6 +564,7 @@
             },
             options: {
                 responsive: true,
+                aspectRatio: false,
                 legend: {
                     position: 'right'
                 },
@@ -604,6 +608,7 @@
             },
             options: {
                 responsive: true,
+                aspectRatio: false,
                 legend: {
                     position: 'right'
                 },
@@ -647,6 +652,7 @@
             },
             options: {
                 responsive: true,
+                aspectRatio: false,
                 legend: {
                     position: 'right'
                 },
@@ -690,6 +696,7 @@
             },
             options: {
                 responsive: true,
+                aspectRatio: false,
                 legend: {
                     position: 'right'
                 },
