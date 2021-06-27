@@ -142,13 +142,3 @@ body {
     font-size: 18px;
   }
 }
-
-.scroll-container {
-    overflow: auto;
-    height: 305px;
-}
-
-.custom-table {
-    table-layout: auto !important;
-    width: 600px !important;
-}

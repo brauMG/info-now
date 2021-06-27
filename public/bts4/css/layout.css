@@ -1152,3 +1152,13 @@ div.content {
         font-size: 0.8em !important;
     }
 }
+
+.scroll-container {
+    overflow: auto;
+    height: 305px;
+}
+
+.custom-table {
+    table-layout: auto !important;
+    width: 600px !important;
+}
