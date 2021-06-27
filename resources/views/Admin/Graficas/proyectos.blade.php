@@ -11,7 +11,7 @@
 
                         <div class="card card-see-results" style="border: solid; margin-bottom: 3% !important;">
                             <div class="card-header card-header-cute" style="background-color: #055e76 !important">
-                                <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Enfoque y Trabajo</h4>
+                                <h4 class="no-bottom" style="text-transform: uppercase">actividades de trabajo Por Enfoque y Trabajo</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
                                 <div class="container" style="text-align: right">
@@ -55,7 +55,7 @@
 
                         <div class="card card-see-results" style="border: solid; margin-bottom: 3% !important;">
                             <div class="card-header card-header-cute" style="background-color: #055e76 !important">
-                                <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Enfoque</h4>
+                                <h4 class="no-bottom" style="text-transform: uppercase">actividades de trabajo Por Enfoque</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
                                 <div class="container" style="text-align: right">
@@ -100,7 +100,7 @@
 
                         <div class="card card-see-results" style="border: solid; margin-bottom: 3% !important;">
                             <div class="card-header card-header-cute" style="background-color: #055e76 !important">
-                                <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Trabajo</h4>
+                                <h4 class="no-bottom" style="text-transform: uppercase">actividades de trabajo Por tipo de Trabajo</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
                                 <div class="container" style="text-align: right">
@@ -145,7 +145,7 @@
 
                         <div class="card card-see-results" style="border: solid; margin-bottom: 3% !important;">
                             <div class="card-header card-header-cute" style="background-color: #055e76 !important">
-                                <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Fase</h4>
+                                <h4 class="no-bottom" style="text-transform: uppercase">actividades de trabajo Por Fase</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
                                 <div class="container" style="text-align: right">
@@ -190,7 +190,7 @@
 
                         <div class="card card-see-results" style="border: solid; margin-bottom: 3% !important;">
                             <div class="card-header card-header-cute" style="background-color: #055e76 !important">
-                                <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Indicador</h4>
+                                <h4 class="no-bottom" style="text-transform: uppercase">actividades de trabajo Por Indicador</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
                                 <div class="container" style="text-align: right">
@@ -235,7 +235,7 @@
 
                         <div class="card card-see-results" style="border: solid; margin-bottom: 3% !important;">
                             <div class="card-header card-header-cute" style="background-color: #055e76 !important">
-                                <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Área</h4>
+                                <h4 class="no-bottom" style="text-transform: uppercase">actividades de trabajo Por Área</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
                                 <div class="container" style="text-align: right">
@@ -280,7 +280,7 @@
 
                         <div class="card card-see-results" style="border: solid; margin-bottom: 3% !important;">
                             <div class="card-header card-header-cute" style="background-color: #055e76 !important">
-                                <h4 class="no-bottom" style="text-transform: uppercase">Proyectos Por Estado</h4>
+                                <h4 class="no-bottom" style="text-transform: uppercase">actividades de trabajo Por Estado</h4>
                             </div>
                             <div class="card-body" style="background-color: rgba(176, 249, 255, 0.39) !important;">
                                 <div class="container" style="text-align: right">
