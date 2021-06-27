@@ -19,7 +19,6 @@
                                 <i class="fas fa-project-diagram"></i> <strong>Total de Proyectos:</strong> {{count($proyectos)}}
                             </div>
                             <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-
                                 <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
                                     <div class="row row2 ">
                                         <table class="table-responsive table-card-inline">
@@ -40,7 +39,6 @@
                                         </table>
                                     </div>
                                 </div>
-
                                 <div class="row2 col-xl-8 max my-auto ">
                                     <div class="card bg-transparent" style="border: none; ">
                                         <div class="card-body">
@@ -64,7 +62,6 @@
                                 <i class="fas fa-project-diagram"></i> <strong>Total de Estados:</strong> 3
                             </div>
                             <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                <div class="expand-container">
                                 <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
                                     <div class="row row2 ">
                                         <table class="table-responsive table-card-inline">
@@ -91,7 +88,6 @@
                                         </table>
                                     </div>
                                 </div>
-                                </div>
                                 <div class="row2 col-xl-8 max my-auto ">
                                     <div class="card bg-transparent" style="border: none; ">
                                         <div class="card-body">
@@ -115,7 +111,6 @@
                                 <i class="fas fa-project-diagram"></i> <strong>Total de Usuarios:</strong> {{count($usuarios)}}
                             </div>
                             <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                <div class="expand-container">
                                 <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
                                     <div class="row row2 ">
                                         <table class="table-responsive table-card-inline">
@@ -135,7 +130,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
                                 </div>
                                 <div class="row2 col-xl-8 max my-auto ">
                                     <div class="card bg-transparent" style="border: none; ">
@@ -160,7 +154,6 @@
                                 <i class="fas fa-project-diagram"></i> <strong>Total de Etapas:</strong> {{count($etapas)}}
                             </div>
                             <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                <div class="expand-container">
                                 <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
                                     <div class="row row2 ">
                                         <table class="table-responsive table-card-inline">
@@ -180,7 +173,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
                                 </div>
                                 <div class="row2 col-xl-8 max my-auto ">
                                     <div class="card bg-transparent" style="border: none; ">

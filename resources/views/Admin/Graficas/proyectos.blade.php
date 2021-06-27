@@ -18,28 +18,26 @@
                                     <i class="fas fa-project-diagram"></i> <strong>Total de Proyectos:</strong> {{count($ProyectosEnfoque)}}
                                 </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                    <div class="expand-container">
-                                        <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
-                                            <div class="row row2 ">
-                                                <table class="table-responsive table-card-inline">
-                                                    <thead class="thead"  style="text-align: left">
+                                    <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
+                                        <div class="row row2 ">
+                                            <table class="table-responsive table-card-inline">
+                                                <thead class="thead"  style="text-align: left">
+                                                <tr class="tr-card-complete">
+                                                    <th scope="col" class="th-card"><i class="far fa-check-square"></i> Proyecto</th>
+                                                    <th scope="col" class="th-card"><i class="far fa-check-circle"></i> Trabajo</th>
+                                                    <th scope="col" class="th-card"><i class="far fa-check-circle"></i> Enfoque</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="fonts" style="text-align: left">
+                                                @foreach($ProyectosTrabajoEnfoque as $PTE)
                                                     <tr class="tr-card-complete">
-                                                        <th scope="col" class="th-card"><i class="far fa-check-square"></i> Proyecto</th>
-                                                        <th scope="col" class="th-card"><i class="far fa-check-circle"></i> Trabajo</th>
-                                                        <th scope="col" class="th-card"><i class="far fa-check-circle"></i> Enfoque</th>
+                                                        <td class="td" style="padding-top: 1%"><i class="fas fa-check-square"></i> {{$PTE->Proyecto}}</td>
+                                                        <td class="td" style="padding-top: 1%"><i class="fas fa-check-circle"></i> {{$PTE->Trabajo}}</td>
+                                                        <td class="td" style="padding-top: 1%"><i class="fas fa-check-circle"></i> {{$PTE->Enfoque}}</td>
                                                     </tr>
-                                                    </thead>
-                                                    <tbody class="fonts" style="text-align: left">
-                                                    @foreach($ProyectosTrabajoEnfoque as $PTE)
-                                                        <tr class="tr-card-complete">
-                                                            <td class="td" style="padding-top: 1%"><i class="fas fa-check-square"></i> {{$PTE->Proyecto}}</td>
-                                                            <td class="td" style="padding-top: 1%"><i class="fas fa-check-circle"></i> {{$PTE->Trabajo}}</td>
-                                                            <td class="td" style="padding-top: 1%"><i class="fas fa-check-circle"></i> {{$PTE->Enfoque}}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <div class="row2 col-xl-8 max my-auto ">
@@ -67,26 +65,24 @@
                                     <br>
                                 </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                    <div class="expand-container">
-                                        <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
-                                            <div class="row row2 ">
-                                                <table class="table-responsive table-card-inline">
-                                                    <thead class="thead"  style="text-align: left">
-                                                    <tr class="tr-card-complete">
-                                                        <th scope="col" class="th-card"><i class="far fa-check-square"></i> Proyecto</th>
-                                                        <th scope="col" class="th-card"><i class="far fa-check-circle"></i> Enfoque</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody class="fonts" style="text-align: left">
-                                                    @foreach($ProyectosEnfoque as $PE)
-                                                            <tr class="tr-card-complete">
-                                                                <td class="td" style="padding-top: 1%"><i class="fas fa-check-square"></i> {{$PE->Proyecto}}</td>
-                                                                <td class="td" style="padding-top: 1%"><i class="fas fa-check-circle"></i> {{$PE->Enfoque}}</td>
-                                                            </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                    <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
+                                        <div class="row row2 ">
+                                            <table class="table-responsive table-card-inline">
+                                                <thead class="thead"  style="text-align: left">
+                                                <tr class="tr-card-complete">
+                                                    <th scope="col" class="th-card"><i class="far fa-check-square"></i> Proyecto</th>
+                                                    <th scope="col" class="th-card"><i class="far fa-check-circle"></i> Enfoque</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="fonts" style="text-align: left">
+                                                @foreach($ProyectosEnfoque as $PE)
+                                                        <tr class="tr-card-complete">
+                                                            <td class="td" style="padding-top: 1%"><i class="fas fa-check-square"></i> {{$PE->Proyecto}}</td>
+                                                            <td class="td" style="padding-top: 1%"><i class="fas fa-check-circle"></i> {{$PE->Enfoque}}</td>
+                                                        </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <div class="row2 col-xl-8 max my-auto ">
@@ -114,26 +110,24 @@
                                     <br>
                                 </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                    <div class="expand-container">
-                                        <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
-                                            <div class="row row2 ">
-                                                <table class="table-responsive table-card-inline">
-                                                    <thead class="thead"  style="text-align: left">
+                                    <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
+                                        <div class="row row2 ">
+                                            <table class="table-responsive table-card-inline">
+                                                <thead class="thead"  style="text-align: left">
+                                                <tr class="tr-card-complete">
+                                                    <th scope="col" class="th-card"><i class="far fa-check-square"></i> Proyecto</th>
+                                                    <th scope="col" class="th-card"><i class="far fa-check-circle"></i> Trabajo</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="fonts" style="text-align: left">
+                                                @foreach($ProyectosTrabajo as $PT)
                                                     <tr class="tr-card-complete">
-                                                        <th scope="col" class="th-card"><i class="far fa-check-square"></i> Proyecto</th>
-                                                        <th scope="col" class="th-card"><i class="far fa-check-circle"></i> Trabajo</th>
+                                                        <td class="td" style="padding-top: 1%"><i class="fas fa-check-square"></i> {{$PT->Proyecto}}</td>
+                                                        <td class="td" style="padding-top: 1%"><i class="fas fa-check-circle"></i> {{$PT->Trabajo}}</td>
                                                     </tr>
-                                                    </thead>
-                                                    <tbody class="fonts" style="text-align: left">
-                                                    @foreach($ProyectosTrabajo as $PT)
-                                                        <tr class="tr-card-complete">
-                                                            <td class="td" style="padding-top: 1%"><i class="fas fa-check-square"></i> {{$PT->Proyecto}}</td>
-                                                            <td class="td" style="padding-top: 1%"><i class="fas fa-check-circle"></i> {{$PT->Trabajo}}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                     <div class="row2 col-xl-8 max my-auto ">
@@ -161,7 +155,6 @@
                                     <br>
                                 </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                    <div class="expand-container">
                                     <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
                                         <div class="row row2 ">
                                             <table class="table-responsive table-card-inline">
@@ -181,7 +174,6 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
                                     </div>
                                     <div class="row2 col-xl-8 max my-auto ">
                                         <div class="card bg-transparent" style="border: none; ">
@@ -208,7 +200,6 @@
                                     <br>
                                 </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                    <div class="expand-container">
                                     <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
                                         <div class="row row2 ">
                                             <table class="table-responsive table-card-inline">
@@ -228,7 +219,6 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
                                     </div>
                                     <div class="row2 col-xl-8 max my-auto ">
                                         <div class="card bg-transparent" style="border: none; ">
@@ -255,7 +245,6 @@
                                     <br>
                                 </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                    <div class="expand-container">
                                     <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
                                         <div class="row row2 ">
                                             <table class="table-responsive table-card-inline">
@@ -275,7 +264,6 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
                                     </div>
                                     <div class="row2 col-xl-8 max my-auto ">
                                         <div class="card bg-transparent" style="border: none; ">
@@ -302,7 +290,6 @@
                                     <br>
                                 </div>
                                 <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
-                                    <div class="expand-container">
                                     <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 10%">
                                         <div class="row row2 ">
                                             <table class="table-responsive table-card-inline">
@@ -322,7 +309,6 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
                                     </div>
                                     <div class="row2 col-xl-8 max my-auto ">
                                         <div class="card bg-transparent" style="border: none; ">
