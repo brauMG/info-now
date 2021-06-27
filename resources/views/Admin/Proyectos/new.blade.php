@@ -21,7 +21,7 @@
                                 </th>
                                 <td class="td-card">
                                     <input name="descripcion" type="text"
-                                           class="form-control  @error('nombres') is-invalid @enderror"
+                                           class="form-control  @error('descripcion') is-invalid @enderror"
                                            placeholder="Ingresa la descripción del proyecto (Nombre)" aria-label="descripcion"
                                            aria-describedby="basic-addon1" required autocomplete="nombres" autofocus
                                            value={{Request::old('nombres')}}>
@@ -36,10 +36,25 @@
                                 </th>
                                 <td class="td-card">
                                     <input name="objetivo" type="text"
-                                           class="form-control  @error('nombres') is-invalid @enderror"
+                                           class="form-control  @error('objetivo') is-invalid @enderror"
                                            placeholder="Ingresa el objetivo del proyecto" aria-label="firstName"
                                            aria-describedby="basic-addon1" required autocomplete="objetivo" autofocus
                                            value={{Request::old('objetivo')}}>
+                                </td>
+                            </div>
+                        </tr>
+
+                        <tr class="tr-card-complete">
+                            <div class="form-group">
+                                <th class="th-card">
+                                    <i class="fas fa-file"></i> Criterio de Exito
+                                </th>
+                                <td class="td-card">
+                                    <input name="criterio" type="text"
+                                           class="form-control  @error('criterio') is-invalid @enderror"
+                                           placeholder="Ingresa el criterio de exito del proyecto" aria-label="criterio"
+                                           aria-describedby="basic-addon1" required autocomplete="criterio" autofocus
+                                           value={{Request::old('criterio')}}>
                                 </td>
                             </div>
                         </tr>

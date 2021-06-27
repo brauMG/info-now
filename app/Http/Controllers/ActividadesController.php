@@ -181,8 +181,8 @@ class ActividadesController extends Controller
         $usuarioId= $request->input('usuario');
 
         $actividad = $request->validate([
-            'descripcion' => ['required', 'string', 'max:150'],
-            'decision' => ['required', 'string', 'max:150']
+            'descripcion' => ['required', 'string', 'max:500150'],
+            'decision' => ['required', 'string', 'max:500150']
         ]);
 
         $actity = Actividad::create([

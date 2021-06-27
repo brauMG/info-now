@@ -28,6 +28,7 @@ class UsuariosTableSeeder extends Seeder
             'UltimoLogin' => null,
             'FechaCreacion' => date('Y-m-d H:i:s'),
             'Activo' => '1',
+            'envio_de_correo' => false,
             'remember_token' => Str::random(10)
         ]);
     }

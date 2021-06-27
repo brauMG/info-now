@@ -59,6 +59,7 @@
                         <th scope="col" style="text-transform: uppercase">Identificador</th>
                         <th scope="col" style="text-transform: uppercase">Descripción</th>
                         <th scope="col" style="text-transform: uppercase">Objetivo</th>
+                        <th scope="col" style="text-transform: uppercase">Criterio de Exito</th>
                         <th scope="col" style="text-transform: uppercase">Área</th>
                         <th scope="col" style="text-transform: uppercase" data-toggle="tooltip" data-placement="top" title="Presiona en el botón para cambiar de fase">Fase</th>
                         <th scope="col" style="text-transform: uppercase">Enfoque</th>
@@ -75,6 +76,7 @@
                                 <td class="td td-center">{{$item->Clave}}</td>
                                 <td class="td td-center">{{$item->Descripcion}}</td>
                                 <td class="td td-center">{{$item->Objectivo}}</td>
+                                <td class="td td-center">{{$item->Criterio}}</td>
                                 <td class="td td-center">{{$item->Area}}</td>
                                 <td class="td td-center">
                                     <a class="btn btn btn-success no-href" @if($rol == 4) clave="{{$item->Clave}}" onclick="changeFase(this);" @endif style="cursor: pointer"><i class="fas fa-edit"></i> {{$item->Fase}}</a>
@@ -94,6 +96,7 @@
                                 <td class="td td-center">{{$item->Clave}}</td>
                                 <td class="td td-center">{{$item->Descripcion}}</td>
                                 <td class="td td-center">{{$item->Objectivo}}</td>
+                                <td class="td td-center">{{$item->Criterio}}</td>
                                 <td class="td td-center">{{$item->Area}}</td>
                                 <td class="td td-center">
                                     <a class="btn btn btn-success no-href" style="background-color: gray; border-color: gray" data-toggle="tooltip" data-placement="top" title="Debido al estado del proyecto, no se puede cambiar de fase"><i class="fas fa-edit"></i> {{$item->Fase}}</a>
@@ -122,6 +125,7 @@
                         <th style="text-transform: uppercase">Identificador</th>
                         <th style="text-transform: uppercase">Descripción</th>
                         <th style="text-transform: uppercase">Objetivo</th>
+                        <th style="text-transform: uppercase">Criterio de Exito</th>
                         <th style="text-transform: uppercase">Área</th>
                         <th style="text-transform: uppercase">Fase</th>
                         <th style="text-transform: uppercase">Enfoque</th>

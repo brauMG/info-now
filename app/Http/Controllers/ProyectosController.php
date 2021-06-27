@@ -46,7 +46,7 @@ class ProyectosController extends Controller
                 ->leftJoin('Enfoques', 'Enfoques.Clave', '=', 'Proyectos.Clave_Enfoque')
                 ->leftJoin('Trabajos', 'Trabajos.Clave', '=', 'Proyectos.Clave_Trabajo')
                 ->leftJoin('Indicador', 'Indicador.Clave', '=', 'Proyectos.Clave_Indicador')
-                ->select('Proyectos.Clave','Status.Activo as Activo', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Descripcion', 'Status.status as Status', 'Areas.Descripcion as Area', 'Fases.Descripcion as Fase', 'Enfoques.Descripcion AS Enfoque', 'Trabajos.Descripcion As Trabajo', 'Indicador.Descripcion As Indicador', 'Objectivo')
+                ->select('Proyectos.Clave','Status.Activo as Activo', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Descripcion', 'Status.status as Status', 'Areas.Descripcion as Area', 'Fases.Descripcion as Fase', 'Enfoques.Descripcion AS Enfoque', 'Trabajos.Descripcion As Trabajo', 'Indicador.Descripcion As Indicador', 'Objectivo', 'Criterio')
                 ->where('Proyectos.Clave_Compania', '=', Auth::user()->Clave_Compania)
                 ->get();
 
@@ -70,7 +70,7 @@ class ProyectosController extends Controller
                 ->leftJoin('Enfoques', 'Enfoques.Clave', '=', 'Proyectos.Clave_Enfoque')
                 ->leftJoin('Trabajos', 'Trabajos.Clave', '=', 'Proyectos.Clave_Trabajo')
                 ->leftJoin('Indicador', 'Indicador.Clave', '=', 'Proyectos.Clave_Indicador')
-                ->select('Proyectos.Clave','Status.Activo as Activo', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Descripcion', 'Status.status as Status', 'Areas.Descripcion as Area', 'Fases.Descripcion as Fase', 'Enfoques.Descripcion AS Enfoque', 'Trabajos.Descripcion As Trabajo', 'Indicador.Descripcion As Indicador', 'Objectivo')
+                ->select('Proyectos.Clave','Status.Activo as Activo', 'Companias.Descripcion as Compania', 'Proyectos.Descripcion as Descripcion', 'Status.status as Status', 'Areas.Descripcion as Area', 'Fases.Descripcion as Fase', 'Enfoques.Descripcion AS Enfoque', 'Trabajos.Descripcion As Trabajo', 'Indicador.Descripcion As Indicador', 'Objectivo', 'Criterio')
                 ->where('RolesProyectos.Clave_Usuario', '=', Auth::user()->Clave)
                 ->get();
 
@@ -120,8 +120,9 @@ class ProyectosController extends Controller
         $company=$user->Clave_Compania=Auth::user()->Clave_Compania;
 
         $project = $request->validate([
-            'descripcion' => ['required', 'string', 'max:150'],
-            'objetivo' => ['required', 'string', 'max:150'],
+            'descripcion' => ['required', 'string', 'max:500'],
+            'objetivo' => ['required', 'string', 'max:500'],
+            'criterio' => ['required', 'string', 'max:500'],
             'area' => ['required'],
             'fase' => ['required'],
             'enfoque' => ['required'],
@@ -134,6 +135,7 @@ class ProyectosController extends Controller
             'Clave_Compania' => $company,
             'Descripcion' => $project['descripcion'],
             'Objectivo' => $project['objetivo'],
+            'Criterio' => $project['criterio'],
             'Clave_Area' => $project['area'],
             'Clave_Fase' => $project['fase'],
             'Clave_Enfoque' => $project['enfoque'],
@@ -161,7 +163,8 @@ class ProyectosController extends Controller
 		$proyecto->Clave_Trabajo = $request->trabajo;
 		$proyecto->Clave_Indicador = $request->indicador;
 		$proyecto->Objectivo = $request->objectivo;
-    	$proyecto->Activo=true;
+        $proyecto->Criterio = $request->criterio;
+        $proyecto->Activo=true;
 		$proyecto->save();
 		return response()->json(['proyecto'=>$proyecto]);
     }

@@ -38,7 +38,7 @@ class AreaController extends Controller
 
     public function update(Request $request, $Clave){
         $area = $request->validate([
-            'descripcion' => ['required', 'string', 'max:150'],
+            'descripcion' => ['required', 'string', 'max:500150'],
             'compania' => ['required']
         ]);
         Areas::where('Clave', $Clave)->update([
@@ -59,7 +59,7 @@ class AreaController extends Controller
     {
         if (Auth::user()->Clave_Rol == 1) {
             $area = $request->validate([
-                'descripcion' => ['required', 'string', 'max:150'],
+                'descripcion' => ['required', 'string', 'max:500150'],
                 'compania' => ['required']
             ]);
             Areas::create([
@@ -72,7 +72,7 @@ class AreaController extends Controller
         }
         else {
             $area = $request->validate([
-                'descripcion' => ['required', 'string', 'max:150']
+                'descripcion' => ['required', 'string', 'max:500150']
             ]);
             Areas::create([
                 'Descripcion' => $area['descripcion'],
