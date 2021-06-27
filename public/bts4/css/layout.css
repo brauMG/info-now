@@ -1167,3 +1167,21 @@ div.content {
     table-layout: auto !important;
     width: 460px !important;
 }
+@media (max-width: 480px) {
+    .scroll-container {
+        overflow: auto !important;
+        height: 100px !important;
+    }
+
+    .custom-table {
+        table-layout: auto !important;
+        width: 335px !important;
+        margin-left: 3% !important;
+    }
+
+    .custom-table-3 {
+        table-layout: auto !important;
+        width: 335px !important;
+        margin-left: 3% !important;
+    }
+}
