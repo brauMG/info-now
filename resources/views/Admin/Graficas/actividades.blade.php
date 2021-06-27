@@ -20,8 +20,8 @@
                             </div>
                             <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
                                 <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
-                                    <div class="row row2 ">
-                                        <table class="table-responsive table-card-inline">
+                                    <div class="row row2 scroll-container">
+                                        <table class="table-responsive table-card-inline custom-table">
                                             <thead class="thead"  style="text-align: left">
                                             <tr class="tr-card-complete">
                                                 <th scope="col" class="th-card"><i class="far fa-check-square"></i> Actividad</th>
@@ -63,8 +63,8 @@
                             </div>
                             <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
                                 <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
-                                    <div class="row row2 ">
-                                        <table class="table-responsive table-card-inline">
+                                    <div class="row row2 scroll-container">
+                                        <table class="table-responsive table-card-inline custom-table">
                                             <thead class="thead"  style="text-align: left">
                                             <tr class="tr-card-complete">
                                                 <th scope="col" class="th-card"><i class="far fa-check-square"></i> Actividad</th>
@@ -112,8 +112,8 @@
                             </div>
                             <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
                                 <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
-                                    <div class="row row2 ">
-                                        <table class="table-responsive table-card-inline">
+                                    <div class="row row2 scroll-container">
+                                        <table class="table-responsive table-card-inline custom-table">
                                             <thead class="thead"  style="text-align: left">
                                             <tr class="tr-card-complete">
                                                 <th scope="col" class="th-card"><i class="far fa-check-square"></i> Actividad</th>
@@ -155,8 +155,8 @@
                             </div>
                             <div class="row bg-transparent rounded mb-0 column" style="background-color: white !important;">
                                 <div class="col-xl-4 max" style="padding-top: 5%; padding-left: 2%">
-                                    <div class="row row2 ">
-                                        <table class="table-responsive table-card-inline">
+                                    <div class="row row2 scroll-container">
+                                        <table class="table-responsive table-card-inline custom-table">
                                             <thead class="thead"  style="text-align: left">
                                             <tr class="tr-card-complete">
                                                 <th scope="col" class="th-card"><i class="far fa-check-square"></i> Actividad</th>
