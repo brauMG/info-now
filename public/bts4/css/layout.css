@@ -1154,8 +1154,8 @@ div.content {
 }
 
 .scroll-container {
-    overflow: auto;
-    height: 305px;
+    overflow: auto !important;
+    height: 305px !important;
 }
 
 .custom-table {
