@@ -17,13 +17,13 @@ class RolesRASICController extends Controller
         $compania=Compania::where('Clave',Auth::user()->Clave_Compania)->first();
         return view('Admin.RolesRASIC.index',['rolRASIC'=>$rolRASIC,'compania'=>$compania]);
     }
-	public function edit($id){
-            $rolRASIC=RolRASIC::find($id);
-            return view('Admin.RolesRASIC.edit',['rolRASIC'=>$rolRASIC]);
+    public function edit($id){
+        $rolRASIC=RolRASIC::find($id);
+        return view('Admin.RolesRASIC.edit',['rolRASIC'=>$rolRASIC]);
     }
 
     public function new(){
-            return view('Admin.RolesRASIC.new');
+        return view('Admin.RolesRASIC.new');
     }
     public function create(Request $request){
         $rolRASIC = new RolRASIC;
